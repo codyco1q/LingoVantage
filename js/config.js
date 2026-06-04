@@ -14,21 +14,24 @@ window.LV_CONFIG = {
   // TODO: paste your Discord invite link here when ready
   discordInvite: "https://discord.gg/5YaD3sXBNQ",
 
-  /* ---- Supabase ----
-     Get these from: Supabase Dashboard > Project Settings > API
-     anonKey is safe to expose on the frontend (public key). */
-  supabase: {
-    url: "https://vmfutaaflitvysazbqsl.supabase.co",          // e.g. https://xxxx.supabase.co
-    anonKey: "sb_publishable_SCm0cqzWOdi1ez_3fff61w_Z8b7I5E-", // public anon key
-    table: "students"                   // your table name
+  /* ---- Admin notifications via Telegram Bot ---- */
+  notify: {
+    enabled: true,
+    botToken: "8767687425:AAGpnfAmloO9hgRzdbAk01agWaL9xdXZIMU",
+    chatId: "6212386995"  // your numeric chat id (or a group id)
   },
 
-  /* ---- Simple dashboard password (frontend gate only) ----
-     For real security use Supabase Auth + RLS. This is a light gate. */
+  /* ---- Supabase ---- */
+  supabase: {
+    url: "https://vmfutaaflitvysazbqsl.supabase.co",
+    anonKey: "sb_publishable_SCm0cqzWOdi1ez_3fff61w_Z8b7I5E-",
+    table: "students"                  // your table name
+  },
+
+  /* ---- Simple dashboard password (frontend gate only) ---- */
   dashboardPassword: "lingo2026",
 
-  /* ---- Assessment test access (username + password gate) ----
-     Frontend gate only — keeps the test behind a simple login. */
+  /* ---- Assessment test access (username + password gate) ---- */
   assessmentAuth: {
     username: "test_user",
     password: "testme123%"

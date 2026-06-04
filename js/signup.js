@@ -2,11 +2,9 @@
    LingoVantage — Signup form logic
    - Validates fields
    - Prefills package from ?package= query param
-   - Saves to Supabase table "student"
-   - Falls back to / also offers a WhatsApp message to the
-     admin number so registrations are never lost
-   Table columns: id, full_name, age, whatsapp, email,
-   current_level, goal, package, created_at
+   - Saves to Supabase table "students"
+   - Sends an automatic Telegram notification to the admin
+   - Also offers a WhatsApp message to the admin as backup
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return ok;
   }
 
-  /* Build a WhatsApp message to the admin number */
+  /* Build a WhatsApp message to the admin number (backup button) */
   function buildWhatsAppMessage(d) {
     const pkgName = d.package === "business" ? "Business / باقة العمل" : "Fluency / باقة الطلاقة";
     const lines = [
@@ -78,6 +76,36 @@ document.addEventListener("DOMContentLoaded", () => {
       `📦 Package: ${pkgName}`
     ];
     return encodeURIComponent(lines.join("\n"));
+  }
+
+  /* Send an AUTOMATIC notification to the admin via a Telegram bot.
+     Fires silently in the background; never blocks the user. */
+  async function notifyAdmin(d) {
+    const n = cfg.notify || {};
+    if (!n.enabled || !n.botToken || !n.chatId ||
+        n.botToken === "YOUR_TELEGRAM_BOT_TOKEN" || n.chatId === "YOUR_TELEGRAM_CHAT_ID") return;
+
+    const pkgName = d.package === "business" ? "Business / باقة العمل" : "Fluency / باقة الطلاقة";
+    const text =
+      `🎓 New LingoVantage Registration\n\n` +
+      `👤 ${d.full_name}\n` +
+      `🎂 Age: ${d.age}\n` +
+      `📱 ${d.whatsapp}\n` +
+      `📧 ${d.email}\n` +
+      `📊 Level: ${d.current_level}\n` +
+      `🎯 Goal: ${d.goal}\n` +
+      `📦 ${pkgName}`;
+
+    const url = `https://api.telegram.org/bot${n.botToken}/sendMessage`;
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: n.chatId, text: text, disable_web_page_preview: true })
+      });
+    } catch (err) {
+      console.warn("Admin notification failed (non-blocking):", err);
+    }
   }
 
   form.addEventListener("submit", async (e) => {
@@ -109,12 +137,15 @@ document.addEventListener("DOMContentLoaded", () => {
     /* 1) Try to save to Supabase */
     if (window.LV_Supabase && window.LV_Supabase.ready()) {
       try {
-        await window.LV_Supabase.insert(cfg.supabase.table || "student", data);
+        await window.LV_Supabase.insert(cfg.supabase.table || "students", data);
         savedToDB = true;
       } catch (err) {
         console.error(err);
       }
     }
+
+    /* 1.5) Fire an automatic Telegram notification to admin (non-blocking) */
+    notifyAdmin(data);
 
     /* 2) Always prepare a WhatsApp message to admin as backup/confirmation */
     const waMsg = buildWhatsAppMessage(data);
