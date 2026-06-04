@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — LingoVantage</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="LingoVantage" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="assessment.html">Level Test</a>
+        <a href="signup.html">Sign Up</a>
+      </nav>
+      <div class="nav-cta">
+        <button id="dashLogout" class="btn btn-ghost" style="display:none;">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- LOGIN GATE -->
+      <div id="dashLoginWrap" class="dash-login">
+        <div class="form-card">
+          <h2 style="margin-bottom:6px;">Admin Dashboard</h2>
+          <p style="color:var(--text-soft);margin-bottom:20px;">Enter the password to view student registrations.</p>
+          <div id="dashLoginErr" class="alert"></div>
+          <form id="dashLoginForm">
+            <div class="form-row">
+              <label>Password</label>
+              <input class="input" type="password" id="dashPass" placeholder="••••••••" />
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Enter</button>
+          </form>
+          <p class="form-note">Default password is set in <b>js/config.js</b>.</p>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div id="dashMain" style="display:none;">
+        <div class="dash-head">
+          <div>
+            <span class="eyebrow" style="display:inline-block;color:var(--teal-400);background:rgba(45,225,208,.08);border:1px solid rgba(45,225,208,.25);padding:6px 14px;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Admin</span>
+            <h2 style="font-size:2rem;margin-top:12px;">Student Registrations</h2>
+          </div>
+          <div class="dash-tools">
+            <input class="input" id="dashSearch" placeholder="🔍 Search…" style="width:220px;" />
+            <button class="btn btn-ghost" id="dashExport">⬇ Export CSV</button>
+            <button class="btn btn-ghost" onclick="loadData()">↻ Refresh</button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card"><div class="sc-num" id="statTotal">0</div><div class="sc-lbl">Total students</div></div>
+          <div class="stat-card"><div class="sc-num" id="statFluency">0</div><div class="sc-lbl">Fluency package</div></div>
+          <div class="stat-card"><div class="sc-num" id="statBusiness">0</div><div class="sc-lbl">Business package</div></div>
+          <div class="stat-card"><div class="sc-num" id="statToday">0</div><div class="sc-lbl">Joined today</div></div>
+        </div>
+
+        <div id="dashState"></div>
+
+        <div class="table-wrap">
+          <div class="table-scroll">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>Name</th><th>Age</th><th>WhatsApp</th><th>Email</th>
+                  <th>Level</th><th>Goal</th><th>Package</th><th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="dashTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a065f016dcb8e1f0',t:'MTc4MDU2NTYyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
