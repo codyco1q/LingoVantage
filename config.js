@@ -12,7 +12,7 @@ window.LV_CONFIG = {
   // Your personal WhatsApp number (international format, no + or spaces) used for direct messages
   whatsappNumber: "201093567856",
   // TODO: paste your Discord invite link here when ready
-  discordInvite: "#",
+  discordInvite: "https://discord.gg/5YaD3sXBNQ",
 
   /* ---- Admin notifications via Telegram Bot ----
      Get an instant Telegram message every time a student registers.
