@@ -542,13 +542,6 @@ table.data .pill { font-size: .75rem; padding: 4px 10px; border-radius: 100px; b
 .dash-empty { padding: 50px; text-align: center; color: var(--text-dim); }
 .dash-login { max-width: 420px; margin: 60px auto; }
 
-/* "Don't have access?" helper under test login */
-.login-help {
-  margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border);
-  text-align: center;
-}
-.login-help p { color: var(--text-soft); font-size: .92rem; }
-
 /* ---------- 16. ANIMATIONS ---------- */
 @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
