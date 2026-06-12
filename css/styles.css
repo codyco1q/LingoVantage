@@ -310,6 +310,7 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; letter-spacing: -.02em; }
 .save-pill { font-size: .72rem; background: rgba(52,211,153,.15); color: var(--success); border: 1px solid rgba(52,211,153,.3); padding: 3px 9px; border-radius: 100px; font-weight: 700; }
 
 .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+.price-grid-2 { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto; }
 .price-card {
   position: relative; background: linear-gradient(180deg, var(--surface), var(--bg-soft));
   border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -541,6 +542,53 @@ table.data tr:hover td { background: rgba(255,255,255,.02); }
 table.data .pill { font-size: .75rem; padding: 4px 10px; border-radius: 100px; background: rgba(108,140,255,.15); color: #b9c7ff; border: 1px solid rgba(108,140,255,.3); }
 .dash-empty { padding: 50px; text-align: center; color: var(--text-dim); }
 .dash-login { max-width: 420px; margin: 60px auto; }
+
+/* ---------- 15b. STUDENT PORTAL ---------- */
+.tabs { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+.tab-btn {
+  font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer;
+  background: none; border: none; color: var(--text-soft);
+  padding: 14px 20px; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color .2s, border-color .2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--teal-300); border-bottom-color: var(--teal-400); }
+.tab-panel { display: none; animation: fadeUp .35s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.session-list { display: grid; gap: 12px; }
+.session-row, .hw-row {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+  transition: border-color .2s, transform .2s;
+}
+.session-row:hover, .hw-row:hover { border-color: rgba(34,211,196,.35); transform: translateX(3px); }
+.session-row.pending { opacity: .72; }
+.session-num {
+  width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+  display: grid; place-items: center; font-weight: 800; font-size: 1.1rem;
+  background: rgba(34,211,196,.12); border: 1px solid rgba(34,211,196,.28); color: var(--teal-300);
+}
+.session-info { flex: 1; min-width: 0; }
+.session-info strong { display: block; font-size: 1.05rem; }
+.session-info span { color: var(--text-dim); font-size: .85rem; }
+.session-action { flex-shrink: 0; }
+.session-action .btn { padding: 10px 18px; font-size: .9rem; }
+.soon-pill {
+  display: inline-block; font-size: .8rem; font-weight: 700;
+  color: var(--text-dim); background: var(--bg-soft);
+  border: 1px solid var(--border); border-radius: 100px; padding: 8px 16px;
+}
+.hw-page { flex-shrink: 0; font-size: 1rem; color: var(--text-soft); }
+.hw-page b { color: var(--teal-300); font-size: 1.15rem; }
+
+@media (max-width: 560px) {
+  .session-row, .hw-row { flex-wrap: wrap; }
+  .session-action, .hw-page { width: 100%; }
+  .session-action .btn { width: 100%; }
+}
 
 /* ---------- 16. ANIMATIONS ---------- */
 @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }

@@ -11,7 +11,7 @@ window.LV_CONFIG = {
   whatsappGroup: "https://chat.whatsapp.com/LmqmGQjqEhmLnWrSYAQe7M",
   // Your personal WhatsApp number (international format, no + or spaces) used for direct messages
   whatsappNumber: "201093567856",
-  // TODO: paste your Discord invite link here when ready
+  // Discord server invite link
   discordInvite: "https://discord.gg/5YaD3sXBNQ",
 
   /* ---- Admin notifications via Telegram Bot ----
@@ -45,6 +45,31 @@ window.LV_CONFIG = {
   /* ---- Simple dashboard password (frontend gate only) ----
      For real security use Supabase Auth + RLS. This is a light gate. */
   dashboardPassword: "lingo2026",
+
+  /* ---- Student Portal (current students area) ----
+     Shared fixed credentials for all current students.
+     Change these and re-share with your students any time. */
+  studentPortal: {
+    username: "student",
+    password: "lingo2026",
+
+    /* 12 units. Add the recording link as you record each session.
+       Leave recording as "" to show "Coming soon". */
+    sessions: [
+      { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://drive.google.com/file/d/1d3T4hoiNN8Kv9K9elz-t2d8Hyx693cTR/view?usp=sharing" },
+      { unit: 2,  title: "Unit 2",  homeworkPage: 22,  recording: "" },
+      { unit: 3,  title: "Unit 3",  homeworkPage: 30,  recording: "" },
+      { unit: 4,  title: "Unit 4",  homeworkPage: 38,  recording: "" },
+      { unit: 5,  title: "Unit 5",  homeworkPage: 46,  recording: "" },
+      { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "" },
+      { unit: 7,  title: "Unit 7",  homeworkPage: 62,  recording: "" },
+      { unit: 8,  title: "Unit 8",  homeworkPage: 70,  recording: "" },
+      { unit: 9,  title: "Unit 9",  homeworkPage: 78,  recording: "" },
+      { unit: 10, title: "Unit 10", homeworkPage: 86,  recording: "" },
+      { unit: 11, title: "Unit 11", homeworkPage: 94,  recording: "" },
+      { unit: 12, title: "Unit 12", homeworkPage: 102, recording: "" }
+    ]
+  },
 
   /* ---- Packages shown on signup + pricing ---- */
   packages: [
