@@ -590,6 +590,30 @@ table.data .pill { font-size: .75rem; padding: 4px 10px; border-radius: 100px; b
   .session-action .btn { width: 100%; }
 }
 
+/* Portal — Tests / quiz */
+.quiz-q { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.quiz-q:last-child { border-bottom: none; }
+.quiz-q-text { font-weight: 600; margin-bottom: 12px; }
+.quiz-opts { display: grid; gap: 8px; }
+.quiz-opts.row { grid-auto-flow: column; justify-content: start; gap: 12px; }
+.quiz-opt {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 14px; transition: .15s;
+}
+.quiz-opt:hover { border-color: var(--teal-500); }
+.quiz-opt input { accent-color: var(--teal-400); width: 17px; height: 17px; flex-shrink: 0; }
+.quiz-opt input:checked + span { color: var(--teal-300); font-weight: 600; }
+.cafe { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 18px; display: grid; gap: 10px; }
+.cafe-line { color: var(--text-soft); }
+.cafe-line b { color: var(--text); }
+.blank-input {
+  display: inline-block; width: 120px; font-family: inherit; font-size: .95rem;
+  background: var(--surface); border: none; border-bottom: 2px solid var(--teal-500);
+  color: var(--text); padding: 3px 8px; border-radius: 6px 6px 0 0;
+}
+.blank-input:focus { outline: none; border-bottom-color: var(--teal-300); background: var(--surface-2); }
+
 /* ---------- 16. ANIMATIONS ---------- */
 @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }

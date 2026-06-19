@@ -10,25 +10,27 @@ Pure HTML + CSS + JavaScript (no build step) — ready to deploy on **Netlify**,
 ```
 lingovantage/
 ├── index.html          # Home (Hero, Features, Packages, Journey, FAQ, CTA, Footer)
-├── pricing.html        # Pricing page (Fluency / Business + free test)
+├── pricing.html        # Pricing page (Fluency Group / Fluency Private)
 ├── assessment.html     # 30-question level test (A1–B1) with scoring
 ├── signup.html         # Registration form → Supabase
-├── dashboard.html      # Simple admin dashboard (view registrations)
+├── dashboard.html      # Admin dashboard (view registrations)
+├── portal.html         # Student Portal (Sessions, Homework, Tests)
 │
 ├── css/
 │   └── styles.css      # ALL styles, organized into numbered sections
 │
 ├── js/
-│   ├── config.js       # 🔧 EDIT HERE: links, Supabase keys, packages, logins
-│   ├── main.js         # Shared UI: navbar, FAQ, pricing toggle, reveal
-│   ├── supabase-client.js  # Supabase REST helper
-│   ├── signup.js       # Signup form validation + save
-│   ├── assessment.js   # Test login gate + engine + 30 questions + scoring
-│   └── dashboard.js    # Admin dashboard logic
+│   ├── config.js       # 🔧 EDIT HERE: links, Supabase keys, packages, portal data
+│   ├── main.js         # Shared UI: navbar, FAQ, reveal, social links
+│   ├── supabase-client.js  # Supabase REST helper (insert/select/selectWhere)
+│   ├── signup.js       # Signup form validation + save + Telegram notify
+│   ├── assessment.js   # Level-test engine + 30 questions + scoring
+│   ├── dashboard.js    # Admin dashboard logic
+│   ├── portal.js       # Student portal login + tabs (sessions/homework)
+│   ├── portal-tests.js # Tests tab: 1-attempt/IP, grading, save results
+│   └── tests-data.js   # 🔧 EDIT HERE: test questions + answer keys
 │
-├── assets/
-│   └── logo.png        # Your LingoVantage logo (transparent)
-│
+├── assets/             # Logo + favicons
 ├── netlify.toml        # Netlify config (pretty URLs + headers)
 └── README.md
 ```
@@ -89,6 +91,48 @@ using (true);
 > 🔒 Note: the dashboard read policy above uses the public anon key.
 > For stronger security later, switch the dashboard to Supabase Auth and
 > restrict `select` to authenticated admins only.
+
+#### Test results table (for the Student Portal → Tests tab)
+Create a second table named **`test_results`** and add RLS policies.
+Run this in the Supabase SQL Editor:
+
+```sql
+create table if not exists test_results (
+  id          uuid primary key default gen_random_uuid(),
+  created_at  timestamptz default now(),
+  test_id     text,
+  test_name   text,
+  ip          text,
+  score       int4,      -- marks earned
+  total_max   int4,      -- marks possible (e.g. 30)
+  percent     int4,      -- score / total_max * 100
+  grade       text,      -- A / B / C / D / -
+  answers     jsonb      -- the student's chosen answers
+);
+
+alter table test_results enable row level security;
+
+-- students can submit a result
+create policy "tr public insert" on test_results
+  for insert to anon with check (true);
+
+-- students can see their own result (portal lists by IP)
+create policy "tr public select" on test_results
+  for select to anon using (true);
+```
+
+**How grading works**
+- Tests are **100% auto-graded** (Multiple choice + Right/Wrong, 1 mark each).
+- The student gets their **final score, percentage and grade instantly** on submitting.
+- Everything is saved to `test_results`; returning students see their saved result.
+
+Grading guide: ≥90% = A · ≥80% = B · ≥70% = C · ≥60% = D · below = needs practice.
+
+> ⚠️ **One-attempt rule:** each visitor IP can take a given test only once
+> (checked against `test_results`). Note this is per-network — students on the
+> same Wi-Fi share an IP, and mobile data IPs can change. It stops casual
+> retakes but isn't bulletproof. For strict per-student limits you'd need
+> per-student logins (a future upgrade).
 
 ### 3) Deploy to Netlify
 - Push this folder to GitHub.

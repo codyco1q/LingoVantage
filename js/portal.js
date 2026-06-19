@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
+      // Lazy-load the Tests tab the first time it's opened
+      if (btn.dataset.tab === "tabTests" && typeof window.LV_initTests === "function") {
+        window.LV_initTests();
+      }
     });
   });
 

@@ -45,5 +45,18 @@ window.LV_Supabase = (function () {
     return res.json();
   }
 
-  return { insert, select, ready: () => window.LV_supabaseReady() };
+  /* Select rows matching a raw PostgREST filter string,
+     e.g. selectWhere("test_results", "ip=eq.1.2.3.4&test_id=eq.units-1-3") */
+  async function selectWhere(table, filter, { order = "created_at.desc", limit = 100 } = {}) {
+    const c = cfg();
+    const url = `${c.url}/rest/v1/${table}?select=*&${filter}&order=${order}&limit=${limit}`;
+    const res = await fetch(url, { headers: headers() });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`Supabase selectWhere failed (${res.status}): ${txt}`);
+    }
+    return res.json();
+  }
+
+  return { insert, select, selectWhere, ready: () => window.LV_supabaseReady() };
 })();
