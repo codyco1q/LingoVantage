@@ -98,16 +98,17 @@ Run this in the Supabase SQL Editor:
 
 ```sql
 create table if not exists test_results (
-  id          uuid primary key default gen_random_uuid(),
-  created_at  timestamptz default now(),
-  test_id     text,
-  test_name   text,
-  ip          text,
-  score       int4,      -- marks earned
-  total_max   int4,      -- marks possible (e.g. 30)
-  percent     int4,      -- score / total_max * 100
-  grade       text,      -- A / B / C / D / -
-  answers     jsonb      -- the student's chosen answers
+  id           uuid primary key default gen_random_uuid(),
+  created_at   timestamptz default now(),
+  student_name text,      -- the name the student entered before the test
+  test_id      text,
+  test_name    text,
+  ip           text,
+  score        int4,      -- marks earned
+  total_max    int4,      -- marks possible (e.g. 30)
+  percent      int4,      -- score / total_max * 100
+  grade        text,      -- A / B / C / D / -
+  answers      jsonb      -- the student's chosen answers
 );
 
 alter table test_results enable row level security;

@@ -140,11 +140,53 @@
         }
       } catch (e) { /* if check fails, still allow */ }
     }
-    renderQuiz(t, sbReady);
+    renderNamePrompt(t, sbReady);
+  }
+
+  /* ---------- Ask for the student's name (required) ---------- */
+  function renderNamePrompt(t, sbReady) {
+    const view = document.getElementById("testsView");
+    const list = document.getElementById("testsList");
+    list.style.display = "none";
+    view.style.display = "block";
+
+    view.innerHTML = `
+      <button class="btn btn-ghost" id="backToTests" style="margin-bottom:20px;">← Back to tests</button>
+      <div class="form-card" style="max-width:480px;margin:0 auto;">
+        <div style="text-align:center;font-size:2.2rem;margin-bottom:8px;">📝</div>
+        <h2 style="text-align:center;margin-bottom:6px;">${escapeHtml(t.name)}</h2>
+        <p style="color:var(--text-soft);text-align:center;margin-bottom:20px;">Enter your name to begin. You can take this test only once.</p>
+        <div id="nameAlert" class="alert"></div>
+        <form id="nameForm">
+          <div class="form-row">
+            <label>Your full name <span class="req">*</span></label>
+            <input class="input" type="text" id="studentNameInput" placeholder="e.g. Ahmed Mohamed" autocomplete="name" />
+            <div class="field-error">Please enter your name.</div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Start test →</button>
+        </form>
+      </div>`;
+
+    document.getElementById("backToTests").addEventListener("click", () => {
+      view.style.display = "none"; view.innerHTML = "";
+      list.style.display = "block";
+    });
+
+    document.getElementById("nameForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = document.getElementById("studentNameInput");
+      const name = (input.value || "").trim();
+      if (name.length < 2) {
+        document.getElementById("nameAlert").className = "alert show error";
+        document.getElementById("nameAlert").textContent = "⚠️ Please enter your full name to start.";
+        return;
+      }
+      renderQuiz(t, sbReady, name);
+    });
   }
 
   /* ---------- Render the quiz form ---------- */
-  function renderQuiz(t, sbReady) {
+  function renderQuiz(t, sbReady, studentName) {
     const view = document.getElementById("testsView");
     const list = document.getElementById("testsList");
     list.style.display = "none";
@@ -156,7 +198,7 @@
       <div class="question-card">
         <div class="q-level">${t.name} · ${escapeHtml(t.subtitle)}</div>
         <h2 style="margin-bottom:6px;">${total}-mark progress test</h2>
-        <p style="color:var(--text-soft);margin-bottom:8px;">Answer all questions. You can only take this test once.</p>
+        <p style="color:var(--text-soft);margin-bottom:8px;">Student: <b>${escapeHtml(studentName)}</b> · Answer all questions.</p>
         <div id="testAlert" class="alert"></div>
         <form id="quizForm">`;
 
@@ -191,12 +233,12 @@
     });
     document.getElementById("quizForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      submitQuiz(t, sbReady);
+      submitQuiz(t, sbReady, studentName);
     });
   }
 
   /* ---------- Grade + submit ---------- */
-  async function submitQuiz(t, sbReady) {
+  async function submitQuiz(t, sbReady, studentName) {
     const form = document.getElementById("quizForm");
     const alertBox = document.getElementById("testAlert");
 
@@ -229,6 +271,7 @@
     const g = gradeFromScore(score, total);
 
     const record = {
+      student_name: studentName,
       test_id: t.id,
       test_name: t.name,
       ip: CURRENT_IP || "unknown",

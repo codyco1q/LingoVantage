@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — LingoVantage</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -13,7 +16,7 @@
   <!-- ============ NAVBAR ============ -->
   <header class="nav">
     <div class="container nav-inner">
-      <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="LingoVantage" /></a>
+      <a href="index.html" class="nav-logo"><img src="assets/logo-light.png" alt="LingoVantage" /></a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="pricing.html">Pricing</a>
@@ -51,35 +54,77 @@
         <div class="dash-head">
           <div>
             <span class="eyebrow" style="display:inline-block;color:var(--teal-400);background:rgba(45,225,208,.08);border:1px solid rgba(45,225,208,.25);padding:6px 14px;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Admin</span>
-            <h2 style="font-size:2rem;margin-top:12px;">Student Registrations</h2>
+            <h2 style="font-size:2rem;margin-top:12px;">Dashboard</h2>
           </div>
           <div class="dash-tools">
-            <input class="input" id="dashSearch" placeholder="🔍 Search…" style="width:220px;" />
-            <button class="btn btn-ghost" id="dashExport">⬇ Export CSV</button>
             <button class="btn btn-ghost" onclick="loadData()">↻ Refresh</button>
           </div>
         </div>
 
-        <div class="stat-grid">
-          <div class="stat-card"><div class="sc-num" id="statTotal">0</div><div class="sc-lbl">Total students</div></div>
-          <div class="stat-card"><div class="sc-num" id="statFluency">0</div><div class="sc-lbl">Fluency package</div></div>
-          <div class="stat-card"><div class="sc-num" id="statBusiness">0</div><div class="sc-lbl">Business package</div></div>
-          <div class="stat-card"><div class="sc-num" id="statToday">0</div><div class="sc-lbl">Joined today</div></div>
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="tabRegs">👥 Registrations</button>
+          <button class="tab-btn" data-tab="tabResults">📝 Test Results</button>
         </div>
 
-        <div id="dashState"></div>
+        <!-- Registrations panel -->
+        <div id="tabRegs" class="tab-panel active">
+          <div class="dash-tools" style="margin-bottom:18px;justify-content:flex-end;">
+            <input class="input" id="dashSearch" placeholder="🔍 Search…" style="width:220px;" />
+            <button class="btn btn-ghost" id="dashExport">⬇ Export CSV</button>
+          </div>
 
-        <div class="table-wrap">
-          <div class="table-scroll">
-            <table class="data">
-              <thead>
-                <tr>
-                  <th>Name</th><th>Age</th><th>WhatsApp</th><th>Email</th>
-                  <th>Level</th><th>Goal</th><th>Package</th><th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="dashTbody"></tbody>
-            </table>
+          <div class="stat-grid">
+            <div class="stat-card"><div class="sc-num" id="statTotal">0</div><div class="sc-lbl">Total students</div></div>
+            <div class="stat-card"><div class="sc-num" id="statFluency">0</div><div class="sc-lbl">Fluency Group</div></div>
+            <div class="stat-card"><div class="sc-num" id="statBusiness">0</div><div class="sc-lbl">Fluency Private</div></div>
+            <div class="stat-card"><div class="sc-num" id="statToday">0</div><div class="sc-lbl">Joined today</div></div>
+          </div>
+
+          <div id="dashState"></div>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+              <table class="data">
+                <thead>
+                  <tr>
+                    <th>Name</th><th>Age</th><th>WhatsApp</th><th>Email</th>
+                    <th>Level</th><th>Goal</th><th>Package</th><th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="dashTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Test Results panel -->
+        <div id="tabResults" class="tab-panel">
+          <div class="dash-tools" style="margin-bottom:18px;justify-content:flex-end;">
+            <input class="input" id="resSearch" placeholder="🔍 Search…" style="width:220px;" />
+            <button class="btn btn-ghost" id="resExport">⬇ Export CSV</button>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card"><div class="sc-num" id="statResTotal">0</div><div class="sc-lbl">Tests taken</div></div>
+            <div class="stat-card"><div class="sc-num" id="statResAvg">0%</div><div class="sc-lbl">Average score</div></div>
+            <div class="stat-card"><div class="sc-num" id="statResPass">0</div><div class="sc-lbl">Passed (≥60%)</div></div>
+            <div class="stat-card"><div class="sc-num" id="statResToday">0</div><div class="sc-lbl">Taken today</div></div>
+          </div>
+
+          <div id="resState"></div>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+              <table class="data">
+                <thead>
+                  <tr>
+                    <th>Student</th><th>Test</th><th>Score</th><th>%</th><th>Grade</th><th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="resTbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -91,5 +136,5 @@
   <script src="js/supabase-client.js"></script>
   <script src="js/main.js"></script>
   <script src="js/dashboard.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a065f016dcb8e1f0',t:'MTc4MDU2NTYyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
