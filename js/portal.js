@@ -61,6 +61,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutBtn) logoutBtn.style.display = "inline-flex";
     renderSessions();
     renderHomework();
+    renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
+    renderResource("miroList", "miro", "🧩 Open Miro board", "Board available", "Not ready yet");
+  }
+
+  /* Generic renderer for a per-unit link list (presentations, miro, …) */
+  function renderResource(containerId, field, btnLabel, readyText, pendingText) {
+    const wrap = document.getElementById(containerId);
+    if (!wrap) return;
+    const sessions = portal.sessions || [];
+    wrap.innerHTML = sessions.map(s => {
+      const link = s[field];
+      const has = link && link.trim() !== "";
+      const action = has
+        ? `<a href="${link}" target="_blank" rel="noopener" class="btn btn-primary">${btnLabel}</a>`
+        : `<span class="soon-pill">Coming soon</span>`;
+      return `
+        <div class="session-row ${has ? "" : "pending"}">
+          <div class="session-num">${s.unit}</div>
+          <div class="session-info">
+            <strong>${s.title}</strong>
+            <span>${has ? readyText : pendingText}</span>
+          </div>
+          <div class="session-action">${action}</div>
+        </div>`;
+    }).join("");
   }
 
   function renderSessions() {

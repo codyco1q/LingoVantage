@@ -53,21 +53,24 @@ window.LV_CONFIG = {
     username: "student",
     password: "lingo2026",
 
-    /* 12 units. Add the recording link as you record each session.
-       Leave recording as "" to show "Coming soon". */
+    /* 12 units. For each unit add the link as it's ready.
+       Leave a link as "" to show "Coming soon".
+         recording    = session recording (Google Drive, etc.)
+         presentation = Canva slideshow link
+         miro         = Miro board link */
     sessions: [
-      { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://drive.google.com/file/d/1d3T4hoiNN8Kv9K9elz-t2d8Hyx693cTR/view?usp=sharing" },
-      { unit: 2,  title: "Unit 2",  homeworkPage: 22,  recording: "https://drive.google.com/file/d/1FZe7eUOZlpdG6LgOU__-JW9SkLe8bjbC/view?usp=sharing" },
-      { unit: 3,  title: "Unit 3",  homeworkPage: 30,  recording: "https://drive.google.com/file/d/1Qh1pH219cDVtddkTV-ot7Q0EkP9sIbm4/view?usp=sharing" },
-      { unit: 4,  title: "Unit 4",  homeworkPage: 38,  recording: "" },
-      { unit: 5,  title: "Unit 5",  homeworkPage: 46,  recording: "" },
-      { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "" },
-      { unit: 7,  title: "Unit 7",  homeworkPage: 62,  recording: "" },
-      { unit: 8,  title: "Unit 8",  homeworkPage: 70,  recording: "" },
-      { unit: 9,  title: "Unit 9",  homeworkPage: 78,  recording: "" },
-      { unit: 10, title: "Unit 10", homeworkPage: 86,  recording: "" },
-      { unit: 11, title: "Unit 11", homeworkPage: 94,  recording: "" },
-      { unit: 12, title: "Unit 12", homeworkPage: 102, recording: "" }
+      { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://drive.google.com/file/d/1d3T4hoiNN8Kv9K9elz-t2d8Hyx693cTR/view?usp=sharing", presentation: "https://canva.link/aoazz9v0qv200o6", miro: "https://miro.com/app/board/uXjVHIQXrMg=/?share_link_id=357044481221" },
+      { unit: 2,  title: "Unit 2",  homeworkPage: 22,  recording: "https://drive.google.com/file/d/1FZe7eUOZlpdG6LgOU__-JW9SkLe8bjbC/view?usp=sharing", presentation: "https://canva.link/30qh10jgrca64d5", miro: "https://miro.com/app/board/uXjVHG7LkHM=/?share_link_id=142149045315" },
+      { unit: 3,  title: "Unit 3",  homeworkPage: 30,  recording: "https://drive.google.com/file/d/1Qh1pH219cDVtddkTV-ot7Q0EkP9sIbm4/view?usp=sharing", presentation: "https://canva.link/kx582x524amccoz", miro: "https://miro.com/app/board/uXjVHE6SYc0=/?share_link_id=366901220545" },
+      { unit: 4,  title: "Unit 4",  homeworkPage: 38,  recording: "https://drive.google.com/file/d/1mKtcWLVQkbCWjy10DxW83ikFBdolyzX5/view?usp=sharing", presentation: "https://canva.link/rwsl8v49xsz9vha", miro: "https://miro.com/app/board/uXjVHBzXdc8=/?share_link_id=557110337314" },
+      { unit: 5,  title: "Unit 5",  homeworkPage: 46,  recording: "", presentation: "", miro: "" },
+      { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "", presentation: "", miro: "" },
+      { unit: 7,  title: "Unit 7",  homeworkPage: 62,  recording: "", presentation: "", miro: "" },
+      { unit: 8,  title: "Unit 8",  homeworkPage: 70,  recording: "", presentation: "", miro: "" },
+      { unit: 9,  title: "Unit 9",  homeworkPage: 78,  recording: "", presentation: "", miro: "" },
+      { unit: 10, title: "Unit 10", homeworkPage: 86,  recording: "", presentation: "", miro: "" },
+      { unit: 11, title: "Unit 11", homeworkPage: 94,  recording: "", presentation: "", miro: "" },
+      { unit: 12, title: "Unit 12", homeworkPage: 102, recording: "", presentation: "", miro: "" }
     ]
   },
 

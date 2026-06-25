@@ -70,6 +70,8 @@
         <!-- Tabs -->
         <div class="tabs">
           <button class="tab-btn active" data-tab="tabSessions">🎥 Previous Sessions</button>
+          <button class="tab-btn" data-tab="tabPresentations">🖼️ Presentations</button>
+          <button class="tab-btn" data-tab="tabMiro">🧩 Miro Boards</button>
           <button class="tab-btn" data-tab="tabHomework">📚 Homework</button>
           <button class="tab-btn" data-tab="tabTests">📝 Tests</button>
         </div>
@@ -77,6 +79,18 @@
         <!-- Sessions panel -->
         <div id="tabSessions" class="tab-panel active">
           <div id="sessionsList" class="session-list"></div>
+        </div>
+
+        <!-- Presentations panel -->
+        <div id="tabPresentations" class="tab-panel">
+          <p style="color:var(--text-soft);margin-bottom:18px;">The Canva slideshow for each unit.</p>
+          <div id="presentationsList" class="session-list"></div>
+        </div>
+
+        <!-- Miro panel -->
+        <div id="tabMiro" class="tab-panel">
+          <p style="color:var(--text-soft);margin-bottom:18px;">The interactive Miro board for each unit.</p>
+          <div id="miroList" class="session-list"></div>
         </div>
 
         <!-- Homework panel -->
@@ -139,5 +153,5 @@
   <script src="js/tests-data.js"></script>
   <script src="js/portal-tests.js"></script>
   <script src="js/portal.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0e2cda449d02438',t:'MTc4MTg3NDkzNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a114cce94d10e1a2',t:'MTc4MjM5OTE5Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
