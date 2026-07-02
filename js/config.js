@@ -64,7 +64,7 @@ window.LV_CONFIG = {
       { unit: 3,  title: "Unit 3",  homeworkPage: 30,  recording: "https://drive.google.com/file/d/1Qh1pH219cDVtddkTV-ot7Q0EkP9sIbm4/view?usp=sharing", presentation: "https://canva.link/kx582x524amccoz", miro: "https://miro.com/app/board/uXjVHE6SYc0=/?share_link_id=366901220545" },
       { unit: 4,  title: "Unit 4",  homeworkPage: 38,  recording: "https://drive.google.com/file/d/1mKtcWLVQkbCWjy10DxW83ikFBdolyzX5/view?usp=sharing", presentation: "https://canva.link/rwsl8v49xsz9vha", miro: "https://miro.com/app/board/uXjVHBzXdc8=/?share_link_id=557110337314" },
       { unit: 5,  title: "Unit 5",  homeworkPage: 46,  recording: "https://drive.google.com/file/d/1eJCl-4fGqqk5tyIAhz9tpFbxreiXNr3V/view?usp=sharing", presentation: "https://canva.link/n5wpabu5p9g4mqp", miro: "https://miro.com/app/board/uXjVHAi0gZc=/?share_link_id=841858833574" },
-      { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "", presentation: "", miro: "" },
+      { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "https://drive.google.com/file/d/1ErJybEzg7GyYXBDbs5Un6dpV1eWIGtz7/view?usp=sharing", presentation: "https://canva.link/lxy7cxayec8ggv7", miro: "https://miro.com/app/board/uXjVH_HCllM=/?share_link_id=49946922519" },
       { unit: 7,  title: "Unit 7",  homeworkPage: 62,  recording: "", presentation: "", miro: "" },
       { unit: 8,  title: "Unit 8",  homeworkPage: 70,  recording: "", presentation: "", miro: "" },
       { unit: 9,  title: "Unit 9",  homeworkPage: 78,  recording: "", presentation: "", miro: "" },
