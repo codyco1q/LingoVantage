@@ -1,0 +1,134 @@
+/* =========================================================
+   LingoVantage — Homework Bank
+   Each unit = 10 auto-graded questions + 1 voice note (≤60s).
+   ---------------------------------------------------------
+   Question types:
+   1) Fill-in-the-blank (text):
+        { q, text, accept: [ ["am","m"] ] }
+      - "accept" is an array of BLANKS; each blank is a list of
+        acceptable answers. Multi-blank questions have >1 entry.
+      - Answers are matched case-insensitively, ignoring
+        punctuation & apostrophes (so "aren't" == "arent").
+      - 1 mark per question (all blanks must be correct).
+   2) Multiple choice: { q, text, options:[["a","…"]], answer:"a" }
+   3) Right/Wrong:     { q, text, type:"rw", answer:"RIGHT"|"WRONG" }
+
+   Set "available: false" to show a unit as "Coming soon".
+   ========================================================= */
+
+window.LV_HOMEWORK = [
+  {
+    unit: 1, title: "Unit 1 Homework", subtitle: "Hello!", available: true, voiceSeconds: 60,
+    voicePrompt: "Introduce yourself: say your name, where you're from, your nationality, and one thing about you. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"I ____ a student.\"", accept: [["am", "m"]] },
+      { q: 2,  text: "\"We ____ from the UK.\" (contracted negative)", accept: [["arent", "are not"]] },
+      { q: 3,  text: "A: \"____ you Berkay?\"  B: \"Yes, I ____.\"", accept: [["are"], ["am"]] },
+      { q: 4,  text: "\"He ____ Japanese.\"", accept: [["is", "s"]] },
+      { q: 5,  text: "\"They ____ American. They are Canadian.\" (negative)", accept: [["arent", "are not"]] },
+      { q: 6,  text: "\"My name's Harumi. I'm from Tokyo, in ____.\"", accept: [["japan"]] },
+      { q: 7,  text: "\"Hi, I'm Pablo. I'm from Puebla, in ____.\"", accept: [["mexico"]] },
+      { q: 8,  text: "\"I'm from Brazil. I'm ____.\" (nationality)", accept: [["brazilian"]] },
+      { q: 9,  text: "\"They are from Spain. They are ____.\" (nationality)", accept: [["spanish"]] },
+      { q: 10, text: "A: \"Who is ____?\"  B: \"He's my friend Lee.\" (this/these)", accept: [["this"]] }
+    ]
+  },
+  {
+    unit: 2, title: "Unit 2 Homework", subtitle: "All About Me", available: true, voiceSeconds: 60,
+    voicePrompt: "Describe your home and something you have (or don't have). Use possessive adjectives (my, his, her…). Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"Javier is from Barcelona. ____ home is in a nice part of the city.\"", accept: [["his"]] },
+      { q: 2,  text: "\"Sarah is from England. ____ town is near Hastings.\"", accept: [["her"]] },
+      { q: 3,  text: "Make it negative (contracted): \"It's a big flat.\" → \"____ a big flat.\"", accept: [["it isnt", "it is not"]] },
+      { q: 4,  text: "\"I ____ a phone in my bag, but I don't have a computer.\" (have)", accept: [["have", "ve"]] },
+      { q: 5,  text: "\"____ you ____ an umbrella at home?\" (auxiliary + verb)", accept: [["do"], ["have"]] },
+      { q: 6,  text: "Opposite adjective: \"My flat isn't small. It is very ____.\"", accept: [["big", "large"]] },
+      { q: 7,  text: "Plural: \"I have two ____ (watch) in my pocket.\"", accept: [["watches"]] },
+      { q: 8,  text: "Plural: \"Are these your ____ (knife)?\"", accept: [["knives"]] },
+      { q: 9,  text: "\"You use this to open a door or a lock. It is a ____.\"", accept: [["key", "keys"]] },
+      { q: 10, text: "Form fields: \"____: Sophia   /   ____: Taylor\" (First name / Surname)", accept: [["first name"], ["surname"]] }
+    ]
+  },
+  {
+    unit: 3, title: "Unit 3 Homework", subtitle: "Food and Drink", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about food: what you like and don't like, and what you eat at what time. Use frequency adverbs. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"I like rice, but I ____ like bread.\"", accept: [["dont", "do not"]] },
+      { q: 2,  text: "\"____ you eat meat?\"  \"Yes, we do.\"", accept: [["do"]] },
+      { q: 3,  text: "\"We ____ fruit every day.\"", accept: [["eat", "like"]] },
+      { q: 4,  text: "Put in order: \"sometimes / we / eat / at / fish / dinner\"", accept: [["we sometimes eat fish at dinner"]] },
+      { q: 5,  text: "\"My friends and I ____ have lunch at work. We always go to the café.\" (frequency)", accept: [["usually", "always"]] },
+      { q: 6,  text: "\"Apples, oranges, and bananas are all types of ____.\"", accept: [["fruit"]] },
+      { q: 7,  text: "\"A ____ is made with two pieces of bread, with cheese, meat, or salad.\"", accept: [["sandwich"]] },
+      { q: 8,  text: "\"02:15 is '(a) ____ past two'.\"", accept: [["quarter"]] },
+      { q: 9,  text: "\"____ time do you have breakfast?\"  \"At 7:30.\"", accept: [["what"]] },
+      { q: 10, text: "Café: \"Can I ____ a chocolate cake and a tea, please?\"", accept: [["have", "order", "get"]] }
+    ]
+  },
+  {
+    unit: 4, title: "Unit 4 Homework", subtitle: "My Life and My Family", available: true, voiceSeconds: 60,
+    voicePrompt: "Describe your family or a photo of them using 'this/these' and present simple verbs. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"Where ____ you live?\" (do/does/are)", accept: [["do"]] },
+      { q: 2,  text: "Put in order: \"study at / university / do you / what\"", accept: [["what university do you study at"]] },
+      { q: 3,  text: "\"Our daughter ____ (eat) rice every day.\"", accept: [["eats"]] },
+      { q: 4,  text: "Correct the spelling: \"My brother studys Spanish.\" → \"My brother ____ Spanish.\"", accept: [["studies"]] },
+      { q: 5,  text: "\"What time ____ you go to school?\" (do/does/is)", accept: [["do"]] },
+      { q: 6,  text: "Which is NOT possible? \"I meet my friends for coffee / to the gym / people at work.\"", accept: [["to the gym"]] },
+      { q: 7,  text: "Spell the number: \"75 = seventy-____\"", accept: [["five"]] },
+      { q: 8,  text: "Spell the number: \"48 = ____-eight\"", accept: [["forty"]] },
+      { q: 9,  text: "Plural: \"She is a woman, but they are ____.\"", accept: [["women"]] },
+      { q: 10, text: "\"____ are my friends.\" (This/These)", accept: [["these"]] }
+    ]
+  },
+  {
+    unit: 5, title: "Unit 5 Homework", subtitle: "Places", available: true, voiceSeconds: 60,
+    voicePrompt: "Describe a place you know (your town, a hotel, or a hostel) using 'there is / there are'. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"In Timbuktu, there ____ a large market.\" (is/are)", accept: [["is"]] },
+      { q: 2,  text: "\"There ____ any blankets or pillows on the beds.\" (isn't/aren't)", accept: [["arent", "are not"]] },
+      { q: 3,  text: "\"____ there a swimming pool at the hotel?\" (Is/Are)", accept: [["is"]] },
+      { q: 4,  text: "A: \"Are there any cafés near here?\"  B: \"Yes, there ____.\"", accept: [["are"]] },
+      { q: 5,  text: "Correct it: \"Is there a hotel on this street? Yes, there's.\" → \"Yes, there ____.\"", accept: [["is"]] },
+      { q: 6,  text: "Place: \"We go here to keep or withdraw our money.\"", accept: [["bank"]] },
+      { q: 7,  text: "Place: \"Children go here to learn and study with teachers.\"", accept: [["school"]] },
+      { q: 8,  text: "Unscramble (i p o w l l): \"You put your head on this in bed.\"", accept: [["pillow"]] },
+      { q: 9,  text: "Unscramble (w e r h o s): \"You stand under this to wash in the bathroom.\"", accept: [["shower"]] },
+      { q: 10, text: "\"There is a beautiful park near the hotel, ____ it is very small.\" (and/but)", accept: [["but"]] }
+    ]
+  },
+  {
+    unit: 6, title: "Unit 6 Homework", subtitle: "Work and Routines", available: true, voiceSeconds: 60,
+    voicePrompt: "Describe your daily routine and your job (or someone's job) with times. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"My sister ____ (not live) at home.\"", accept: [["doesnt live", "does not live"]] },
+      { q: 2,  text: "Correct it: \"She don't like cake.\" → \"____\"", accept: [["she doesnt like cake", "she does not like cake"]] },
+      { q: 3,  text: "A: \"____ your sister work in a bank?\"  B: \"No, she ____.\"", accept: [["does"], ["doesnt", "does not"]] },
+      { q: 4,  text: "Put in order: \"where / your brother / work\"", accept: [["where does your brother work"]] },
+      { q: 5,  text: "\"I sleep ____ 11:00 pm ____ 7:00 am.\" (for/from/to/until)", accept: [["from"], ["to"]] },
+      { q: 6,  text: "Job: \"She works in a hospital and helps sick people. She is a ____.\"", accept: [["doctor"]] },
+      { q: 7,  text: "Job: \"He drives people around a city. He is a ____.\"", accept: [["taxi driver"]] },
+      { q: 8,  text: "\"I always ____ home at 6:30 in the evening after work.\" (get/go/have)", accept: [["get"]] },
+      { q: 9,  text: "\"I usually have ____ at 8:00 am, and then I have a ____ at my desk.\"", accept: [["breakfast"], ["coffee"]] },
+      { q: 10, text: "\"I walk to work every day ____ my flat is near the office.\" (because/also)", accept: [["because"]] }
+    ]
+  },
+
+  /* ----- Units 7–12: coming soon (add questions later) ----- */
+  { unit: 7,  title: "Unit 7 Homework",  subtitle: "", available: false },
+  { unit: 8,  title: "Unit 8 Homework",  subtitle: "", available: false },
+  { unit: 9,  title: "Unit 9 Homework",  subtitle: "", available: false },
+  { unit: 10, title: "Unit 10 Homework", subtitle: "", available: false },
+  { unit: 11, title: "Unit 11 Homework", subtitle: "", available: false },
+  { unit: 12, title: "Unit 12 Homework", subtitle: "", available: false }
+];
+
+/* Shared answer-normalizer (used by portal + dashboard) */
+window.LV_normAnswer = function (s) {
+  return String(s == null ? "" : s)
+    .toLowerCase()
+    .replace(/[''`]/g, "")          // drop apostrophes: aren't -> arent
+    .replace(/[^a-z0-9 ]/g, " ")    // other punctuation -> space
+    .replace(/\s+/g, " ")
+    .trim();
+};

@@ -52,6 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (btn.dataset.tab === "tabTests" && typeof window.LV_initTests === "function") {
         window.LV_initTests();
       }
+      // Lazy-load the interactive Homework tab
+      if (btn.dataset.tab === "tabSubmit" && typeof window.LV_initHomework === "function") {
+        window.LV_initHomework();
+      }
     });
   });
 

@@ -58,5 +58,26 @@ window.LV_Supabase = (function () {
     return res.json();
   }
 
-  return { insert, select, selectWhere, ready: () => window.LV_supabaseReady() };
+  /* Upload a file (Blob) to a Storage bucket. Returns the public URL.
+     Requires the bucket to be PUBLIC (see README). */
+  async function uploadFile(bucket, path, blob, contentType) {
+    const c = cfg();
+    const res = await fetch(`${c.url}/storage/v1/object/${bucket}/${encodeURIComponent(path)}`, {
+      method: "POST",
+      headers: {
+        "apikey": c.anonKey,
+        "Authorization": "Bearer " + c.anonKey,
+        "Content-Type": contentType || "application/octet-stream",
+        "x-upsert": "true"
+      },
+      body: blob
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`Supabase upload failed (${res.status}): ${txt}`);
+    }
+    return `${c.url}/storage/v1/object/public/${bucket}/${encodeURIComponent(path)}`;
+  }
+
+  return { insert, select, selectWhere, uploadFile, ready: () => window.LV_supabaseReady() };
 })();

@@ -65,6 +65,7 @@
         <div class="tabs">
           <button class="tab-btn active" data-tab="tabRegs">👥 Registrations</button>
           <button class="tab-btn" data-tab="tabResults">📝 Test Results</button>
+          <button class="tab-btn" data-tab="tabHwSubs">📤 Homework</button>
         </div>
 
         <!-- Registrations panel -->
@@ -126,6 +127,46 @@
               </table>
             </div>
           </div>
+          <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px;">💡 Click any row to see the student's answers.</p>
+        </div>
+
+        <!-- Homework Submissions panel -->
+        <div id="tabHwSubs" class="tab-panel">
+          <div class="dash-tools" style="margin-bottom:18px;justify-content:flex-end;">
+            <input class="input" id="hwSearch" placeholder="🔍 Search…" style="width:220px;" />
+            <button class="btn btn-ghost" id="hwExport">⬇ Export CSV</button>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card"><div class="sc-num" id="statHwTotal">0</div><div class="sc-lbl">Submissions</div></div>
+            <div class="stat-card"><div class="sc-num" id="statHwStudents">0</div><div class="sc-lbl">Students</div></div>
+            <div class="stat-card"><div class="sc-num" id="statHwToday">0</div><div class="sc-lbl">Today</div></div>
+            <div class="stat-card"><div class="sc-num" id="statHwUnits">0</div><div class="sc-lbl">Units covered</div></div>
+          </div>
+
+          <div id="hwState"></div>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+              <table class="data">
+                <thead>
+                  <tr>
+                    <th>Student</th><th>Batch</th><th>Unit</th><th>Quiz</th><th>Voice</th><th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="hwTbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px;">💡 Click any row to read the full homework.</p>
+        </div>
+      </div>
+
+      <!-- Detail modal (used for test answers + homework) -->
+      <div id="dashModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+          <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+          <div id="modalBody"></div>
         </div>
       </div>
 
@@ -134,7 +175,9 @@
 
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/tests-data.js"></script>
+  <script src="js/homework-data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/dashboard.js"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a156737d5a1fe288',t:'MTc4MzA4NzU4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

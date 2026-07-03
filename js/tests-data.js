@@ -57,8 +57,62 @@ window.LV_TESTS = [
     ]
   },
 
+  {
+    id: "units-4-6",
+    name: "Units 4–6 Test",
+    subtitle: "My Life and My Family · Places · Work and Routines",
+    units: "4–6",
+    available: true,
+    timeMinutes: 15,
+
+    /* ---- PART A: multiple choice (answer = correct option key) ---- */
+    partA: [
+      /* Unit 4: Wh-questions, Common verbs, Family, Age */
+      { q: 1,  text: "\"Where ____ you live?\" \"I live in Málaga.\"", options: [["a","are"],["b","does"],["c","do"]], answer: "c" },
+      { q: 2,  text: "\"What ____ he study at university?\" \"He studies art.\"", options: [["a","do"],["b","does"],["c","is"]], answer: "b" },
+      { q: 3,  text: "My brother ____ in a large office in Cairo.", options: [["a","work"],["b","works"],["c","working"]], answer: "b" },
+      { q: 4,  text: "My father's sister is my ____.", options: [["a","daughter"],["b","cousin"],["c","aunt"]], answer: "c" },
+      { q: 5,  text: "How old ____ her children?", options: [["a","have"],["b","are"],["c","is"]], answer: "b" },
+      { q: 6,  text: "My sister is twenty-five. She ____ 25.", options: [["a","has"],["b","is"],["c","is having"]], answer: "b" },
+      { q: 7,  text: "This is a picture ____ my international family.", options: [["a","of"],["b","for"],["c","in"]], answer: "a" },
+
+      /* Unit 5: There is/are positive & negative, Quantifiers, Prepositions, Questions */
+      { q: 8,  text: "Timbuktu is a small town. There ____ a large market.", options: [["a","are"],["b","is"],["c","isn't"]], answer: "b" },
+      { q: 9,  text: "There are ____ shops here—only three or four.", options: [["a","a lot of"],["b","lots of"],["c","a few"]], answer: "c" },
+      { q: 10, text: "We can't stay there. There ____ any free rooms in the hotel.", options: [["a","isn't"],["b","aren't"],["c","not are"]], answer: "b" },
+      { q: 11, text: "I'm sorry, there ____ a swimming pool at the hostel.", options: [["a","not is"],["b","aren't"],["c","isn't"]], answer: "c" },
+      { q: 12, text: "\"____ there a supermarket near here?\" \"Yes, in the next street.\"", options: [["a","Is"],["b","Are"],["c","Do"]], answer: "a" },
+      { q: 13, text: "\"Are there ____ cafés near the station?\" \"No, there aren't.\"", options: [["a","a"],["b","any"],["c","one"]], answer: "b" },
+      { q: 14, text: "Our flat is great ____ it is in a nice part of town.", options: [["a","but"],["b","because"],["c","and"]], answer: "c" },
+
+      /* Unit 6: Present simple he/she/it negative & questions, Time linkers, Offers */
+      { q: 15, text: "Diana works in a shop, but she ____ work at night.", options: [["a","don't"],["b","doesn't"],["c","not"]], answer: "b" },
+      { q: 16, text: "Matteo is a waiter. He ____ work on Mondays.", options: [["a","doesn't"],["b","not works"],["c","doesn't works"]], answer: "a" },
+      { q: 17, text: "I sleep ____ eight hours every night.", options: [["a","until"],["b","for"],["c","from"]], answer: "b" },
+      { q: 18, text: "We watch TV ____ 3 o'clock in the morning, then we sleep.", options: [["a","for"],["b","until"],["c","from"]], answer: "b" },
+      { q: 19, text: "\"Would you ____ a cup of tea?\" \"Yes, please.\"", options: [["a","have"],["b","like"],["c","want"]], answer: "b" },
+      { q: 20, text: "A: \"I need to go to the shop.\" B: \"____ go with you.\"", options: [["a","I'll"],["b","I am"],["c","I can to"]], answer: "a" }
+    ],
+
+    /* ---- PART B: right / wrong (answer = "RIGHT" | "WRONG") ---- */
+    partB: [
+      /* Unit 4 */
+      { q: 21, text: "Where do you work?", answer: "RIGHT" },
+      { q: 22, text: "My brother teachs Spanish at a language school.", answer: "WRONG" }, // Correct: teaches
+      { q: 23, text: "She has 30 years old.", answer: "WRONG" }, // Correct: She is 30 years old
+      /* Unit 5 */
+      { q: 24, text: "There is a hotel on this street?", answer: "WRONG" }, // Correct: Is there a hotel...
+      { q: 25, text: "There aren't any blankets in the room.", answer: "RIGHT" },
+      { q: 26, text: "My flat is near the office, but there is a park nearby.", answer: "WRONG" }, // Correct: uses "and" for addition, not "but"
+      /* Unit 6 */
+      { q: 27, text: "Marcus doesn't meets many people in his job.", answer: "WRONG" }, // Correct: doesn't meet
+      { q: 28, text: "When does he get up in the morning?", answer: "RIGHT" },
+      { q: 29, text: "We go out to a café because the office coffee machine isn't very good.", answer: "RIGHT" },
+      { q: 30, text: "Would you like a piece of cake?", answer: "RIGHT" }
+    ]
+  },
+
   /* ----- Placeholders for the remaining tests (add later) ----- */
-  { id: "units-4-6",   name: "Units 4–6 Test",   subtitle: "Coming soon", units: "4–6",   available: false },
   { id: "units-7-9",   name: "Units 7–9 Test",   subtitle: "Coming soon", units: "7–9",   available: false },
   { id: "units-10-12", name: "Units 10–12 Test", subtitle: "Coming soon", units: "10–12", available: false }
 ];

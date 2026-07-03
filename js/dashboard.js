@@ -50,6 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const resExport = document.getElementById("resExport");
   if (resExport) resExport.addEventListener("click", exportResultsCSV);
 
+  // Homework submissions search + export
+  const hwSearch = document.getElementById("hwSearch");
+  if (hwSearch) hwSearch.addEventListener("input", () => filterHw(hwSearch.value));
+  const hwExport = document.getElementById("hwExport");
+  if (hwExport) hwExport.addEventListener("click", exportHwCSV);
+
+  // Modal close
+  const modalClose = document.getElementById("modalClose");
+  if (modalClose) modalClose.addEventListener("click", closeModal);
+  const overlay = document.getElementById("dashModal");
+  if (overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
   // Tabs
   document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -58,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
       if (btn.dataset.tab === "tabResults" && !LV_resultsLoaded) loadResults();
+      if (btn.dataset.tab === "tabHwSubs" && !LV_hwLoaded) loadHw();
     });
   });
 
@@ -69,13 +83,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* Refresh both tabs */
+/* Refresh all tabs */
 function loadData() {
   loadRegistrations();
   LV_resultsLoaded = false;
-  // if results tab is currently visible, reload it too
+  LV_hwLoaded = false;
   const rt = document.getElementById("tabResults");
   if (rt && rt.classList.contains("active")) loadResults();
+  const ht = document.getElementById("tabHwSubs");
+  if (ht && ht.classList.contains("active")) loadHw();
 }
 
 /* =========================================================
@@ -192,10 +208,10 @@ function renderResultsTable(rows) {
     tbody.innerHTML = '<tr><td colspan="6"><div class="dash-empty">No test results yet.</div></td></tr>';
     return;
   }
-  tbody.innerHTML = rows.map(r => {
+  tbody.innerHTML = rows.map((r, i) => {
     const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
     const pct = r.percent != null ? r.percent : "—";
-    return `<tr>
+    return `<tr class="clickable" data-res="${i}">
       <td>${esc(r.student_name)}</td>
       <td>${esc(r.test_name)}</td>
       <td>${esc(r.score)}/${esc(r.total_max)}</td>
@@ -204,6 +220,52 @@ function renderResultsTable(rows) {
       <td style="white-space:nowrap">${date}</td>
     </tr>`;
   }).join("");
+  // row click -> show answers (uses the currently displayed rows)
+  tbody.querySelectorAll("tr[data-res]").forEach(tr => {
+    tr.addEventListener("click", () => showResultAnswers(rows[+tr.dataset.res]));
+  });
+}
+
+/* ---- Modal: show a student's test answers with correct/wrong ---- */
+function showResultAnswers(r) {
+  const test = (window.LV_TESTS || []).find(t => t.id === r.test_id);
+  let ans = r.answers;
+  if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (e) { ans = {}; } }
+  ans = ans || {};
+
+  let html = `<h2 style="margin-bottom:4px;">${esc(r.student_name)}</h2>
+    <p style="color:var(--text-soft);margin-bottom:16px;">${esc(r.test_name)} · Score <b>${esc(r.score)}/${esc(r.total_max)}</b> (${r.percent}%) · Grade ${esc(r.grade)}</p>`;
+
+  if (!test) {
+    html += `<pre class="raw-json">${esc(JSON.stringify(ans, null, 2))}</pre>`;
+    openModal(html);
+    return;
+  }
+
+  const rowHtml = (num, questionText, studentVal, correctVal) => {
+    const ok = String(studentVal) === String(correctVal);
+    return `<div class="ans-row ${ok ? "ok" : "bad"}">
+      <div class="ans-q">${num}. ${esc(questionText)}</div>
+      <div class="ans-detail">
+        <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+        <span>Their answer: <b>${esc(studentVal ?? "—")}</b></span>
+        ${ok ? "" : `<span class="ans-correct">Correct: <b>${esc(correctVal)}</b></span>`}
+      </div>
+    </div>`;
+  };
+
+  html += `<h3 style="margin:18px 0 10px;">Part A — Multiple Choice</h3>`;
+  (test.partA || []).forEach(item => {
+    const chosen = ans.A ? ans.A[item.q] : undefined;
+    html += rowHtml(item.q, item.text, chosen, item.answer);
+  });
+  html += `<h3 style="margin:18px 0 10px;">Part B — Right or Wrong</h3>`;
+  (test.partB || []).forEach(item => {
+    const chosen = ans.B ? ans.B[item.q] : undefined;
+    html += rowHtml(item.q, item.text, chosen, item.answer);
+  });
+
+  openModal(html);
 }
 
 function gradeStyle(g) {
@@ -226,6 +288,152 @@ function exportResultsCSV() {
   if (!LV_results.length) return alert("No test results to export.");
   const cols = ["student_name", "test_name", "score", "total_max", "percent", "grade", "ip", "created_at"];
   downloadCSV(cols, LV_results, "lingovantage-test-results");
+}
+
+/* =========================================================
+   TAB 3 — HOMEWORK SUBMISSIONS
+   ========================================================= */
+let LV_hw = [];
+let LV_hwLoaded = false;
+
+async function loadHw() {
+  const state = document.getElementById("hwState");
+  if (!window.LV_Supabase || !window.LV_Supabase.ready()) {
+    state.innerHTML = '<div class="dash-empty">⚠️ Supabase is not configured yet.</div>';
+    return;
+  }
+  state.innerHTML = '<div class="dash-empty"><span class="spinner" style="border-top-color:var(--teal-400)"></span> Loading homework…</div>';
+  try {
+    LV_hw = await window.LV_Supabase.select("homework_submissions", { order: "created_at.desc" });
+    LV_hwLoaded = true;
+    renderHwStats(LV_hw);
+    renderHwTable(LV_hw);
+    state.innerHTML = "";
+  } catch (err) {
+    console.error(err);
+    state.innerHTML = '<div class="dash-empty">❌ Could not load homework.<br><small>' + (err.message || "") + '</small><br>Make sure the <b>homework_submissions</b> table exists (see README).</div>';
+  }
+}
+
+function renderHwStats(rows) {
+  const total = rows.length;
+  const students = new Set(rows.map(r => (r.student_name || "").toLowerCase().trim())).size;
+  const today = rows.filter(r => sameDay(r.created_at)).length;
+  const units = new Set(rows.map(r => r.unit)).size;
+  document.getElementById("statHwTotal").textContent = total;
+  document.getElementById("statHwStudents").textContent = students;
+  document.getElementById("statHwToday").textContent = today;
+  document.getElementById("statHwUnits").textContent = units;
+}
+
+function renderHwTable(rows) {
+  const tbody = document.getElementById("hwTbody");
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="dash-empty">No homework submitted yet.</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r, i) => {
+    const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
+    const unitLabel = r.unit_title ? r.unit_title : ("Unit " + esc(r.unit));
+    const quiz = (r.score != null && r.total_max != null) ? `${esc(r.score)}/${esc(r.total_max)}` : "—";
+    const voice = r.voice_url ? "🎙️ Yes" : "—";
+    return `<tr class="clickable" data-hw="${i}">
+      <td>${esc(r.student_name)}</td>
+      <td><span class="pill">${esc(r.batch)}</span></td>
+      <td>${esc(unitLabel)}</td>
+      <td>${quiz}</td>
+      <td>${voice}</td>
+      <td style="white-space:nowrap">${date}</td>
+    </tr>`;
+  }).join("");
+  tbody.querySelectorAll("tr[data-hw]").forEach(tr => {
+    tr.addEventListener("click", () => showHwContent(rows[+tr.dataset.hw]));
+  });
+}
+
+function showHwContent(r) {
+  const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
+  const unitLabel = r.unit_title ? r.unit_title : ("Unit " + r.unit);
+  const pct = r.percent != null ? r.percent : (r.total_max ? Math.round((r.score / r.total_max) * 100) : "—");
+
+  let html = `
+    <h2 style="margin-bottom:4px;">${esc(r.student_name)}</h2>
+    <p style="color:var(--text-soft);margin-bottom:16px;">${esc(r.batch)} · ${esc(unitLabel)} · ${date}</p>`;
+
+  // Voice note player
+  if (r.voice_url) {
+    html += `<h3 style="margin:6px 0 10px;">🎙️ Voice note</h3>
+      <audio controls src="${esc(r.voice_url)}" style="width:100%;margin-bottom:8px;"></audio>
+      <p style="margin-bottom:18px;"><a href="${esc(r.voice_url)}" target="_blank" rel="noopener" style="color:var(--teal-300);font-size:.88rem;">Open / download voice note ↗</a></p>`;
+  } else {
+    html += `<p style="color:var(--text-dim);margin-bottom:18px;">No voice note.</p>`;
+  }
+
+  // Quiz answers with correct/wrong
+  if (r.score != null && r.total_max != null) {
+    html += `<h3 style="margin:6px 0 10px;">Quiz — ${esc(r.score)}/${esc(r.total_max)} (${pct}%)</h3>`;
+    const hw = (window.LV_HOMEWORK || []).find(u => String(u.unit) === String(r.unit));
+    let ans = r.answers;
+    if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (e) { ans = {}; } }
+    ans = ans || {};
+    if (hw && hw.questions) {
+      const norm = window.LV_normAnswer || (s => String(s || "").toLowerCase().trim());
+      hw.questions.forEach(item => {
+        const chosen = ans[item.q];
+        let ok, chosenText, correctText;
+        if (item.accept) {
+          // fill-in-the-blank (possibly multi-blank)
+          const vals = Array.isArray(chosen) ? chosen : [chosen];
+          ok = item.accept.every((blank, bi) => blank.some(a => norm(a) === norm(vals[bi])));
+          chosenText = vals.map(v => v == null || v === "" ? "—" : v).join(" | ");
+          correctText = item.accept.map(blank => blank[0]).join(" | ");
+        } else {
+          ok = String(chosen) === String(item.answer);
+          chosenText = chosen == null ? "—" : chosen;
+          correctText = item.answer;
+        }
+        html += `<div class="ans-row ${ok ? "ok" : "bad"}">
+          <div class="ans-q">${item.q}. ${esc(item.text)}</div>
+          <div class="ans-detail">
+            <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+            <span>Their answer: <b>${esc(chosenText)}</b></span>
+            ${ok ? "" : `<span class="ans-correct">Accepted: <b>${esc(correctText)}</b></span>`}
+          </div>
+        </div>`;
+      });
+    } else {
+      html += `<pre class="raw-json">${esc(JSON.stringify(ans, null, 2))}</pre>`;
+    }
+  }
+
+  openModal(html);
+}
+
+function filterHw(term) {
+  term = term.toLowerCase().trim();
+  if (!term) return renderHwTable(LV_hw);
+  renderHwTable(LV_hw.filter(r => JSON.stringify(r).toLowerCase().includes(term)));
+}
+
+function exportHwCSV() {
+  if (!LV_hw.length) return alert("No homework to export.");
+  const cols = ["student_name", "batch", "unit", "unit_title", "score", "total_max", "percent", "voice_url", "created_at"];
+  downloadCSV(cols, LV_hw, "lingovantage-homework");
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+function openModal(html) {
+  const modal = document.getElementById("dashModal");
+  document.getElementById("modalBody").innerHTML = html;
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  const modal = document.getElementById("dashModal");
+  if (modal) modal.style.display = "none";
+  document.body.style.overflow = "";
 }
 
 /* =========================================================

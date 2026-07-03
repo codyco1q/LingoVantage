@@ -28,7 +28,9 @@ lingovantage/
 │   ├── dashboard.js    # Admin dashboard logic
 │   ├── portal.js       # Student portal login + tabs (sessions/homework)
 │   ├── portal-tests.js # Tests tab: 1-attempt/IP, grading, save results
-│   └── tests-data.js   # 🔧 EDIT HERE: test questions + answer keys
+│   ├── tests-data.js   # 🔧 EDIT HERE: test questions + answer keys
+│   ├── portal-homework.js # Homework tab: quiz + voice recorder + upload
+│   └── homework-data.js   # 🔧 EDIT HERE: homework questions per unit
 │
 ├── assets/             # Logo + favicons
 ├── netlify.toml        # Netlify config (pretty URLs + headers)
@@ -134,6 +136,62 @@ Grading guide: ≥90% = A · ≥80% = B · ≥70% = C · ≥60% = D · below = n
 > same Wi-Fi share an IP, and mobile data IPs can change. It stops casual
 > retakes but isn't bulletproof. For strict per-student limits you'd need
 > per-student logins (a future upgrade).
+
+#### Homework submissions table (Student Portal → Submit Homework)
+Interactive homework = **10 auto-graded questions + a 60-second voice note** per unit.
+Create the table + a Storage bucket for the voice notes.
+
+**1. Table** — run in the Supabase SQL Editor:
+
+```sql
+create table if not exists homework_submissions (
+  id           uuid primary key default gen_random_uuid(),
+  created_at   timestamptz default now(),
+  student_name text,
+  batch        text,
+  unit         int4,        -- unit number (1–12)
+  unit_title   text,
+  ip           text,
+  score        int4,        -- quiz marks earned
+  total_max    int4,        -- quiz marks possible (10)
+  percent      int4,
+  answers      jsonb,       -- the student's quiz answers
+  voice_url    text         -- public URL of the uploaded voice note
+);
+
+alter table homework_submissions enable row level security;
+
+create policy "hw public insert" on homework_submissions
+  for insert to anon with check (true);
+create policy "hw public select" on homework_submissions
+  for select to anon using (true);
+```
+
+**2. Storage bucket for voice notes** (in Supabase → **Storage**):
+- Click **New bucket** → name it exactly **`voicenotes`** → tick **Public bucket** → Create.
+- Then allow uploads/reads with the anon key (SQL Editor):
+
+```sql
+-- allow anyone to upload a voice note
+create policy "voicenotes insert" on storage.objects
+  for insert to anon with check (bucket_id = 'voicenotes');
+-- allow reading the files (bucket is public anyway)
+create policy "voicenotes read" on storage.objects
+  for select to anon using (bucket_id = 'voicenotes');
+```
+
+**How it works**
+- Student picks a unit → enters name + batch → answers 10 questions → records a
+  voice note (≤60s, with playback + re-record) → submits.
+- Quiz is **auto-graded instantly**; the voice note uploads to the `voicenotes` bucket.
+- **One attempt per IP per unit.**
+- In the **admin dashboard → 📤 Homework** tab: every submission shows the student,
+  unit, quiz score, and whether a voice note exists. **Click any row** to see their
+  quiz answers (✓/✗ marked) and **play the voice note** right there.
+- Test-result rows are clickable too (full answer sheet).
+
+**Adding more units:** open `js/homework-data.js`, fill a unit's `questions`
+(10 items) + `voicePrompt`, and set `available: true`.
 
 ### 3) Deploy to Netlify
 - Push this folder to GitHub.

@@ -614,6 +614,60 @@ table.data .pill { font-size: .75rem; padding: 4px 10px; border-radius: 100px; b
 }
 .blank-input:focus { outline: none; border-bottom-color: var(--teal-300); background: var(--surface-2); }
 
+/* Dashboard — clickable rows */
+table.data tr.clickable { cursor: pointer; }
+table.data tr.clickable:hover td { background: rgba(34,211,196,.06); }
+
+/* Dashboard — detail modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(4,7,14,.72); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 16px; overflow-y: auto;
+}
+.modal-box {
+  position: relative; width: 100%; max-width: 640px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow);
+  animation: fadeUp .3s ease;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 14px; width: 34px; height: 34px;
+  border-radius: 9px; border: 1px solid var(--border); background: var(--bg-soft);
+  color: var(--text-soft); font-size: 1rem; cursor: pointer; transition: .18s;
+}
+.modal-close:hover { color: var(--text); border-color: var(--teal-500); }
+.raw-json { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; overflow-x: auto; font-size: .85rem; color: var(--text-soft); white-space: pre-wrap; }
+
+/* Test answer rows in modal */
+.ans-row { padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 8px; border: 1px solid var(--border); background: var(--bg-soft); }
+.ans-row.ok  { border-color: rgba(52,211,153,.3); }
+.ans-row.bad { border-color: rgba(248,113,113,.35); }
+.ans-q { font-weight: 600; font-size: .92rem; margin-bottom: 6px; }
+.ans-detail { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: .88rem; color: var(--text-soft); }
+.ans-badge { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font-weight: 800; flex-shrink: 0; }
+.ans-badge.ok  { background: rgba(52,211,153,.16); color: #34d399; }
+.ans-badge.bad { background: rgba(248,113,113,.16); color: #f87171; }
+.ans-correct { color: var(--teal-300); }
+
+/* Fill-in-the-blank inputs (homework) */
+.blank-inputs { display: flex; flex-wrap: wrap; gap: 10px; }
+.hw-blank { max-width: 260px; }
+
+/* Voice recorder (portal homework) */
+.recorder { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; }
+.rec-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rec-timer { margin-left: auto; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--teal-300); font-size: 1.1rem; }
+.rec-status { color: var(--text-soft); font-size: .9rem; margin-top: 12px; }
+#recStart:disabled, #recStop:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Homework content in modal */
+.hw-content-box {
+  background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px 18px; white-space: pre-wrap; line-height: 1.7; color: var(--text);
+  max-height: 55vh; overflow-y: auto;
+}
+
 /* ---------- 16. ANIMATIONS ---------- */
 @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
