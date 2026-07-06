@@ -113,9 +113,24 @@ window.LV_HOMEWORK = [
       { q: 10, text: "\"I walk to work every day ____ my flat is near the office.\" (because/also)", accept: [["because"]] }
     ]
   },
+  {
+    unit: 7, title: "Unit 7 Homework", subtitle: "Shopping and Fashion", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about your favorite clothes or a recent shopping trip. Describe colors, prices, and what you or others are wearing using demonstratives (this/that/these/those). Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"Excuse me, how much is ___________ lamp over there?\" (pointing to a lamp far away)", accept: [["that"]] },
+      { q: 2,  text: "\"I love ___________ flowers here in my hand.\"", accept: [["these"]] },
+      { q: 3,  text: "\"This is ___________ phone.\" (belonging to Kate)", options: [["a","Kates'"],["b","Kate's"],["c","Kates"]], answer: "b" },
+      { q: 4,  text: "\"The ___________ lesson starts at nine.\" (belonging to two or more girls)", options: [["a","girl's"],["b","girls'"],["c","girls"]], answer: "b" },
+      { q: 5,  text: "\"My ___________ are dark blue.\"", options: [["a","brother's jeans"],["b","jeans of my brother"],["c","brother jeans"]], answer: "a" },
+      { q: 6,  text: "\"You use a ___________ to carry your clothes when you travel.\"", accept: [["suitcase", "bag"]] },
+      { q: 7,  text: "Write the price in words as spoken: \"€13.50\" → \"___________\"", accept: [["thirteen euros fifty", "thirteen fifty"]] },
+      { q: 8,  text: "\"He is wearing a light green shirt and dark blue ___________.\"", accept: [["trousers", "jeans", "shoes"]] },
+      { q: 9,  text: "Complete the opposite pair: \"light blue\" ↔ \"___________ blue\"", accept: [["dark"]] },
+      { q: 10, text: "Rewrite with punctuation (commas/full stops): \"I need to buy a bag a lamp and a chair\" → \"___________\"", accept: [["i need to buy a bag a lamp and a chair"]] }
+    ]
+  },
 
-  /* ----- Units 7–12: coming soon (add questions later) ----- */
-  { unit: 7,  title: "Unit 7 Homework",  subtitle: "", available: false },
+  /* ----- Units 8–12: coming soon (add questions later) ----- */
   { unit: 8,  title: "Unit 8 Homework",  subtitle: "", available: false },
   { unit: 9,  title: "Unit 9 Homework",  subtitle: "", available: false },
   { unit: 10, title: "Unit 10 Homework", subtitle: "", available: false },
