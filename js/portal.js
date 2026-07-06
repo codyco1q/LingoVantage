@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSessions();
     renderHomework();
     renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
-    renderResource("miroList", "miro", "🧩 Open Miro board", "Board available", "Not ready yet");
+    renderResource("miroList", "mindmap", "🧩 Open mind map", "Mind map available", "Not ready yet");
   }
 
   /* Generic renderer for a per-unit link list (presentations, miro, …) */
