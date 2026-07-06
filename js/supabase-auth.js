@@ -75,12 +75,15 @@ window.LV_Auth = (function () {
     return s ? s.access_token : null;
   }
 
-  /* ---- Look up this user's profile (approved flag, name) ---- */
+  /* ---- Look up this user's profile (approved flag, name) ----
+     Uses the anon apikey for the read so it matches the
+     "to anon" RLS policy (a logged-in user's JWT has role
+     'authenticated', which the anon-only policy would block). */
   async function getProfile() {
     const u = currentUser();
     if (!u) return null;
     const res = await fetch(`${rest()}/student_profiles?id=eq.${u.id}&select=*`, {
-      headers: { "apikey": apikey(), "Authorization": "Bearer " + (accessToken() || apikey()) }
+      headers: { "apikey": apikey(), "Authorization": "Bearer " + apikey() }
     });
     if (!res.ok) return null;
     const rows = await res.json();
