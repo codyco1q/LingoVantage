@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("dashLoginForm");
   const dashMain = document.getElementById("dashMain");
   const loginWrap = document.getElementById("dashLoginWrap");
+  const logoutBtn = document.getElementById("dashLogout");
 
   // Already authenticated this session?
   if (sessionStorage.getItem("lv_dash_auth") === "1") {
@@ -32,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const logoutBtn = document.getElementById("dashLogout");
   if (logoutBtn) logoutBtn.addEventListener("click", () => {
     sessionStorage.removeItem("lv_dash_auth");
     location.reload();

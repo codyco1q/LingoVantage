@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginWrap = document.getElementById("portalLoginWrap");
   const main = document.getElementById("portalMain");
   const loginForm = document.getElementById("portalLoginForm");
+  const logoutBtn = document.getElementById("portalLogout");
 
   /* Already logged in this session? */
   if (sessionStorage.getItem("lv_portal_auth") === "1") {
@@ -35,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const logoutBtn = document.getElementById("portalLogout");
   if (logoutBtn) logoutBtn.addEventListener("click", () => {
     sessionStorage.removeItem("lv_portal_auth");
     location.reload();
