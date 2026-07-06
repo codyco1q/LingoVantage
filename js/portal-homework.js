@@ -1,16 +1,10 @@
 /* =========================================================
    LingoVantage — Student Portal: Homework (interactive)
    Per unit = 10 auto-graded questions + 1 voice note (≤60s).
-   - Name + Batch required before starting
+   - Name auto-fills from login; Batch required
    - One attempt per IP per unit (checked against Supabase)
    - Records audio via MediaRecorder, uploads to Supabase Storage
    - Auto-grades quiz, saves everything to "homework_submissions"
-   - Returning students see their saved result
-
-   Supabase table: homework_submissions (see README)
-     id, created_at, student_name, batch, unit, unit_title, ip,
-     score, total_max, percent, answers jsonb, voice_url text
-   Storage bucket: "voicenotes" (public)
    ========================================================= */
 
 (function () {
@@ -116,17 +110,19 @@
     const view = document.getElementById("hwView");
     document.getElementById("hwList").style.display = "none";
     view.style.display = "block";
+    const loggedName = (typeof sessionStorage !== "undefined") ? (sessionStorage.getItem("lv_portal_name") || "") : "";
+    const nameLocked = loggedName.trim().length >= 2;
     view.innerHTML = `
       <button class="btn btn-ghost" id="hwBack" style="margin-bottom:20px;">← Back</button>
       <div class="form-card" style="max-width:480px;margin:0 auto;">
         <div style="text-align:center;font-size:2.2rem;margin-bottom:8px;">📤</div>
         <h2 style="text-align:center;margin-bottom:6px;">${esc(u.title)}</h2>
-        <p style="color:var(--text-soft);text-align:center;margin-bottom:20px;">Enter your details to begin. One attempt only.</p>
+        <p style="color:var(--text-soft);text-align:center;margin-bottom:20px;">Confirm your details to begin. One attempt only.</p>
         <div id="hwNameAlert" class="alert"></div>
         <form id="hwNameForm">
           <div class="form-row">
             <label>Your full name <span class="req">*</span></label>
-            <input class="input" type="text" id="hwName" placeholder="e.g. Ahmed Mohamed" autocomplete="name" />
+            <input class="input" type="text" id="hwName" placeholder="e.g. Ahmed Mohamed" autocomplete="name" value="${esc(loggedName)}" ${nameLocked ? "readonly" : ""}/>
           </div>
           <div class="form-row">
             <label>Batch <span class="req">*</span></label>
@@ -179,7 +175,6 @@
         });
         html += `</div>`;
       } else if (item.accept) {
-        // Fill-in-the-blank: one input per blank
         html += `<div class="blank-inputs">`;
         item.accept.forEach((blank, bi) => {
           const ph = item.accept.length > 1 ? `Answer ${bi + 1}` : "Your answer";
@@ -190,7 +185,6 @@
       html += `</div>`;
     });
 
-    // Voice note section
     html += `
       <h3 style="margin:26px 0 12px;">🎙️ Voice note <span style="color:var(--text-dim);font-weight:500;">(up to ${u.voiceSeconds || 60}s)</span></h3>
       <p style="color:var(--text-soft);margin-bottom:14px;">${esc(u.voicePrompt || "Record your spoken answer.")}</p>
@@ -288,7 +282,6 @@
     const form = document.getElementById("hwQuizForm");
     const alertBox = document.getElementById("hwAlert");
 
-    // require all questions answered
     let missing = 0;
     u.questions.forEach(i => {
       if (i.accept) {
@@ -311,12 +304,10 @@
       return;
     }
 
-    // grade
     const norm = window.LV_normAnswer || (s => String(s || "").toLowerCase().trim());
     let score = 0; const answers = {};
     u.questions.forEach(i => {
       if (i.accept) {
-        // fill-in-the-blank: every blank must match one of its accepted answers
         const vals = i.accept.map((blank, bi) => form.querySelector(`input[name="q${i.q}_${bi}"]`).value.trim());
         answers[i.q] = vals.length === 1 ? vals[0] : vals;
         const allOk = i.accept.every((blank, bi) => blank.some(a => norm(a) === norm(vals[bi])));
@@ -334,7 +325,6 @@
     btn.disabled = true; const orig = btn.innerHTML;
     btn.innerHTML = '<span class="spinner"></span> Uploading…';
 
-    // upload voice note
     let voiceUrl = "";
     if (sbReady) {
       try {
