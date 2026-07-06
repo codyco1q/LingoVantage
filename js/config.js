@@ -44,7 +44,7 @@ window.LV_CONFIG = {
 
   /* ---- Simple dashboard password (frontend gate only) ----
      For real security use Supabase Auth + RLS. This is a light gate. */
-  dashboardPassword: "lingo2026",
+  dashboardPassword: "lingovantageadmin",
 
   /* ---- Student Portal (current students area) ----
      Shared fixed credentials for all current students.
