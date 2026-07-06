@@ -72,8 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById(btn.dataset.tab).classList.add("active");
       if (btn.dataset.tab === "tabResults" && !LV_resultsLoaded) loadResults();
       if (btn.dataset.tab === "tabHwSubs" && !LV_hwLoaded) loadHw();
+      if (btn.dataset.tab === "tabStudents" && !LV_stuLoaded) loadStudents();
     });
   });
+
+  // Student accounts search
+  const stuSearch = document.getElementById("stuSearch");
+  if (stuSearch) stuSearch.addEventListener("input", () => filterStudents(stuSearch.value));
 
   function showDashboard() {
     loginWrap.style.display = "none";
@@ -88,10 +93,13 @@ function loadData() {
   loadRegistrations();
   LV_resultsLoaded = false;
   LV_hwLoaded = false;
+  LV_stuLoaded = false;
   const rt = document.getElementById("tabResults");
   if (rt && rt.classList.contains("active")) loadResults();
   const ht = document.getElementById("tabHwSubs");
   if (ht && ht.classList.contains("active")) loadHw();
+  const st = document.getElementById("tabStudents");
+  if (st && st.classList.contains("active")) loadStudents();
 }
 
 /* =========================================================
@@ -419,6 +427,84 @@ function exportHwCSV() {
   if (!LV_hw.length) return alert("No homework to export.");
   const cols = ["student_name", "batch", "unit", "unit_title", "score", "total_max", "percent", "voice_url", "created_at"];
   downloadCSV(cols, LV_hw, "lingovantage-homework");
+}
+
+/* =========================================================
+   TAB 4 — STUDENT ACCOUNTS (Supabase Auth + approval)
+   Reads the "student_profiles" table. Students sign up
+   themselves; you approve/revoke them here.
+   ========================================================= */
+let LV_students = [];
+let LV_stuLoaded = false;
+
+async function loadStudents() {
+  const state = document.getElementById("stuState");
+  if (!window.LV_Supabase || !window.LV_Supabase.ready()) {
+    state.innerHTML = '<div class="dash-empty">⚠️ Supabase is not configured yet.</div>';
+    return;
+  }
+  state.innerHTML = '<div class="dash-empty"><span class="spinner" style="border-top-color:var(--teal-400)"></span> Loading student accounts…</div>';
+  try {
+    LV_students = await window.LV_Supabase.select("student_profiles", { order: "created_at.desc" });
+    LV_stuLoaded = true;
+    renderStudents(LV_students);
+    state.innerHTML = "";
+  } catch (err) {
+    console.error(err);
+    state.innerHTML = '<div class="dash-empty">❌ Could not load student accounts.<br><small>' + (err.message || "") + '</small><br>Make sure the <b>student_profiles</b> table exists (see README).</div>';
+  }
+}
+
+function renderStudentStats(rows) {
+  const total = rows.length;
+  const approved = rows.filter(r => r.approved === true).length;
+  const pending = total - approved;
+  const today = rows.filter(r => sameDay(r.created_at)).length;
+  document.getElementById("statStuTotal").textContent = total;
+  document.getElementById("statStuApproved").textContent = approved;
+  document.getElementById("statStuPending").textContent = pending;
+  document.getElementById("statStuToday").textContent = today;
+}
+
+function renderStudents(rows) {
+  renderStudentStats(rows);
+  const tbody = document.getElementById("stuTbody");
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="dash-empty">No student accounts yet.</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r, i) => {
+    const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : "—";
+    const approved = r.approved === true;
+    const btn = `<button class="btn ${approved ? "btn-ghost" : "btn-primary"}" data-toggle="${i}" style="padding:6px 14px;font-size:.82rem;">${approved ? "Revoke" : "Approve"}</button>`;
+    return `<tr>
+      <td>${esc(r.full_name)}</td>
+      <td>${esc(r.email)}</td>
+      <td>${approved ? '<span style="color:var(--success)">● Approved</span>' : '<span style="color:var(--warn)">● Pending</span>'}</td>
+      <td style="white-space:nowrap">${date}</td>
+      <td>${btn}</td>
+    </tr>`;
+  }).join("");
+  tbody.querySelectorAll("[data-toggle]").forEach(b => {
+    b.addEventListener("click", () => toggleStudent(rows[+b.dataset.toggle]));
+  });
+}
+
+async function toggleStudent(s) {
+  const newApproved = s.approved !== true; // flip
+  try {
+    await window.LV_Supabase.update("student_profiles", `id=eq.${encodeURIComponent(s.id)}`, { approved: newApproved });
+    s.approved = newApproved;
+    renderStudents(LV_students);
+  } catch (err) {
+    alert("Could not update: " + (err.message || ""));
+  }
+}
+
+function filterStudents(term) {
+  term = term.toLowerCase().trim();
+  if (!term) return renderStudents(LV_students);
+  renderStudents(LV_students.filter(r => JSON.stringify(r).toLowerCase().includes(term)));
 }
 
 /* =========================================================

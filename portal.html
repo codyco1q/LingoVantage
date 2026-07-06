@@ -40,20 +40,62 @@
         <div class="form-card">
           <div style="text-align:center;font-size:2.4rem;margin-bottom:8px;">🎓</div>
           <h2 style="margin-bottom:6px;text-align:center;">Student Portal</h2>
-          <p style="color:var(--text-soft);margin-bottom:20px;text-align:center;">Log in to access your session recordings and homework.</p>
+          <p style="color:var(--text-soft);margin-bottom:20px;text-align:center;">Sign in with your email to access your lessons.</p>
+
+          <!-- Auth mode switch -->
+          <div class="auth-switch">
+            <button type="button" class="auth-switch-btn active" data-mode="login">Log in</button>
+            <button type="button" class="auth-switch-btn" data-mode="signup">Sign up</button>
+          </div>
+
           <div id="portalLoginErr" class="alert"></div>
+
+          <!-- LOGIN form -->
           <form id="portalLoginForm">
             <div class="form-row">
-              <label>Username</label>
-              <input class="input" type="text" id="portalUser" placeholder="username" autocomplete="username" />
+              <label>Email</label>
+              <input class="input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
             </div>
             <div class="form-row">
               <label>Password</label>
-              <input class="input" type="password" id="portalPass" placeholder="••••••••" autocomplete="current-password" />
+              <input class="input" type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
             </div>
             <button class="btn btn-primary btn-block btn-lg" type="submit">Log in →</button>
+            <p class="form-note"><a href="#" id="forgotLink">Forgot your password?</a></p>
           </form>
-          <p class="form-note">For current LingoVantage students. Don't have access? <a href="#" data-link="whatsapp">Message us on WhatsApp</a>.</p>
+
+          <!-- SIGNUP form -->
+          <form id="portalSignupForm" style="display:none;">
+            <div class="form-row">
+              <label>Full name</label>
+              <input class="input" type="text" id="suName" placeholder="e.g. Ahmed Mohamed" autocomplete="name" />
+            </div>
+            <div class="form-row">
+              <label>Email</label>
+              <input class="input" type="email" id="suEmail" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="form-row">
+              <label>Password</label>
+              <input class="input" type="password" id="suPass" placeholder="Choose a password (6+ characters)" autocomplete="new-password" />
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Create account →</button>
+            <p class="form-note">After signing up, your account needs to be approved by your teacher before you can log in.</p>
+          </form>
+
+          <p class="form-note" style="margin-top:14px;">Need help? <a href="#" data-link="whatsapp">Message us on WhatsApp</a>.</p>
+        </div>
+      </div>
+
+      <!-- PENDING APPROVAL screen -->
+      <div id="portalPending" class="dash-login" style="display:none;">
+        <div class="form-card success-screen">
+          <div class="check" style="border-color:var(--warn);color:var(--warn);background:rgba(251,191,36,.12);">⏳</div>
+          <h2 class="result-title">Account pending approval</h2>
+          <p class="result-desc">Thanks for signing up! Your teacher needs to approve your account before you can access the portal. We'll let you know once you're in.</p>
+          <div class="result-actions" style="margin-top:20px;">
+            <a href="#" data-link="whatsapp" class="btn btn-whatsapp">💬 Contact us on WhatsApp</a>
+            <button class="btn btn-ghost" id="pendingLogout">Back to login</button>
+          </div>
         </div>
       </div>
 
@@ -62,7 +104,7 @@
         <div class="dash-head">
           <div>
             <span class="eyebrow" style="display:inline-block;color:var(--teal-400);background:rgba(34,211,196,.08);border:1px solid rgba(34,211,196,.25);padding:6px 14px;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Student Portal</span>
-            <h2 style="font-size:2rem;margin-top:12px;">Welcome back! 👋</h2>
+            <h2 id="portalGreeting" style="font-size:2rem;margin-top:12px;">Welcome back! 👋</h2>
             <p style="color:var(--text-soft);">Your session recordings and homework, all in one place.</p>
           </div>
         </div>
@@ -158,10 +200,11 @@
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/supabase-auth.js"></script>
   <script src="js/tests-data.js"></script>
   <script src="js/portal-tests.js"></script>
   <script src="js/homework-data.js"></script>
   <script src="js/portal-homework.js"></script>
   <script src="js/portal.js"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16f63789a821f97',t:'MTc4MzM0OTA3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -44,20 +44,21 @@ window.LV_CONFIG = {
 
   /* ---- Simple dashboard password (frontend gate only) ----
      For real security use Supabase Auth + RLS. This is a light gate. */
-  dashboardPassword: "lingovantageadmin",
+  dashboardPassword: "lingo2026",
 
-  /* ---- Student Portal (current students area) ----
-     Shared fixed credentials for all current students.
-     Change these and re-share with your students any time. */
+  /* ---- Student Portal content (current students area) ----
+     NOTE: Logins are now handled by Supabase Auth (email + password
+     with teacher approval) — see js/supabase-auth.js. The
+     username/password below are kept ONLY as an optional master
+     login is NOT used anymore; the "sessions" list below still
+     powers the portal's unit content (recordings/slides/etc). */
   studentPortal: {
-    username: "student",
-    password: "lingo2026",
 
     /* 12 units. For each unit add the link as it's ready.
        Leave a link as "" to show "Coming soon".
          recording    = session recording (Google Drive, etc.)
          presentation = Canva slideshow link
-         mindmap      = Mind Map link */
+         mindmap      = Mind map link */
     sessions: [
       { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://drive.google.com/file/d/1d3T4hoiNN8Kv9K9elz-t2d8Hyx693cTR/view?usp=sharing", presentation: "https://canva.link/aoazz9v0qv200o6", mindmap: "https://miro.com/app/board/uXjVHIQXrMg=/?share_link_id=357044481221" },
       { unit: 2,  title: "Unit 2",  homeworkPage: 22,  recording: "https://drive.google.com/file/d/1FZe7eUOZlpdG6LgOU__-JW9SkLe8bjbC/view?usp=sharing", presentation: "https://canva.link/30qh10jgrca64d5", mindmap: "https://miro.com/app/board/uXjVHG7LkHM=/?share_link_id=142149045315" },

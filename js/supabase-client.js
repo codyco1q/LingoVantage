@@ -79,5 +79,21 @@ window.LV_Supabase = (function () {
     return `${c.url}/storage/v1/object/public/${bucket}/${encodeURIComponent(path)}`;
   }
 
-  return { insert, select, selectWhere, uploadFile, ready: () => window.LV_supabaseReady() };
+  /* Update rows matching a PostgREST filter. Returns updated record(s).
+     e.g. update("student_profiles", "id=eq.<uuid>", { approved: true }) */
+  async function update(table, filter, patch) {
+    const c = cfg();
+    const res = await fetch(`${c.url}/rest/v1/${table}?${filter}`, {
+      method: "PATCH",
+      headers: headers(),
+      body: JSON.stringify(patch)
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`Supabase update failed (${res.status}): ${txt}`);
+    }
+    return res.json();
+  }
+
+  return { insert, select, selectWhere, uploadFile, update, ready: () => window.LV_supabaseReady() };
 })();

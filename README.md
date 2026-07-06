@@ -137,6 +137,56 @@ Grading guide: ≥90% = A · ≥80% = B · ≥70% = C · ≥60% = D · below = n
 > retakes but isn't bulletproof. For strict per-student limits you'd need
 > per-student logins (a future upgrade).
 
+#### Student accounts (Supabase Auth + approval) 🔐
+Each student signs up with their **own email + password** (real, hashed by
+Supabase Auth). They can't enter the portal until **you approve** them in the
+dashboard — and you can revoke anyone instantly if they share access.
+
+**1. Turn on Email auth**
+- Supabase → **Authentication → Providers → Email** → make sure it's **enabled**.
+- For the smoothest student experience you can turn **"Confirm email" OFF**
+  (Authentication → Providers → Email → uncheck *Confirm email*). Then approval
+  is the only gate. If you leave it ON, students must click a confirmation link
+  in their inbox *and* be approved by you.
+
+**2. Create the profiles table** (holds the approved flag) — run in SQL Editor:
+
+```sql
+create table if not exists student_profiles (
+  id         uuid primary key,          -- matches the auth user id
+  created_at timestamptz default now(),
+  email      text,
+  full_name  text,
+  approved   boolean default false
+);
+
+alter table student_profiles enable row level security;
+
+-- portal can read a profile to check the approved flag
+create policy "profiles public select" on student_profiles
+  for select to anon using (true);
+-- a new signup can create its own profile row
+create policy "profiles public insert" on student_profiles
+  for insert to anon with check (true);
+-- dashboard approves / revokes
+create policy "profiles public update" on student_profiles
+  for update to anon using (true) with check (true);
+```
+
+**How it works**
+- Portal shows **Log in / Sign up** tabs. New students sign up (name + email +
+  password) → they see a "pending approval" screen.
+- In the dashboard → **🔑 Student Accounts** tab: you see everyone, with
+  **Approve** / **Revoke** buttons and pending/approved counts.
+- Approved students log in with their email; their **name auto-fills** on tests
+  and homework. Revoke = blocked immediately.
+- "Forgot password?" sends a Supabase reset email automatically.
+
+> ✅ This is the secure option: passwords are hashed by Supabase Auth (never
+> stored in plain text), and each account is a real personal email — which
+> strongly discourages sharing. The old shared username/password login has been
+> removed.
+
 #### Homework submissions table (Student Portal → Submit Homework)
 Interactive homework = **10 auto-graded questions + a 60-second voice note** per unit.
 Create the table + a Storage bucket for the voice notes.

@@ -10,36 +10,126 @@ document.addEventListener("DOMContentLoaded", () => {
   const portal = cfg.studentPortal || {};
 
   const loginWrap = document.getElementById("portalLoginWrap");
+  const pendingWrap = document.getElementById("portalPending");
   const main = document.getElementById("portalMain");
   const loginForm = document.getElementById("portalLoginForm");
+  const signupForm = document.getElementById("portalSignupForm");
   const logoutBtn = document.getElementById("portalLogout");
+  const err = document.getElementById("portalLoginErr");
 
-  /* Already logged in this session? */
-  if (sessionStorage.getItem("lv_portal_auth") === "1") {
-    showPortal();
+  function setErr(type, msg) {
+    if (!err) return;
+    err.className = "alert show " + type;
+    err.innerHTML = msg;
+  }
+  function clearErr() { if (err) err.className = "alert"; }
+
+  /* ---- Auth mode switch (Log in / Sign up) ---- */
+  document.querySelectorAll(".auth-switch-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll(".auth-switch-btn").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      clearErr();
+      const mode = b.dataset.mode;
+      loginForm.style.display = mode === "login" ? "block" : "none";
+      signupForm.style.display = mode === "signup" ? "block" : "none";
+    });
+  });
+
+  /* ---- Resume an existing session on load ---- */
+  (async function resume() {
+    if (window.LV_Auth && window.LV_Auth.currentUser()) {
+      await enterIfApproved(true);
+    }
+  })();
+
+  /* ---- Check approval, then show portal or pending screen ---- */
+  async function enterIfApproved(silent) {
+    if (!window.LV_Auth) return;
+    let profile = null;
+    try { profile = await window.LV_Auth.getProfile(); } catch (e) {}
+    const user = window.LV_Auth.currentUser();
+    const name = (profile && profile.full_name) || (user && user.user_metadata && user.user_metadata.full_name) || "";
+
+    if (profile && profile.approved === true) {
+      sessionStorage.setItem("lv_portal_name", name);
+      sessionStorage.setItem("lv_portal_email", (user && user.email) || "");
+      showPortal();
+    } else {
+      // authenticated but not approved (or no profile yet)
+      if (loginWrap) loginWrap.style.display = "none";
+      if (main) main.style.display = "none";
+      if (pendingWrap) pendingWrap.style.display = "block";
+    }
   }
 
+  /* ---- LOGIN ---- */
   if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const user = document.getElementById("portalUser").value.trim();
-      const pass = document.getElementById("portalPass").value;
-      const err = document.getElementById("portalLoginErr");
-
-      if (user === portal.username && pass === portal.password) {
-        sessionStorage.setItem("lv_portal_auth", "1");
-        showPortal();
-      } else {
-        err.className = "alert show error";
-        err.textContent = "❌ Wrong username or password.";
+      clearErr();
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPass").value;
+      const btn = loginForm.querySelector('button[type="submit"]');
+      const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Logging in…';
+      try {
+        await window.LV_Auth.signIn(email, pass);
+        await enterIfApproved();
+      } catch (e2) {
+        const m = (e2.message || "").toLowerCase();
+        if (m.includes("confirm")) setErr("error", "📧 Please confirm your email first (check your inbox), then log in.");
+        else setErr("error", "❌ Wrong email or password.");
       }
+      btn.disabled = false; btn.innerHTML = orig;
     });
   }
 
-  if (logoutBtn) logoutBtn.addEventListener("click", () => {
-    sessionStorage.removeItem("lv_portal_auth");
-    location.reload();
+  /* ---- SIGN UP ---- */
+  if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearErr();
+      const name = document.getElementById("suName").value.trim();
+      const email = document.getElementById("suEmail").value.trim();
+      const pass = document.getElementById("suPass").value;
+      if (name.length < 2) return setErr("error", "⚠️ Please enter your full name.");
+      if (pass.length < 6) return setErr("error", "⚠️ Password must be at least 6 characters.");
+      const btn = signupForm.querySelector('button[type="submit"]');
+      const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Creating…';
+      try {
+        await window.LV_Auth.signUp(email, pass, name);
+        // show pending screen
+        if (loginWrap) loginWrap.style.display = "none";
+        if (pendingWrap) pendingWrap.style.display = "block";
+      } catch (e2) {
+        const m = (e2.message || "").toLowerCase();
+        if (m.includes("registered") || m.includes("already")) setErr("error", "⚠️ This email is already registered. Try logging in.");
+        else setErr("error", "❌ " + (e2.message || "Could not sign up."));
+      }
+      btn.disabled = false; btn.innerHTML = orig;
+    });
+  }
+
+  /* ---- Forgot password ---- */
+  const forgot = document.getElementById("forgotLink");
+  if (forgot) forgot.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    if (!email) return setErr("error", "Enter your email above first, then click 'Forgot your password?'.");
+    try { await window.LV_Auth.resetPassword(email); setErr("success", "📧 Password reset email sent — check your inbox."); }
+    catch (e2) { setErr("error", "Could not send reset email."); }
   });
+
+  /* ---- Logout (both from portal and pending screen) ---- */
+  function doLogout() {
+    if (window.LV_Auth) window.LV_Auth.signOut();
+    sessionStorage.removeItem("lv_portal_name");
+    sessionStorage.removeItem("lv_portal_email");
+    location.reload();
+  }
+  if (logoutBtn) logoutBtn.addEventListener("click", doLogout);
+  const pendingLogout = document.getElementById("pendingLogout");
+  if (pendingLogout) pendingLogout.addEventListener("click", doLogout);
 
   /* Tabs */
   document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -63,6 +153,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginWrap) loginWrap.style.display = "none";
     if (main) main.style.display = "block";
     if (logoutBtn) logoutBtn.style.display = "inline-flex";
+    // Greet the logged-in student by name
+    const nm = sessionStorage.getItem("lv_portal_name");
+    const greetEl = document.getElementById("portalGreeting");
+    if (greetEl) greetEl.textContent = nm ? `Welcome back, ${nm.split(" ")[0]}! 👋` : "Welcome back! 👋";
     renderSessions();
     renderHomework();
     renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");

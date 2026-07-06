@@ -66,6 +66,7 @@
           <button class="tab-btn active" data-tab="tabRegs">👥 Registrations</button>
           <button class="tab-btn" data-tab="tabResults">📝 Test Results</button>
           <button class="tab-btn" data-tab="tabHwSubs">📤 Homework</button>
+          <button class="tab-btn" data-tab="tabStudents">🔑 Student Logins</button>
         </div>
 
         <!-- Registrations panel -->
@@ -160,6 +161,34 @@
           </div>
           <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px;">💡 Click any row to read the full homework.</p>
         </div>
+
+        <!-- Student Accounts panel -->
+        <div id="tabStudents" class="tab-panel">
+          <div class="dash-tools" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <input class="input" id="stuSearch" placeholder="🔍 Search…" style="width:220px;" />
+            <button class="btn btn-ghost" onclick="loadStudents()">↻ Refresh</button>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card"><div class="sc-num" id="statStuTotal">0</div><div class="sc-lbl">Total accounts</div></div>
+            <div class="stat-card"><div class="sc-num" id="statStuApproved">0</div><div class="sc-lbl">Approved</div></div>
+            <div class="stat-card"><div class="sc-num" id="statStuPending">0</div><div class="sc-lbl">Pending approval</div></div>
+            <div class="stat-card"><div class="sc-num" id="statStuToday">0</div><div class="sc-lbl">Signed up today</div></div>
+          </div>
+
+          <div id="stuState"></div>
+          <div class="table-wrap">
+            <div class="table-scroll">
+              <table class="data">
+                <thead>
+                  <tr><th>Name</th><th>Email</th><th>Status</th><th>Signed up</th><th>Action</th></tr>
+                </thead>
+                <tbody id="stuTbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px;">💡 Students sign up themselves with their email. <b>Approve</b> to let them in; <b>Revoke</b> to block a sharer instantly.</p>
+        </div>
       </div>
 
       <!-- Detail modal (used for test answers + homework) -->
@@ -179,5 +208,5 @@
   <script src="js/homework-data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/dashboard.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a156737d5a1fe288',t:'MTc4MzA4NzU4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16f639739a71f97',t:'MTc4MzM0OTA4Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
