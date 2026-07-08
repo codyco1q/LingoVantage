@@ -129,9 +129,23 @@ window.LV_HOMEWORK = [
       { q: 10, text: "Rewrite with punctuation (commas/full stops): \"I need to buy a bag a lamp and a chair\" → \"___________\"", accept: [["i need to buy a bag a lamp and a chair"]] }
     ]
   },
-
-  /* ----- Units 8–12: coming soon (add questions later) ----- */
-  { unit: 8,  title: "Unit 8 Homework",  subtitle: "", available: false },
+{
+    unit: 8, title: "Unit 8 Homework", subtitle: "Past Events", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about a memorable holiday or a specific day last week. Describe where you went, who you talked to, and what you did using the past simple form of regular and irregular verbs. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"Last week my family and I ___________ in Dublin for a holiday.\" (was/were)", accept: [["were"]] },
+      { q: 2,  text: "\"James ___________ at work this morning because he was sick.\" (wasn't/weren't)", accept: [["wasnt", "was not"]] },
+      { q: 3,  text: "\"Yesterday, I ___________ (talk) to my friend Katie on the phone for an hour.\"", accept: [["talked"]] },
+      { q: 4,  text: "\"We ___________ (go) to a really nice Italian restaurant last night.\"", accept: [["went"]] },
+      { q: 5,  text: "\"Where ___________ you yesterday afternoon at 3:00? I called you but you didn't answer.\" (was/were)", accept: [["were"]] },
+      { q: 6,  text: "\"I went to a big museum in Paris three years ___________.\" (yesterday/ago/last)", accept: [["ago"]] },
+      { q: 7,  text: "Write the past simple form of the irregular verb 'have': \"We ___________ sandwiches for lunch yesterday.\"", accept: [["had"]] },
+      { q: 8,  text: "\"On Saturday, I decided to stay at home and ___________ a book.\" (read)", accept: [["read"]] },
+      { q: 9,  text: "\"I usually go ___________ a walk in the park on Sunday mornings.\" (preposition)", accept: [["for"]] },
+      { q: 10, text: "Complete the suggestion: A: \"We ___________ go to the cinema tonight.\" B: \"Yes, that's a great idea!\" (Let's/Shall/could)", accept: [["could"]] }
+    ]
+  },
+  /* ----- Units 9–12: coming soon (add questions later) ----- */
   { unit: 9,  title: "Unit 9 Homework",  subtitle: "", available: false },
   { unit: 10, title: "Unit 10 Homework", subtitle: "", available: false },
   { unit: 11, title: "Unit 11 Homework", subtitle: "", available: false },
