@@ -1,10 +1,16 @@
 /* =========================================================
    LingoVantage — Student Portal: Homework (interactive)
    Per unit = 10 auto-graded questions + 1 voice note (≤60s).
-   - Name auto-fills from login; Batch required
+   - Name + Batch required before starting
    - One attempt per IP per unit (checked against Supabase)
    - Records audio via MediaRecorder, uploads to Supabase Storage
    - Auto-grades quiz, saves everything to "homework_submissions"
+   - Returning students see their saved result
+
+   Supabase table: homework_submissions (see README)
+     id, created_at, student_name, batch, unit, unit_title, ip,
+     score, total_max, percent, answers jsonb, voice_url text
+   Storage bucket: "voicenotes" (public)
    ========================================================= */
 
 (function () {
@@ -34,6 +40,39 @@
 
   function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstElementChild; }
   function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+  /* ---------- Build an answer-review breakdown (right/wrong) ---------- */
+  function buildReview(u, answers) {
+    if (!u || !u.questions || !answers) return "";
+    if (typeof answers === "string") { try { answers = JSON.parse(answers); } catch (e) { return ""; } }
+    const norm = window.LV_normAnswer || (s => String(s || "").toLowerCase().trim());
+    let html = '<div class="answer-review"><h3 style="margin:26px 0 12px;">Your answers</h3>';
+
+    u.questions.forEach(item => {
+      const chosen = answers[item.q];
+      let ok, chosenText, correctText;
+      if (item.accept) {
+        const vals = Array.isArray(chosen) ? chosen : [chosen];
+        ok = item.accept.every((blank, bi) => blank.some(a => norm(a) === norm(vals[bi])));
+        chosenText = vals.map(v => (v == null || v === "") ? "—" : v).join(" | ");
+        correctText = item.accept.map(blank => blank[0]).join(" | ");
+      } else {
+        ok = String(chosen) === String(item.answer);
+        chosenText = chosen == null ? "—" : chosen;
+        correctText = item.answer;
+      }
+      html += `<div class="ans-row ${ok ? "ok" : "bad"}">
+        <div class="ans-q">${item.q}. ${esc(item.text)}</div>
+        <div class="ans-detail">
+          <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+          <span>Your answer: <b>${esc(chosenText)}</b></span>
+          ${ok ? "" : `<span class="ans-correct">Correct: <b>${esc(correctText)}</b></span>`}
+        </div>
+      </div>`;
+    });
+    html += "</div>";
+    return html;
+  }
 
   /* ---------- List units ---------- */
   async function renderList() {
@@ -175,6 +214,7 @@
         });
         html += `</div>`;
       } else if (item.accept) {
+        // Fill-in-the-blank: one input per blank
         html += `<div class="blank-inputs">`;
         item.accept.forEach((blank, bi) => {
           const ph = item.accept.length > 1 ? `Answer ${bi + 1}` : "Your answer";
@@ -185,6 +225,7 @@
       html += `</div>`;
     });
 
+    // Voice note section
     html += `
       <h3 style="margin:26px 0 12px;">🎙️ Voice note <span style="color:var(--text-dim);font-weight:500;">(up to ${u.voiceSeconds || 60}s)</span></h3>
       <p style="color:var(--text-soft);margin-bottom:14px;">${esc(u.voicePrompt || "Record your spoken answer.")}</p>
@@ -282,6 +323,7 @@
     const form = document.getElementById("hwQuizForm");
     const alertBox = document.getElementById("hwAlert");
 
+    // require all questions answered
     let missing = 0;
     u.questions.forEach(i => {
       if (i.accept) {
@@ -304,10 +346,12 @@
       return;
     }
 
+    // grade
     const norm = window.LV_normAnswer || (s => String(s || "").toLowerCase().trim());
     let score = 0; const answers = {};
     u.questions.forEach(i => {
       if (i.accept) {
+        // fill-in-the-blank: every blank must match one of its accepted answers
         const vals = i.accept.map((blank, bi) => form.querySelector(`input[name="q${i.q}_${bi}"]`).value.trim());
         answers[i.q] = vals.length === 1 ? vals[0] : vals;
         const allOk = i.accept.every((blank, bi) => blank.some(a => norm(a) === norm(vals[bi])));
@@ -325,6 +369,7 @@
     btn.disabled = true; const orig = btn.innerHTML;
     btn.innerHTML = '<span class="spinner"></span> Uploading…';
 
+    // upload voice note
     let voiceUrl = "";
     if (sbReady) {
       try {
@@ -376,7 +421,8 @@
         <div class="result-actions" style="margin-top:24px;">
           <button class="btn btn-primary" id="hwDone">Back to homework</button>
         </div>
-      </div>`;
+      </div>
+      ${buildReview(u, record.answers)}`;
     document.getElementById("hwDone").addEventListener("click", () => { initialized = false; backToList(); window.LV_initHomework(); });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -394,7 +440,8 @@
         </div>
         <h2 class="result-title">Your result</h2>
         <p class="result-desc">${esc(u.title)}: <b>${prev.score}/${prev.total_max}</b> (${pct}%). Your voice note was submitted. ✅</p>
-      </div>`;
+      </div>
+      ${buildReview(u, prev.answers)}`;
     document.getElementById("hwBack").addEventListener("click", backToList);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }

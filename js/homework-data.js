@@ -145,8 +145,23 @@ window.LV_HOMEWORK = [
       { q: 10, text: "Complete the suggestion: A: \"We ___________ go to the cinema tonight.\" B: \"Yes, that's a great idea!\" (Let's/Shall/could)", accept: [["could"]] }
     ]
   },
-  /* ----- Units 9–12: coming soon (add questions later) ----- */
-  { unit: 9,  title: "Unit 9 Homework",  subtitle: "", available: false },
+  {
+    unit: 9, title: "Unit 9 Homework", subtitle: "Holidays", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about your last holiday or a trip you took. Explain how you traveled there (by plane, train, etc.), what the weather was like, and what you did during the trip. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"We had a great holiday, but we _______________ in a hotel. We camped in a garden.\" (stay - past simple negative)", accept: [["didnt stay", "did not stay"]] },
+      { q: 2,  text: "\"I _______________ any photos from my trip because I lost my phone.\" (have - past simple negative)", accept: [["didnt have", "did not have"]] },
+      { q: 3,  text: "\"___________ you enjoy your holiday in Greece last year?\" (helper verb)", accept: [["did"]] },
+      { q: 4,  text: "Rearrange the words to make a correct question: 'did / stay / where / you / in London / ?' ➔ \"___________\"", accept: [["where did you stay in london"]] },
+      { q: 5,  text: "A: \"Did you see Youssef's place?\" B: \"No, I didn't. We _______________ there.\"", options: [["a","didn't went"],["b","didn't go"],["c","wasn't go"]], answer: "b" },
+      { q: 6,  text: "\"We usually go to Alexandria ___________ train because it is fast and comfortable.\"", accept: [["by"]] },
+      { q: 7,  text: "Complete the weather adjective: \"It was a ___________ day, so we stayed inside and watched a movie.\" (rain)", accept: [["rainy"]] },
+      { q: 8,  text: "\"March, April, and May are the months of ___________ in Egypt.\"", accept: [["spring"]] },
+      { q: 9,  text: "\"What was the weather ___________ during your trip to London?\"", accept: [["like"]] },
+      { q: 10, text: "\"___________ you help me carry this suitcase, please?\" (Making requests)", accept: [["could", "can"]] }
+    ]
+  },
+  /* ----- Units 10–12: coming soon (add questions later) ----- */
   { unit: 10, title: "Unit 10 Homework", subtitle: "", available: false },
   { unit: 11, title: "Unit 11 Homework", subtitle: "", available: false },
   { unit: 12, title: "Unit 12 Homework", subtitle: "", available: false }

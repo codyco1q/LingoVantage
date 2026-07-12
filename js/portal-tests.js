@@ -5,6 +5,18 @@
    - Auto-grades 100% (MCQ + Right/Wrong) -> instant final score
    - Saves results to Supabase table "test_results"
    - Shows the student their saved result when they return
+
+   Supabase table expected (see README): test_results
+     id uuid (default gen_random_uuid())
+     created_at timestamptz (default now())
+     test_id text
+     test_name text
+     ip text
+     score int4          -- marks earned
+     total_max int4       -- marks possible
+     percent int4         -- score / total_max * 100
+     grade text           -- A / B / C / D / -
+     answers jsonb        -- the student's chosen answers
    ========================================================= */
 
 (function () {
@@ -35,6 +47,7 @@
   /* ---------- Grade from score (out of total) ---------- */
   function gradeFromScore(score, max) {
     const pct = Math.round((score / max) * 100);
+    // thresholds scale with total (answer key is based on /30)
     if (pct >= 90) return { grade: "A", label: "Excellent — ready for the next units", pct };
     if (pct >= 80) return { grade: "B", label: "Very good", pct };
     if (pct >= 70) return { grade: "C", label: "Good — minor review needed", pct };
@@ -52,6 +65,31 @@
   }
   function maxOf(t) { return (t.partA ? t.partA.length : 0) + (t.partB ? t.partB.length : 0); }
 
+  /* ---------- Build an answer-review breakdown (right/wrong) ---------- */
+  function buildReview(t, answers) {
+    if (!answers) return "";
+    if (typeof answers === "string") { try { answers = JSON.parse(answers); } catch (e) { return ""; } }
+    const A = answers.A || {}, B = answers.B || {};
+    let html = '<div class="answer-review"><h3 style="margin:26px 0 12px;">Your answers</h3>';
+
+    const row = (num, text, chosen, correct) => {
+      const ok = String(chosen) === String(correct);
+      return `<div class="ans-row ${ok ? "ok" : "bad"}">
+        <div class="ans-q">${num}. ${escapeHtml(text)}</div>
+        <div class="ans-detail">
+          <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+          <span>Your answer: <b>${escapeHtml(chosen == null ? "—" : chosen)}</b></span>
+          ${ok ? "" : `<span class="ans-correct">Correct: <b>${escapeHtml(correct)}</b></span>`}
+        </div>
+      </div>`;
+    };
+
+    (t.partA || []).forEach(i => { html += row(i.q, i.text, A[i.q], i.answer); });
+    (t.partB || []).forEach(i => { html += row(i.q, i.text, B[i.q], i.answer); });
+    html += "</div>";
+    return html;
+  }
+
   /* ---------- Render the list of tests ---------- */
   async function renderTestList() {
     const wrap = document.getElementById("testsList");
@@ -61,6 +99,7 @@
     const tests = window.LV_TESTS || [];
     const sbReady = window.LV_Supabase && window.LV_Supabase.ready();
 
+    // Fetch this IP's previous results once
     let myResults = [];
     if (sbReady && CURRENT_IP) {
       try {
@@ -135,7 +174,7 @@
     }
   }
 
-  /* ---------- Ask for the student's name (fallback only) ---------- */
+  /* ---------- Ask for the student's name (required) ---------- */
   function renderNamePrompt(t, sbReady) {
     const view = document.getElementById("testsView");
     const list = document.getElementById("testsList");
@@ -194,6 +233,7 @@
         <div id="testAlert" class="alert"></div>
         <form id="quizForm">`;
 
+    // Part A
     html += `<h3 style="margin:24px 0 14px;">Part A — Multiple Choice <span style="color:var(--text-dim);font-weight:500;">(${t.partA.length} marks)</span></h3>`;
     t.partA.forEach(item => {
       html += `<div class="quiz-q"><p class="quiz-q-text">${item.q}. ${escapeHtml(item.text)}</p><div class="quiz-opts">`;
@@ -203,6 +243,7 @@
       html += `</div></div>`;
     });
 
+    // Part B
     html += `<h3 style="margin:28px 0 14px;">Part B — Right or Wrong <span style="color:var(--text-dim);font-weight:500;">(${t.partB.length} marks)</span></h3>`;
     t.partB.forEach(item => {
       html += `<div class="quiz-q"><p class="quiz-q-text">${item.q}. ${escapeHtml(item.text)}</p><div class="quiz-opts row">
@@ -232,6 +273,7 @@
     const form = document.getElementById("quizForm");
     const alertBox = document.getElementById("testAlert");
 
+    // Require all answers
     let unanswered = 0;
     t.partA.forEach(i => { if (!form.querySelector(`input[name="A${i.q}"]:checked`)) unanswered++; });
     t.partB.forEach(i => { if (!form.querySelector(`input[name="B${i.q}"]:checked`)) unanswered++; });
@@ -242,6 +284,7 @@
       return;
     }
 
+    // Grade
     let score = 0;
     const answers = { A: {}, B: {} };
     t.partA.forEach(i => {
@@ -298,7 +341,8 @@
         <div class="result-actions" style="margin-top:24px;">
           <button class="btn btn-primary" id="resBack">Back to tests</button>
         </div>
-      </div>`;
+      </div>
+      ${buildReview(t, record.answers)}`;
     document.getElementById("resBack").addEventListener("click", () => {
       view.style.display = "none"; view.innerHTML = "";
       document.getElementById("testsList").style.display = "block";
@@ -329,7 +373,8 @@
         <div class="result-actions" style="margin-top:24px;">
           <button class="btn btn-primary" id="resBack2">Back to tests</button>
         </div>
-      </div>`;
+      </div>
+      ${buildReview(t, prev.answers)}`;
     document.getElementById("resBack2").addEventListener("click", () => {
       view.style.display = "none"; view.innerHTML = "";
       list.style.display = "block";

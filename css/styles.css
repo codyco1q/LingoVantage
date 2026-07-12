@@ -639,7 +639,11 @@ table.data tr.clickable:hover td { background: rgba(34,211,196,.06); }
 .modal-close:hover { color: var(--text); border-color: var(--teal-500); }
 .raw-json { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; overflow-x: auto; font-size: .85rem; color: var(--text-soft); white-space: pre-wrap; }
 
-/* Test answer rows in modal */
+/* Student-facing answer review (portal result screens) */
+.answer-review { max-width: 800px; margin: 22px auto 0; }
+.answer-review h3 { text-align: left; }
+
+/* Test answer rows (dashboard modal + student review) */
 .ans-row { padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 8px; border: 1px solid var(--border); background: var(--bg-soft); }
 .ans-row.ok  { border-color: rgba(52,211,153,.3); }
 .ans-row.bad { border-color: rgba(248,113,113,.35); }
