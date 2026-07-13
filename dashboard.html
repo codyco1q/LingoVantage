@@ -57,7 +57,7 @@
             <h2 style="font-size:2rem;margin-top:12px;">Dashboard</h2>
           </div>
           <div class="dash-tools">
-            <button class="btn btn-ghost" onclick="loadData()">↻ Refresh</button>
+            <button id="refreshBtn" class="btn btn-ghost">↻ Refresh</button>
           </div>
         </div>
 
@@ -166,7 +166,7 @@
         <div id="tabStudents" class="tab-panel">
           <div class="dash-tools" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap;gap:10px;">
             <input class="input" id="stuSearch" placeholder="🔍 Search…" style="width:220px;" />
-            <button class="btn btn-ghost" onclick="loadStudents()">↻ Refresh</button>
+            <button id="stuRefreshBtn" class="btn btn-ghost">↻ Refresh</button>
           </div>
 
           <div class="stat-grid">
@@ -202,6 +202,7 @@
     </div>
   </section>
 
+  <script src="js/env-config.js"></script>
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/tests-data.js"></script>

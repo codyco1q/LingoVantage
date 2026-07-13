@@ -268,7 +268,7 @@ function restartTest() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-/* expose for inline onclick */
-window.goPrev = goPrev;
-window.goNext = goNext;
-window.restartTest = restartTest;
+document.getElementById("prevBtn").addEventListener("click", goPrev);
+document.getElementById("nextBtn").addEventListener("click", goNext);
+const restartBtn = document.getElementById("restartBtn");
+if (restartBtn) restartBtn.addEventListener("click", restartTest);

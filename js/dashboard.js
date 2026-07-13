@@ -80,6 +80,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const stuSearch = document.getElementById("stuSearch");
   if (stuSearch) stuSearch.addEventListener("input", () => filterStudents(stuSearch.value));
 
+  // Refresh buttons
+  const refreshBtn = document.getElementById("refreshBtn");
+  if (refreshBtn) refreshBtn.addEventListener("click", loadData);
+  const stuRefreshBtn = document.getElementById("stuRefreshBtn");
+  if (stuRefreshBtn) stuRefreshBtn.addEventListener("click", loadStudents);
+
   function showDashboard() {
     loginWrap.style.display = "none";
     dashMain.style.display = "block";

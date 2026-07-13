@@ -1,0 +1,11 @@
+{
+  "name": "lingovantage",
+  "private": true,
+  "scripts": {
+    "env": "node scripts/generate-env.js",
+    "lint": "eslint js/"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
+  }
+}

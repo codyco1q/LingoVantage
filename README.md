@@ -55,17 +55,17 @@ supabase: {
   table: "student"                            // ✅ matches your table
 },
 
-dashboardPassword: "lingo2026",   // ⬅ change this!
+dashboardPassword: "...",   // ⬅ set in .env as VITE_DASHBOARD_PASSWORD
 
-// The level test is behind a simple login:
+// The level test is behind a simple login (set in .env):
 assessmentAuth: {
-  username: "test_user",
-  password: "testme123%"
+  username: "...",
+  password: "..."
 }
 ```
 
-> 🔑 **Test page login:** username `test_user` · password `testme123%`
-> (change these anytime in `js/config.js`).
+> 🔑 **Test page login:** credentials are in your `.env` file.
+> Run `npm run env` after editing `.env` to regenerate `js/env-config.js`.
 
 ### 2) Supabase table
 You already created the `student` table with these columns (✅ matches the code):
@@ -269,7 +269,7 @@ Student fills Signup form
 ---
 
 ## 🧪 Assessment test
-- Protected by a login: username `test_user` / password `testme123%` (set in `js/config.js`).
+- Protected by a login: set credentials in `.env` then run `npm run env`.
 - 30 questions: 10 × A1, 10 × A2, 10 × B1.
 - 1 point per correct answer (score out of 30).
 - Level logic: you must score ≥60% in lower sections to claim a higher level.
