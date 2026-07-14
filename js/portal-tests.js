@@ -99,12 +99,13 @@
     const tests = window.LV_TESTS || [];
     const sbReady = window.LV_Supabase && window.LV_Supabase.ready();
 
-    // Fetch this IP's previous results once
+    // Fetch this student's previous results once
     let myResults = [];
-    if (sbReady && CURRENT_IP) {
+    const myName = (sessionStorage.getItem("lv_portal_name") || "").trim();
+    if (sbReady && myName.length >= 2) {
       try {
         myResults = await window.LV_Supabase.selectWhere(
-          "test_results", `ip=eq.${encodeURIComponent(CURRENT_IP)}`
+          "test_results", `student_name=ilike.${encodeURIComponent(myName)}`
         );
       } catch (e) { console.warn("Could not load past results:", e); }
     }
@@ -153,13 +154,14 @@
 
   /* ---------- Start a test (re-check one-attempt rule) ---------- */
   async function startTest(t, sbReady) {
-    if (sbReady && CURRENT_IP && CURRENT_IP !== "unknown") {
+    const myName = (sessionStorage.getItem("lv_portal_name") || "").trim();
+    if (sbReady && myName.length >= 2) {
       try {
         const existing = await window.LV_Supabase.selectWhere(
-          "test_results", `ip=eq.${encodeURIComponent(CURRENT_IP)}&test_id=eq.${t.id}`
+          "test_results", `student_name=ilike.${encodeURIComponent(myName)}&test_id=eq.${t.id}`
         );
         if (existing && existing.length) {
-          alert("You have already taken this test. Only one attempt is allowed per device/network.");
+          alert("You have already taken this test. Only one attempt is allowed.");
           initialized = false; renderTestList();
           return;
         }
@@ -302,7 +304,7 @@
     const g = gradeFromScore(score, total);
 
     const record = {
-      student_name: studentName,
+      student_name: studentName.trim(),
       test_id: t.id,
       test_name: t.name,
       ip: CURRENT_IP || "unknown",

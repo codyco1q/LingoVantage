@@ -84,9 +84,10 @@
     const sbReady = window.LV_Supabase && window.LV_Supabase.ready();
 
     let mine = [];
-    if (sbReady && CURRENT_IP) {
+    const myName = (sessionStorage.getItem("lv_portal_name") || "").trim();
+    if (sbReady && myName.length >= 2) {
       try {
-        mine = await window.LV_Supabase.selectWhere("homework_submissions", `ip=eq.${encodeURIComponent(CURRENT_IP)}`);
+        mine = await window.LV_Supabase.selectWhere("homework_submissions", `student_name=ilike.${encodeURIComponent(myName)}`);
       } catch (e) { console.warn("Could not load past homework:", e); }
     }
 
@@ -131,10 +132,11 @@
 
   /* ---------- Start: re-check attempt, then name prompt ---------- */
   async function startFlow(u, sbReady) {
-    if (sbReady && CURRENT_IP && CURRENT_IP !== "unknown") {
+    const myName = (sessionStorage.getItem("lv_portal_name") || "").trim();
+    if (sbReady && myName.length >= 2) {
       try {
         const ex = await window.LV_Supabase.selectWhere("homework_submissions",
-          `ip=eq.${encodeURIComponent(CURRENT_IP)}&unit=eq.${encodeURIComponent(u.unit)}`);
+          `student_name=ilike.${encodeURIComponent(myName)}&unit=eq.${encodeURIComponent(u.unit)}`);
         if (ex && ex.length) {
           alert("You have already submitted this unit's homework. Only one attempt is allowed.");
           initialized = false; renderList();
@@ -387,7 +389,7 @@
     }
 
     const record = {
-      student_name: name, batch: batch,
+      student_name: name.trim(), batch: batch,
       unit: u.unit, unit_title: u.title,
       ip: CURRENT_IP || "unknown",
       score: score, total_max: total, percent: pct,
