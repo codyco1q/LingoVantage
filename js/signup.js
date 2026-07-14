@@ -78,30 +78,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return encodeURIComponent(lines.join("\n"));
   }
 
-  /* Send an AUTOMATIC notification to the admin via a Telegram bot.
-     Fires silently in the background; never blocks the user. */
+  /* Send an AUTOMATIC notification to the admin via the
+     server-side Telegram proxy. Fires silently in the background;
+     never blocks the user. */
   async function notifyAdmin(d) {
     const n = cfg.notify || {};
-    if (!n.enabled || !n.botToken || !n.chatId ||
-        n.botToken === "YOUR_TELEGRAM_BOT_TOKEN" || n.chatId === "YOUR_TELEGRAM_CHAT_ID") return;
+    if (!n.enabled) return;
 
-    const pkgName = d.package === "business" ? "Business / باقة العمل" : "Fluency / باقة الطلاقة";
-    const text =
-      `🎓 New LingoVantage Registration\n\n` +
-      `👤 ${d.full_name}\n` +
-      `🎂 Age: ${d.age}\n` +
-      `📱 ${d.whatsapp}\n` +
-      `📧 ${d.email}\n` +
-      `📊 Level: ${d.current_level}\n` +
-      `🎯 Goal: ${d.goal}\n` +
-      `📦 ${pkgName}`;
-
-    const url = `https://api.telegram.org/bot${n.botToken}/sendMessage`;
     try {
-      await fetch(url, {
+      await fetch("/api/notify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: n.chatId, text: text, disable_web_page_preview: true })
+        body: JSON.stringify(d)
       });
     } catch (err) {
       console.warn("Admin notification failed (non-blocking):", err);

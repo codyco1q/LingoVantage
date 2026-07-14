@@ -20,9 +20,7 @@
 
     /* ---- Admin notifications via Telegram Bot ---- */
     notify: {
-      enabled: true,
-      botToken: e.VITE_TELEGRAM_BOT_TOKEN || "YOUR_TELEGRAM_BOT_TOKEN",
-      chatId: e.VITE_TELEGRAM_CHAT_ID || "YOUR_TELEGRAM_CHAT_ID"
+      enabled: true
     },
 
     /* ---- Supabase ---- */
@@ -32,8 +30,7 @@
       table: e.VITE_SUPABASE_TABLE || "students"
     },
 
-    /* ---- Simple dashboard password (frontend gate only) ---- */
-    dashboardPassword: e.VITE_DASHBOARD_PASSWORD || "YOUR_DASHBOARD_PASSWORD",
+    /* ---- Dashboard password is now checked server-side via /api/auth ---- */
 
     /* ---- Student Portal content (current students area) ---- */
     studentPortal: {

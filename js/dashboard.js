@@ -19,16 +19,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const pass = document.getElementById("dashPass").value;
       const err = document.getElementById("dashLoginErr");
-      if (pass === (window.LV_CONFIG.dashboardPassword || "")) {
-        sessionStorage.setItem("lv_dash_auth", "1");
-        showDashboard();
-      } else {
+      try {
+        const res = await fetch("/api/auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: pass })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          sessionStorage.setItem("lv_dash_auth", "1");
+          showDashboard();
+        } else {
+          err.className = "alert show error";
+          err.textContent = "❌ Wrong password.";
+        }
+      } catch (err2) {
         err.className = "alert show error";
-        err.textContent = "❌ Wrong password.";
+        err.textContent = "❌ Could not verify password. Try again.";
       }
     });
   }
