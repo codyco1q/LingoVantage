@@ -112,7 +112,156 @@ window.LV_TESTS = [
     ]
   },
 
+  {
+    id: "units-7-9",
+    name: "Units 7–9 Test",
+    subtitle: "Units 7–9 · Past Events, Shopping & Holidays",
+    units: "7-9",
+    available: true,
+    timeMinutes: 15,
+
+    /* ---- PART A: Multiple Choice (Answer = correct option key) ---- */
+    partA: [
+      // Unit 7: Shopping and Fashion
+      { 
+        q: 1,  
+        text: "Look at ________ picture in my hand. It is beautiful!", 
+        options: [["a","those"],["b","these"],["c","this"],["d","that"]], 
+        answer: "c" 
+      },
+      { 
+        q: 2,  
+        text: "I want to buy ________ blue jeans over here.", 
+        options: [["a","this"],["b","these"],["c","that"],["d","a"]], 
+        answer: "b" 
+      },
+      { 
+        q: 3,  
+        text: "Look at those birds far away in the sky! ________ are beautiful.", 
+        options: [["a","This"],["b","That"],["c","These"],["d","Those"]], 
+        answer: "d" 
+      },
+      { 
+        q: 4,  
+        text: "My ________ car is parked outside. It is dark blue.", 
+        options: [["a","brothers's"],["b","brother's"],["c","brothers"],["d","brother"]], 
+        answer: "b" 
+      },
+      { 
+        q: 5,  
+        text: "All of the ________ dresses are white and light blue.", 
+        options: [["a","girls'"],["b","girl's"],["c","girls's"],["d","girls"]], 
+        answer: "a" 
+      },
+      { 
+        q: 6,  
+        text: "Customer: Excuse me, how much is this suitcase? \nShop Assistant: It is ________ (£3.80).", 
+        options: [["a","three pounds eighty"],["b","three eighty pounds"],["c","three point eighty pounds"],["d","three eighty pence"]], 
+        answer: "a" 
+      },
+      { 
+        q: 7,  
+        text: "I have a white shirt, dark blue trousers, and a black ________.", 
+        options: [["a","picture"],["b","speaker"],["c","jacket"],["d","lamp"]], 
+        answer: "c" 
+      },
+      // Unit 8: Past Events
+      { 
+        q: 8,  
+        text: "Last week, my family and I ________ on holiday in Spain.", 
+        options: [["a","was"],["b","were"],["c","are"],["d","did"]], 
+        answer: "b" 
+      },
+      { 
+        q: 9,  
+        text: "My brother ________ at work yesterday morning because he was sick.", 
+        options: [["a","wasn't"],["b","weren't"],["c","didn't"],["d","isn't"]], 
+        answer: "a" 
+      },
+      { 
+        q: 10, 
+        text: "________ you at home last night at 9:00 PM?", 
+        options: [["a","Was"],["b","Did"],["c","Were"],["d","Are"]], 
+        answer: "c" 
+      },
+      { 
+        q: 11, 
+        text: "Yesterday afternoon, we ________ to a great new French café.", 
+        options: [["a","go"],["b","went"],["c","goes"],["d","gone"]], 
+        answer: "b" 
+      },
+      { 
+        q: 12, 
+        text: "I ________ a very strange sound outside my bedroom window last night.", 
+        options: [["a","hear"],["b","heared"],["c","heard"],["d","was hear"]], 
+        answer: "c" 
+      },
+      { 
+        q: 13, 
+        text: "They moved to Dubai three years ________.", 
+        options: [["a","ago"],["b","last"],["c","yesterday"],["d","past"]], 
+        answer: "a" 
+      },
+      { 
+        q: 14, 
+        text: "Host: It is late. What shall we do? \nGuest: We ________ go to the cinema tonight.", 
+        options: [["a","was"],["b","had"],["c","were"],["d","could"]], 
+        answer: "d" 
+      },
+      // Unit 9: Holidays
+      { 
+        q: 15, 
+        text: "We ________ in a hotel during our last holiday. We stayed in a small tent.", 
+        options: [["a","didn't stayed"],["b","didn't stay"],["c","wasn't stay"],["d","don't stay"]], 
+        answer: "b" 
+      },
+      { 
+        q: 16, 
+        text: "________ you watch the football match on TV last night?", 
+        options: [["a","Were"],["b","Was"],["c","Did"],["d","Do"]], 
+        answer: "c" 
+      },
+      { 
+        q: 17, 
+        text: "Where ________ on holiday last summer?", 
+        options: [["a","you went"],["b","did you went"],["c","did you go"],["d","were you went"]], 
+        answer: "c" 
+      },
+      { 
+        q: 18, 
+        text: "I hate rainy days, but I really love ________ weather.", 
+        options: [["a","snow"],["b","sunny"],["c","wind"],["d","cloud"]], 
+        answer: "b" 
+      },
+      { 
+        q: 19, 
+        text: "In London, people often go to work ________ bus.", 
+        options: [["a","by"],["b","on"],["c","in"],["d","with"]], 
+        answer: "a" 
+      },
+      { 
+        q: 20, 
+        text: "Guest: ________ you help me with my suitcase, please? \nReceptionist: Yes, of course.", 
+        options: [["a","Was"],["b","Did"],["c","Could"],["d","Were"]], 
+        answer: "c" 
+      }
+    ],
+
+    /* ---- PART B: Right / Wrong (Answer = "RIGHT" | "WRONG") ---- */
+    partB: [
+      { q: 21, text: "I really like this jeans you are wearing today.", answer: "WRONG" },
+      { q: 22, text: "This is my sister's clock on the wall.", answer: "RIGHT" },
+      { q: 23, text: "The room of Zoe is very small but clean.", answer: "WRONG" },
+      { q: 24, text: "My friends was at a party last Saturday night.", answer: "WRONG" },
+      { q: 25, text: "We walked by the river two hours ago.", answer: "RIGHT" },
+      { q: 26, text: "I didn't went to school yesterday morning.", answer: "WRONG" },
+      { q: 27, text: "Did they enjoy their holiday last winter?", answer: "RIGHT" },
+      { q: 28, text: "First we went to Paris, next we visited London.", answer: "RIGHT" },
+      { q: 29, text: "Can you pass me that plate, please?", answer: "RIGHT" },
+      { q: 30, text: "They didn't had a big breakfast this morning.", answer: "WRONG" }
+    ]
+  },
+
   /* ----- Placeholders for the remaining tests (add later) ----- */
-  { id: "units-7-9",   name: "Units 7–9 Test",   subtitle: "Coming soon", units: "7–9",   available: false },
-  { id: "units-10-12", name: "Units 10–12 Test", subtitle: "Coming soon", units: "10–12", available: false }
+{ id: "units-10-12", name: "Units 10–12 Test", subtitle: "Coming soon", units: "10–12", available: false }
 ];

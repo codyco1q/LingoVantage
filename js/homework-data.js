@@ -161,8 +161,23 @@ window.LV_HOMEWORK = [
       { q: 10, text: "\"___________ you help me carry this suitcase, please?\" (Making requests)", accept: [["could", "can"]] }
     ]
   },
-  /* ----- Units 10–12: coming soon (add questions later) ----- */
-  { unit: 10, title: "Unit 10 Homework", subtitle: "", available: false },
+  {
+    unit: 10, title: "Unit 10 Homework", subtitle: "Here and Now", available: true, voiceSeconds: 60,
+    voicePrompt: "Describe what you or your family members are doing right now in different rooms of your house. Use the present continuous (e.g., I am studying, my mom is cooking). Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"Shhh! Be quiet. I _______________ (study) really hard for my English exam in my bedroom right now.\"", accept: [["am studying", "m studying"]] },
+      { q: 2,  text: "\"Look out of the window! _______________ outside, so we can't play football.\" (It rains / It's raining)", accept: [["its raining", "it is raining"]] },
+      { q: 3,  text: "Correct the error: \"I am not like cooking tonight.\" ➔ \"I _______________ cooking tonight.\"", accept: [["am not", "m not"]] },
+      { q: 4,  text: "A: \"Hi Juan, are you at the cinema?\" B: \"No, I'm at the bus stop. I _______________ (wait) for the bus.\"", accept: [["am waiting", "m waiting"]] },
+      { q: 5,  text: "Put in order: 'wearing / you / shoes / black / why / are / ?' ➔ \"___________\"", accept: [["why are you wearing black shoes"]] },
+      { q: 6,  text: "\"My mother is cooking dinner in the _______________, so there is a wonderful smell in the house.\"", accept: [["kitchen"]] },
+      { q: 7,  text: "\"Where is Khalid? He is ___________ holiday in Barcelona this week.\" (at/on/in)", accept: [["on"]] },
+      { q: 8,  text: "\"Don't leave your book on the floor. Put it _______________ the table in the living room.\" (preposition of place)", accept: [["on", "onto"]] },
+      { q: 9,  text: "Passenger: \"Excuse me, which ___________ does the train to London leave from?\" Station Agent: \"It leaves from number 3.\"", accept: [["platform"]] },
+      { q: 10, text: "Put in order to make a question: 'find / I / a / where / taxi / can / ?' ➔ \"___________\"", accept: [["where can i find a taxi"]] }
+    ]
+  },
+  /* ----- Units 11–12: coming soon (add questions later) ----- */
   { unit: 11, title: "Unit 11 Homework", subtitle: "", available: false },
   { unit: 12, title: "Unit 12 Homework", subtitle: "", available: false }
 ];
