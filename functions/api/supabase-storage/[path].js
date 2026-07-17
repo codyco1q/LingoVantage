@@ -12,7 +12,7 @@ export async function onRequest(context) {
     });
   }
 
-  const subpath = context.params.path.join("/");
+  const subpath = context.params.path;
   const targetUrl = `${SUPABASE_URL}/storage/v1/object/${subpath}`;
 
   const headers = {
@@ -40,8 +40,9 @@ export async function onRequest(context) {
       });
     }
 
-    const bucket = context.params.path[0];
-    const filePath = context.params.path.slice(1).join("/");
+    const firstSlash = subpath.indexOf("/");
+    const bucket = firstSlash === -1 ? subpath : subpath.substring(0, firstSlash);
+    const filePath = firstSlash === -1 ? "" : subpath.substring(firstSlash + 1);
     const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${filePath}`;
 
     return new Response(JSON.stringify({ publicUrl }), {

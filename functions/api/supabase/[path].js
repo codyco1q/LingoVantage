@@ -12,7 +12,7 @@ export async function onRequest(context) {
     });
   }
 
-  const subpath = context.params.path.join("/");
+  const subpath = context.params.path;
   const reqUrl = new URL(context.request.url);
   const targetUrl = `${SUPABASE_URL}/rest/v1/${subpath}${reqUrl.search}`;
 
