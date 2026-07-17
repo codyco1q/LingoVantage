@@ -1,13 +1,12 @@
 /* =========================================================
    LingoVantage — Student Portal
-   - Fixed shared login (config.studentPortal)
+   - Session data served from /api/portal-config after auth
    - Tabs: Previous Sessions (recordings) + Homework (pages)
-   - Data comes from window.LV_CONFIG.studentPortal.sessions
+   - Session data fetched from /api/portal-config after auth
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const cfg = window.LV_CONFIG || {};
-  const portal = cfg.studentPortal || {};
 
   const loginWrap = document.getElementById("portalLoginWrap");
   const pendingWrap = document.getElementById("portalPending");
@@ -16,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("portalSignupForm");
   const logoutBtn = document.getElementById("portalLogout");
   const err = document.getElementById("portalLoginErr");
+
+  let portalSessions = [];
 
   function setErr(type, msg) {
     if (!err) return;
@@ -149,14 +150,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  function showPortal() {
+  async function loadPortalConfig() {
+    const token = window.LV_Auth && window.LV_Auth.accessToken();
+    if (!token) return;
+    try {
+      const res = await fetch("/api/portal-config", {
+        headers: { "Authorization": "Bearer " + token }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        portalSessions = data.sessions || [];
+      }
+    } catch (e) { /* silent */ }
+  }
+
+  async function showPortal() {
     if (loginWrap) loginWrap.style.display = "none";
     if (main) main.style.display = "block";
     if (logoutBtn) logoutBtn.style.display = "inline-flex";
-    // Greet the logged-in student by name
     const nm = sessionStorage.getItem("lv_portal_name");
     const greetEl = document.getElementById("portalGreeting");
     if (greetEl) greetEl.textContent = nm ? `Welcome back, ${nm.split(" ")[0]}! 👋` : "Welcome back! 👋";
+    await loadPortalConfig();
     renderSessions();
     renderHomework();
     renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
@@ -167,8 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderResource(containerId, field, btnLabel, readyText, pendingText) {
     const wrap = document.getElementById(containerId);
     if (!wrap) return;
-    const sessions = portal.sessions || [];
-    wrap.innerHTML = sessions.map(s => {
+    wrap.innerHTML = portalSessions.map(s => {
       const link = s[field];
       const has = link && link.trim() !== "";
       const action = has
@@ -188,8 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderSessions() {
     const wrap = document.getElementById("sessionsList");
-    const sessions = portal.sessions || [];
-    wrap.innerHTML = sessions.map(s => {
+    wrap.innerHTML = portalSessions.map(s => {
       const has = s.recording && s.recording.trim() !== "";
       const action = has
         ? `<a href="${s.recording}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording</a>`
@@ -208,8 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderHomework() {
     const wrap = document.getElementById("homeworkList");
-    const sessions = portal.sessions || [];
-    wrap.innerHTML = sessions.map(s => `
+    wrap.innerHTML = portalSessions.map(s => `
       <div class="hw-row">
         <div class="session-num">${s.unit}</div>
         <div class="session-info">

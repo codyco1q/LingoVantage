@@ -1,14 +1,13 @@
 /* =========================================================
    LingoVantage — Global Config
-   Non-secret settings only. Supabase credentials are now
-   handled server-side via Cloudflare Pages Functions.
+   Non-secret settings only. Supabase credentials and student
+   portal content are handled server-side via Cloudflare Pages
+   Functions (see /api/portal-config, /api/supabase/*).
    ========================================================= */
 
 (function () {
 
   window.LV_CONFIG = {
-    brand: "LingoVantage",
-
     /* ---- Contact / Social links ---- */
     whatsappGroup: "https://chat.whatsapp.com/LmqmGQjqEhmLnWrSYAQe7M",
     whatsappNumber: "201093567856",
@@ -17,37 +16,7 @@
     /* ---- Admin notifications via Telegram Bot ---- */
     notify: {
       enabled: true
-    },
-
-    /* ---- Student Portal content (current students area) ---- */
-    studentPortal: {
-
-      /* 12 units. For each unit add the link as it's ready.
-         Leave a link as "" to show "Coming soon".
-           recording    = session recording (Google Drive, etc.)
-           presentation = Canva slideshow link
-           mindmap      = Mind map link */
-      sessions: [
-        { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://drive.google.com/file/d/1d3T4hoiNN8Kv9K9elz-t2d8Hyx693cTR/view?usp=sharing", presentation: "https://canva.link/aoazz9v0qv200o6", mindmap: "https://miro.com/app/board/uXjVHIQXrMg=/?share_link_id=357044481221" },
-        { unit: 2,  title: "Unit 2",  homeworkPage: 22,  recording: "https://drive.google.com/file/d/1FZe7eUOZlpdG6LgOU__-JW9SkLe8bjbC/view?usp=sharing", presentation: "https://canva.link/30qh10jgrca64d5", mindmap: "https://miro.com/app/board/uXjVHG7LkHM=/?share_link_id=142149045315" },
-        { unit: 3,  title: "Unit 3",  homeworkPage: 30,  recording: "https://drive.google.com/file/d/1Qh1pH219cDVtddkTV-ot7Q0EkP9sIbm4/view?usp=sharing", presentation: "https://canva.link/kx582x524amccoz", mindmap: "https://miro.com/app/board/uXjVHE6SYc0=/?share_link_id=366901220545" },
-        { unit: 4,  title: "Unit 4",  homeworkPage: 38,  recording: "https://drive.google.com/file/d/1mKtcWLVQkbCWjy10DxW83ikFBdolyzX5/view?usp=sharing", presentation: "https://canva.link/rwsl8v49xsz9vha", mindmap: "https://miro.com/app/board/uXjVHBzXdc8=/?share_link_id=557110337314" },
-        { unit: 5,  title: "Unit 5",  homeworkPage: 46,  recording: "https://drive.google.com/file/d/1eJCl-4fGqqk5tyIAhz9tpFbxreiXNr3V/view?usp=sharing", presentation: "https://canva.link/n5wpabu5p9g4mqp", mindmap: "https://miro.com/app/board/uXjVHAi0gZc=/?share_link_id=841858833574" },
-        { unit: 6,  title: "Unit 6",  homeworkPage: 54,  recording: "https://drive.google.com/file/d/1ErJybEzg7GyYXBDbs5Un6dpV1eWIGtz7/view?usp=sharing", presentation: "https://canva.link/lxy7cxayec8ggv7", mindmap: "https://miro.com/app/board/uXjVH_HCllM=/?share_link_id=49946922519" },
-        { unit: 7,  title: "Unit 7",  homeworkPage: 62,  recording: "https://drive.google.com/file/d/1uKUz-welyj_jEvLQtr3ALQUSC9t7sW72/view?usp=sharing", presentation: "https://canva.link/6dvi5mlm01cqa0c", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/052c7e63-889a-4e4d-9e21-805eac70de16?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" },
-        { unit: 8,  title: "Unit 8",  homeworkPage: 70,  recording: "https://drive.google.com/file/d/13pHy9aRzzosvkLShAZGQvINo4WyBW8J7/view?usp=sharing", presentation: "https://canva.link/rr1amv20zpz3zs5", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/ba904976-00c3-4a2a-b3fa-6b4daf0d14f4?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" },
-        { unit: 9,  title: "Unit 9",  homeworkPage: 78,  recording: "https://drive.google.com/file/d/1JTNHwwgPHPlCbTvyb8Qnm5sXIi5iyIu-/view?usp=sharing", presentation: "https://canva.link/c7m2f33w5ir1s8u", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/0a30dc6d-2962-4a8e-a3b2-cbc109229da1?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" },
-        { unit: 10, title: "Unit 10", homeworkPage: 86,  recording: "https://drive.google.com/file/d/11B6o8hasRBx4G5Vv1tkaZAw1HSV0h7Qj/view?usp=sharing", presentation: "https://canva.link/22f988kxxb6pqhv", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/2b1c106a-8359-42a7-ba9b-e82745c7ff15?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" },
-        { unit: 11, title: "Unit 11", homeworkPage: 94,  recording: "", presentation: "", mindmap: "" },
-        { unit: 12, title: "Unit 12", homeworkPage: 102, recording: "", presentation: "", mindmap: "" }
-      ]
-    },
-
-    /* ---- Packages shown on signup + pricing ---- */
-    packages: [
-      { id: "fluency", name: "Fluency / باقة الطلاقة", desc: "Everyday speaking confidence" },
-      { id: "business", name: "Business / باقة العمل", desc: "Professional & workplace English" }
-    ]
+    }
   };
 
   /* Helper: is Supabase configured? (always true — handled server-side) */

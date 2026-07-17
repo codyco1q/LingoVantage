@@ -12,7 +12,7 @@ export async function onRequest(context) {
     });
   }
 
-  const subpath = context.params.path;
+  const subpath = Array.isArray(context.params.path) ? context.params.path.join("/") : context.params.path;
   const targetUrl = `${SUPABASE_URL}/storage/v1/object/${subpath}`;
 
   const headers = {

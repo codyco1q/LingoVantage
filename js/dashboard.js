@@ -135,7 +135,7 @@ async function loadRegistrations() {
   state.innerHTML = '<div class="dash-empty"><span class="spinner" style="border-top-color:var(--teal-400)"></span> Loading registrations…</div>';
 
   try {
-    LV_rows = await window.LV_Supabase.select(cfg.supabase.table || "students", { order: "created_at.desc" });
+    LV_rows = await window.LV_Supabase.select("students", { order: "created_at.desc" });
     renderStats(LV_rows);
     renderTable(LV_rows);
     state.innerHTML = "";

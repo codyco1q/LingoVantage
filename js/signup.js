@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* 1) Try to save to Supabase */
     if (window.LV_Supabase && window.LV_Supabase.ready()) {
       try {
-        await window.LV_Supabase.insert(cfg.supabase.table || "students", data);
+        await window.LV_Supabase.insert("students", data);
         savedToDB = true;
       } catch (err) {
         console.error(err);
