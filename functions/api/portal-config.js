@@ -35,7 +35,7 @@ export async function onRequestGet(context) {
 
     const profileRes = await fetch(
       `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=approved&limit=1`,
-      { headers: { "Authorization": `Bearer ${token}`, "apikey": SUPABASE_ANON_KEY, "Prefer": "return=representation" } }
+      { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=representation" } }
     );
     if (!profileRes.ok) {
       return new Response(JSON.stringify({ error: "Could not load profile" }), {

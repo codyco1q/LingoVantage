@@ -158,10 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Authorization": "Bearer " + token }
       });
       if (res.ok) {
-        const data = await res.json();
+        var data = await res.json();
         portalSessions = data.sessions || [];
+      } else {
+        var errData = await res.json().catch(function() { return {}; });
+        console.error("portal-config rejected:", res.status, errData);
       }
-    } catch (e) { /* silent */ }
+    } catch (e) { console.error("portal-config fetch error:", e); }
   }
 
   async function showPortal() {
