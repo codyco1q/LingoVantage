@@ -1,7 +1,7 @@
 /* =========================================================
    LingoVantage — Supabase Auth helper (email + password)
-   Uses the Supabase Auth REST endpoints directly (no SDK),
-   so it works on a static Netlify site with zero build step.
+   All Supabase Auth calls go through server-side Cloudflare
+   Pages Functions so the API key is never exposed.
 
    Stores the session in localStorage so students stay logged
    in across page navigations.
@@ -14,11 +14,7 @@
    ========================================================= */
 
 window.LV_Auth = (function () {
-  const SKEY = "lv_auth_session";
-  function cfg() { return (window.LV_CONFIG || {}).supabase || {}; }
-  function base() { return cfg().url + "/auth/v1"; }
-  function rest() { return cfg().url + "/rest/v1"; }
-  function apikey() { return cfg().anonKey; }
+  var SKEY = "lv_auth_session";
 
   function saveSession(s) { try { localStorage.setItem(SKEY, JSON.stringify(s)); } catch (e) {} }
   function getSession() { try { return JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) { return null; } }
@@ -26,23 +22,19 @@ window.LV_Auth = (function () {
 
   /* ---- Sign up (email + password) + create profile row ---- */
   async function signUp(email, password, fullName) {
-    const res = await fetch(`${base()}/signup`, {
+    var res = await fetch("/api/supabase-auth/signup", {
       method: "POST",
-      headers: { "apikey": apikey(), "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, data: { full_name: fullName } })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password, data: { full_name: fullName } })
     });
-    const data = await res.json();
+    var data = await res.json();
     if (!res.ok) throw new Error(data.msg || data.error_description || data.error || "Sign up failed");
 
-    // Create a profile row (approved = false). Uses the user id if returned.
-    const uid = (data.user && data.user.id) || (data.id) || null;
+    var uid = (data.user && data.user.id) || data.id || null;
     try {
-      await fetch(`${rest()}/student_profiles`, {
+      await fetch("/api/supabase/student_profiles", {
         method: "POST",
-        headers: {
-          "apikey": apikey(), "Authorization": "Bearer " + apikey(),
-          "Content-Type": "application/json", "Prefer": "return=minimal"
-        },
+        headers: { "Content-Type": "application/json", "Prefer": "return=minimal" },
         body: JSON.stringify({ id: uid, email: email, full_name: fullName, approved: false })
       });
     } catch (e) { console.warn("profile create skipped:", e); }
@@ -52,12 +44,12 @@ window.LV_Auth = (function () {
 
   /* ---- Log in ---- */
   async function signIn(email, password) {
-    const res = await fetch(`${base()}/token?grant_type=password`, {
+    var res = await fetch("/api/supabase-auth/token?grant_type=password", {
       method: "POST",
-      headers: { "apikey": apikey(), "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
     });
-    const data = await res.json();
+    var data = await res.json();
     if (!res.ok) throw new Error(data.msg || data.error_description || data.error || "Login failed");
     saveSession(data);
     return data;
@@ -67,39 +59,36 @@ window.LV_Auth = (function () {
 
   /* ---- Current user (from stored session) ---- */
   function currentUser() {
-    const s = getSession();
+    var s = getSession();
     return s && s.user ? s.user : null;
   }
   function accessToken() {
-    const s = getSession();
+    var s = getSession();
     return s ? s.access_token : null;
   }
 
-  /* ---- Look up this user's profile (approved flag, name) ----
-     Uses the anon apikey for the read so it matches the
-     "to anon" RLS policy (a logged-in user's JWT has role
-     'authenticated', which the anon-only policy would block). */
+  /* ---- Look up this user's profile (approved flag, name) ---- */
   async function getProfile() {
-    const u = currentUser();
+    var u = currentUser();
     if (!u) return null;
-    const res = await fetch(`${rest()}/student_profiles?id=eq.${u.id}&select=*`, {
-      headers: { "apikey": apikey(), "Authorization": "Bearer " + apikey() }
+    var res = await fetch("/api/supabase/student_profiles?id=eq." + u.id + "&select=*", {
+      headers: { "Prefer": "return=representation" }
     });
     if (!res.ok) return null;
-    const rows = await res.json();
+    var rows = await res.json();
     return rows && rows.length ? rows[0] : null;
   }
 
   /* ---- Password reset email ---- */
   async function resetPassword(email) {
-    const res = await fetch(`${base()}/recover`, {
+    var res = await fetch("/api/supabase-auth/recover", {
       method: "POST",
-      headers: { "apikey": apikey(), "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email })
     });
-    if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.msg || "Could not send reset email"); }
+    if (!res.ok) { var d = await res.json().catch(function () { return {}; }); throw new Error(d.msg || "Could not send reset email"); }
     return true;
   }
 
-  return { signUp, signIn, signOut, currentUser, accessToken, getProfile, resetPassword, getSession };
+  return { signUp: signUp, signIn: signIn, signOut: signOut, currentUser: currentUser, accessToken: accessToken, getProfile: getProfile, resetPassword: resetPassword, getSession: getSession };
 })();

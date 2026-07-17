@@ -49,23 +49,11 @@ whatsappGroup: "https://chat.whatsapp.com/LmqmGQjqEhmLnWrSYAQe7M",  // ✅ alrea
 whatsappNumber: "201093567856",   // ✅ already set (your number)
 discordInvite: "#",               // ⬅ paste your Discord invite when ready
 
-supabase: {
-  url: "https://YOURPROJECT.supabase.co",   // ⬅ from Supabase > Settings > API
-  anonKey: "eyJhbGciOi...",                  // ⬅ the public "anon" key
-  table: "student"                            // ✅ matches your table
-},
-
-dashboardPassword: "...",   // ⬅ set in .env as VITE_DASHBOARD_PASSWORD
-
-// The level test is behind a simple login (set in .env):
-assessmentAuth: {
-  username: "...",
-  password: "..."
-}
+// Supabase is now configured server-side via Cloudflare Pages environment variables.
+// Set SUPABASE_URL, SUPABASE_ANON_KEY, etc. in Cloudflare Pages dashboard.
 ```
 
-> 🔑 **Test page login:** credentials are in your `.env` file.
-> Run `npm run env` after editing `.env` to regenerate `js/env-config.js`.
+> 🔑 **Test page login:** credentials are set as environment variables in Cloudflare Pages.
 
 ### 2) Supabase table
 You already created the `student` table with these columns (✅ matches the code):
@@ -269,7 +257,7 @@ Student fills Signup form
 ---
 
 ## 🧪 Assessment test
-- Protected by a login: set credentials in `.env` then run `npm run env`.
+- Protected by a login: set credentials as environment variables in Cloudflare Pages.
 - 30 questions: 10 × A1, 10 × A2, 10 × B1.
 - 1 point per correct answer (score out of 30).
 - Level logic: you must score ≥60% in lower sections to claim a higher level.

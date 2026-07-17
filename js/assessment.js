@@ -56,44 +56,9 @@ let LV_timerId = null;
 
 /* ---------- DOM ---------- */
 document.addEventListener("DOMContentLoaded", () => {
-  initTestLogin();
   const startBtn = document.getElementById("startTestBtn");
   if (startBtn) startBtn.addEventListener("click", startTest);
 });
-
-/* ---------- LOGIN GATE ---------- */
-function initTestLogin() {
-  const loginWrap = document.getElementById("testLoginWrap");
-  const intro = document.getElementById("testIntro");
-  const form = document.getElementById("testLoginForm");
-  if (!form) return;
-
-  const auth = (window.LV_CONFIG || {}).assessmentAuth || {};
-
-  // Already unlocked this session?
-  if (sessionStorage.getItem("lv_test_auth") === "1") {
-    if (loginWrap) loginWrap.style.display = "none";
-    if (intro) intro.style.display = "block";
-    return;
-  }
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const user = document.getElementById("testUser").value.trim();
-    const pass = document.getElementById("testPassInput").value;
-    const err = document.getElementById("testLoginErr");
-
-    if (user === auth.username && pass === auth.password) {
-      sessionStorage.setItem("lv_test_auth", "1");
-      if (loginWrap) loginWrap.style.display = "none";
-      if (intro) intro.style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      err.className = "alert show error";
-      err.textContent = "❌ Wrong username or password.";
-    }
-  });
-}
 
 function startTest() {
   document.getElementById("testIntro").style.display = "none";
