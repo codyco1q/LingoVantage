@@ -177,8 +177,23 @@ window.LV_HOMEWORK = [
       { q: 10, text: "Put in order to make a question: 'find / I / a / where / taxi / can / ?' ➔ \"___________\"", accept: [["where can i find a taxi"]] }
     ]
   },
-  /* ----- Units 11–12: coming soon (add questions later) ----- */
-  { unit: 11, title: "Unit 11 Homework", subtitle: "", available: false },
+  {
+    unit: 11, title: "Unit 11 Homework", subtitle: "Achievers", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about your abilities and life events. Describe what you can or can't do well (e.g., speak languages, play sports) and mention important years in your life using object pronouns. Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"I love my parents very much, and I think they love ________ too.\" (me/my/mine)", accept: [["me"]] },
+      { q: 2,  text: "\"Those shoes in the window are beautiful! I really want to buy ________.\" (it/them/they)", accept: [["them"]] },
+      { q: 3,  text: "\"Sarah is a very good friend. I met ________ when we were at university.\" (she/her/hers)", accept: [["her"]] },
+      { q: 4,  text: "\"Beto is an amazing piano player, but he ________ play guitar at all—he doesn't know how.\" (can/can't)", accept: [["cant", "can not"]] },
+      { q: 5,  text: "\"________ you drive a car?\" \"Yes, I can, but not very well.\"", accept: [["can"]] },
+      { q: 6,  text: "Complete the life event sequence: be born ➔ go to school ➔ finish school ➔ ________ a job ➔ get married.", accept: [["get"]] },
+      { q: 7,  text: "How do you speak the year 1998 in words? ➔ \"___________\"", accept: [["nineteen ninety eight"]] },
+      { q: 8,  text: "A: \"Can Leila sing?\" B: \"Yes, quite ________. She has a nice voice.\" (good/well/at all)", accept: [["well"]] },
+      { q: 9,  text: "\"What do you ________ of Central Park?\" (think/like/agree)", accept: [["think"]] },
+      { q: 10, text: "A: \"I think London Zoo is very nice.\" B: \"Maybe you're ________, but I think it's very expensive.\" (agree/right/think)", accept: [["right"]] }
+    ]
+  },
+  /* ----- Unit 12: coming soon (add questions later) ----- */
   { unit: 12, title: "Unit 12 Homework", subtitle: "", available: false }
 ];
 
