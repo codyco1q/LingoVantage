@@ -581,6 +581,12 @@ table.data .pill { font-size: .75rem; padding: 4px 10px; border-radius: 100px; b
   color: var(--text-dim); background: var(--bg-soft);
   border: 1px solid var(--border); border-radius: 100px; padding: 8px 16px;
 }
+.telegram-banner {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  background: var(--surface); border: 1px solid rgba(34,211,196,.25);
+  border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px;
+}
+.telegram-banner p { margin: 0; font-weight: 600; }
 .hw-page { flex-shrink: 0; font-size: 1rem; color: var(--text-soft); }
 .hw-page b { color: var(--teal-300); font-size: 1.15rem; }
 

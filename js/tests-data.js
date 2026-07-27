@@ -261,7 +261,153 @@ window.LV_TESTS = [
       { q: 30, text: "They didn't had a big breakfast this morning.", answer: "WRONG" }
     ]
   },
+  {
+    id: "units-10-12-progress",
+    name: "Progress Review Exam",
+    subtitle: "Units 10–12 · Here & Now, Achievers & Plans",
+    units: "10-12",
+    available: true,
+    timeMinutes: 45,
 
-  /* ----- Placeholders for the remaining tests (add later) ----- */
-{ id: "units-10-12", name: "Units 10–12 Test", subtitle: "Coming soon", units: "10–12", available: false }
+    /* ---- PART A: Multiple Choice (Answer = correct option key) ---- */
+    partA: [
+      // Unit 10: Here and Now
+      { 
+        q: 1,  
+        text: "Which sentence correctly describes what someone is doing right now?", 
+        options: [["a","He sitting in the car outside the house."],["b","He is sitting in the car outside the house."],["c","He sits in the car outside the house now."],["d","He is sit in the car outside the house."]], 
+        answer: "b" 
+      },
+      { 
+        q: 2,  
+        text: "A: \"Can I have some coffee, please?\"\nB: \"Sorry, I ________ dinner right now. Can you wait?\"", 
+        options: [["a","cook"],["b","cooking"],["c","am cooking"],["d","'m cook"]], 
+        answer: "c" 
+      },
+      { 
+        q: 3,  
+        text: "Complete the sentence with the correct prepositions:\n\"There is a beautiful picture ________ the wall ________ the living room.\"", 
+        options: [["a","in / on"],["b","at / in"],["c","on / in"],["d","on / at"]], 
+        answer: "c" 
+      },
+      { 
+        q: 4,  
+        text: "Which preposition of place correctly completes the collocation in this sentence?\n\"John is not at home today. He is ________ work in London.\"", 
+        options: [["a","on"],["b","in"],["c","at"],["d","to"]], 
+        answer: "c" 
+      },
+      { 
+        q: 5,  
+        text: "Which is the correct Present Continuous negative sentence?", 
+        options: [["a","We aren't staying in a hotel; we are camping in a garden."],["b","We not staying in a hotel; we are camping in a garden."],["c","We don't staying in a hotel; we are camping in a garden."],["d","We are no staying in a hotel; we are camping in a garden."]], 
+        answer: "a" 
+      },
+      { 
+        q: 6,  
+        text: "Which question has the correct word order for asking about travel information?", 
+        options: [["a","Where I can find a taxi?"],["b","Where can I find a taxi?"],["c","Where can find I a taxi?"],["d","Where find can I a taxi?"]], 
+        answer: "b" 
+      },
+      { 
+        q: 7,  
+        text: "Passenger: \"Excuse me, which ________ is the next train to London?\"\nOfficial: \"It's Platform 3. It leaves ________ five minutes.\"", 
+        options: [["a","bus stop / in"],["b","platform / at"],["c","platform / in"],["d","station / at"]], 
+        answer: "c" 
+      },
+      // Unit 11: Achievers
+      { 
+        q: 8,  
+        text: "Choose the correct chronological sequence of life events:", 
+        options: [["a","finish school ➔ be born ➔ go to university ➔ get a job"],["b","be born ➔ finish school ➔ go to university ➔ get a job"],["c","go to university ➔ be born ➔ finish school ➔ get a job"],["d","finish school ➔ go to university ➔ get a job ➔ be born"]], 
+        answer: "b" 
+      },
+      { 
+        q: 9,  
+        text: "How do you say the year \"1998\" in English?", 
+        options: [["a","Nineteen hundred ninety-eight"],["b","One thousand nine hundred ninety-eight"],["c","Nineteen ninety-eight"],["d","One nine nine eight"]], 
+        answer: "c" 
+      },
+      { 
+        q: 10, 
+        text: "Complete the sentence with the correct pronoun:\n\"Sarah is a very good friend of mine. I met ________ at university last year.\"", 
+        options: [["a","she"],["b","her"],["c","him"],["d","us"]], 
+        answer: "b" 
+      },
+      { 
+        q: 11, 
+        text: "A: \"Can you play the guitar?\"\nB: \"No, I can't play ________. I am a terrible musician!\"", 
+        options: [["a","very well"],["b","quite well"],["c","not at all"],["d","at all"]], 
+        answer: "d" 
+      },
+      { 
+        q: 12, 
+        text: "Which sentence correctly expresses a physical ability?", 
+        options: [["a","My brother can't dance very well."],["b","My brother can't to dance very well."],["c","My brother can't dancing very well."],["d","My brother doesn't can dance very well."]], 
+        answer: "a" 
+      },
+      { 
+        q: 13, 
+        text: "A: \"I think London Zoo is very nice.\"\nB: \"________. It's a wonderful place to visit.\"", 
+        options: [["a","Maybe you're right"],["b","Yes, I agree"],["c","I don't think so"],["d","I'm not so sure"]], 
+        answer: "b" 
+      },
+      { 
+        q: 14, 
+        text: "Replace the repeated nouns with the correct pronouns:\n\"Seema Bhadoria is a very strong woman. Seema can pull a truck with Seema's teeth!\"", 
+        options: [["a","She / her"],["b","Her / she"],["c","She / his"],["d","He / her"]], 
+        answer: "a" 
+      },
+      // Unit 12: Plans
+      { 
+        q: 15, 
+        text: "Complete the positive future plan:\n\"Joel has had a very long day. He ________ to sleep for a long time tonight.\"", 
+        options: [["a","is going"],["b","goes"],["c","is going to"],["d","going to"]], 
+        answer: "c" 
+      },
+      { 
+        q: 16, 
+        text: "Complete the negative future plan:\n\"We are too tired. We ________ do any housework at the weekend.\"", 
+        options: [["a","aren't going to"],["b","are not going"],["c","going to not"],["d","don't going to"]], 
+        answer: "a" 
+      },
+      { 
+        q: 17, 
+        text: "What is the correct question structure for asking about weekend plans?", 
+        options: [["a","What you are going to do this weekend?"],["b","What are you going to do this weekend?"],["c","What do you going to do this weekend?"],["d","What are you going to doing this weekend?"]], 
+        answer: "b" 
+      },
+      { 
+        q: 18, 
+        text: "Complete the date phrase with the correct ordinal number spelling:\n\"Our next English class is on Tuesday, the ________ (22nd) of November.\"", 
+        options: [["a","twenty-two"],["b","twenty-second"],["c","twentieth-second"],["d","twenty-twoth"]], 
+        answer: "b" 
+      },
+      { 
+        q: 19, 
+        text: "Which sentence contains the correct future time expression?", 
+        options: [["a","I am going to visit my parents at next week."],["b","I am going to visit my parents next week."],["c","I am going to visit my parents in next week."],["d","I am going to visit my parents on next week."]], 
+        answer: "b" 
+      },
+      { 
+        q: 20, 
+        text: "Choose the most polite and natural response to decline an invitation:\nHost: \"Would you like to come to my house for dinner on Saturday?\"\nGuest: \"________\"", 
+        options: [["a","No, I wouldn't."],["b","I'd love to, but I'm busy."],["c","Yes, I would."],["d","No, I am too tired."]], 
+        answer: "b" 
+      }
+    ],
+
+    /* ---- PART B: Right / Wrong (Answer = "RIGHT" | "WRONG") ---- */
+    partB: [
+      { q: 21, text: "I am writeing an email to my friend in Canada right now.", answer: "WRONG" },
+      { q: 22, text: "Look! It's raining outside, so we can't play football in the garden.", answer: "RIGHT" },
+      { q: 23, text: "My sister is having coffee in a café, but my husband is at work.", answer: "RIGHT" },
+      { q: 24, text: "Those shoes are very beautiful. Can I buy they, please?", answer: "WRONG" },
+      { q: 25, text: "She can swim quite well, but she can't to drive a car.", answer: "WRONG" },
+      { q: 26, text: "He was born in nineteen ninety-eight (1998).", answer: "RIGHT" },
+      { q: 27, text: "We going to make a cake for Melissa's birthday tomorrow.", answer: "WRONG" },
+      { q: 28, text: "Mick is going to have a long hot bath after the TV programme.", answer: "RIGHT" },
+      { q: 29, text: "We are going to go to a restaurant for lunch on tomorrow.", answer: "WRONG" },
+      { q: 30, text: "Would you like to go for a walk at the weekend?", answer: "RIGHT" }
+    ]
+  },
 ];

@@ -193,8 +193,22 @@ window.LV_HOMEWORK = [
       { q: 10, text: "A: \"I think London Zoo is very nice.\" B: \"Maybe you're ________, but I think it's very expensive.\" (agree/right/think)", accept: [["right"]] }
     ]
   },
-  /* ----- Unit 12: coming soon (add questions later) ----- */
-  { unit: 12, title: "Unit 12 Homework", subtitle: "", available: false }
+  {
+    unit: 12, title: "Unit 12 Homework", subtitle: "Plans", available: true, voiceSeconds: 60,
+    voicePrompt: "Talk about your future plans and intentions. Mention what you are going to do next week or during your next holiday, including dates and activities (e.g., travel, clean your room, visit friends). Speak for up to 60 seconds.",
+    questions: [
+      { q: 1,  text: "\"I am very tired tonight. I ________________________ (have) a long hot bath and sleep early.\" (be going to)", accept: [["m going to have", "am going to have"]] },
+      { q: 2,  text: "\"We ________________________ (not watch) any TV this evening because we want to finish our homework.\" (be going to negative)", accept: [["arent going to watch", "are not going to watch"]] },
+      { q: 3,  text: "\"___________ you ___________ (visit) your friend in London next weekend?\" (be going to question)", accept: [["are / going to visit", "are going to visit"]] },
+      { q: 4,  text: "\"What time ___________ he ___________ (arrive) at the airport tomorrow morning?\" (be going to question)", accept: [["is / going to arrive", "is going to arrive"]] },
+      { q: 5,  text: "Correct the error: 'He is going to plays football with us next Saturday.' ➔ \"He is going to ___________ football with us next Saturday.\"", accept: [["play"]] },
+      { q: 6,  text: "Write the ordinal number in words: \"My birthday is on the 22nd of January.\" ➔ \"twenty-___________ of January.\"", accept: [["second"]] },
+      { q: 7,  text: "Complete with the correct preposition (or type 'none' if no preposition is needed): \"They are going to travel to Spain ___________ next week.\"", accept: [["none", "x", "-"]] },
+      { q: 8,  text: "\"I need to ___________ my bedroom because it is very messy.\" (do / make / clean / go)", accept: [["clean"]] },
+      { q: 9,  text: "Which word contains the voiced /v/ sound? (week / window / visit / homework / warm)", accept: [["visit"]] },
+      { q: 10, text: "A: \"Would you ___________ to come for coffee tomorrow?\" B: \"I'd ___________ to, but I'm busy.\"", accept: [["like / love", "like love"]] }
+    ]
+  },
 ];
 
 /* Shared answer-normalizer (used by portal + dashboard) */
