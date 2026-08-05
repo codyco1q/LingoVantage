@@ -66,7 +66,13 @@ export async function onRequestGet(context) {
       { unit: 12, title: "Unit 12", homeworkPage: 102, recording: "https://t.me/c/4428371838/18", presentation: "https://canva.link/ht1sqdafrtoy3fm", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/5de465b0-57be-4895-ad39-84a668636d4d?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" }
     ];
 
-    return new Response(JSON.stringify({ sessions }), {
+    const revisions = [
+      { unit: 1, title: "Revision Session 1", link: "https://t.me/c/4428371838/19" },
+      { unit: 2, title: "Revision Session 2", link: "" },
+      { unit: 3, title: "Revision Session 3", link: "" }
+    ];
+
+    return new Response(JSON.stringify({ sessions, revisions }), {
       headers: { "Content-Type": "application/json" }
     });
   } catch (err) {

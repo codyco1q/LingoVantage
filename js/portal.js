@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const err = document.getElementById("portalLoginErr");
 
   let portalSessions = [];
+  let portalRevisions = [];
 
   function setErr(type, msg) {
     if (!err) return;
@@ -160,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (res.ok) {
         var data = await res.json();
         portalSessions = data.sessions || [];
+        portalRevisions = data.revisions || [];
       } else {
         var errData = await res.json().catch(function() { return {}; });
         console.error("portal-config rejected:", res.status, errData);
@@ -179,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHomework();
     renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
     renderResource("miroList", "mindmap", "🧩 Open mind map", "Mind map available", "Not ready yet");
+    renderRevisions();
   }
 
   /* Generic renderer for a per-unit link list (presentations, miro, …) */
@@ -216,6 +219,26 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="session-info">
             <strong>${s.title}</strong>
             <span>${has ? "Recording available" : "Not recorded yet"}</span>
+          </div>
+          <div class="session-action">${action}</div>
+        </div>`;
+    }).join("");
+  }
+
+  function renderRevisions() {
+    const wrap = document.getElementById("revisionsList");
+    if (!wrap) return;
+    wrap.innerHTML = portalRevisions.map(r => {
+      const has = r.link && r.link.trim() !== "";
+      const action = has
+        ? `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Open session</a>`
+        : `<span class="soon-pill">Coming soon</span>`;
+      return `
+        <div class="session-row ${has ? "" : "pending"}">
+          <div class="session-num">${r.unit}</div>
+          <div class="session-info">
+            <strong>${r.title}</strong>
+            <span>${has ? "Session available" : "Not ready yet"}</span>
           </div>
           <div class="session-action">${action}</div>
         </div>`;
