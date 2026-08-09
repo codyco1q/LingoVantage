@@ -68,7 +68,7 @@ export async function onRequestGet(context) {
 
     const revisions = [
       { unit: 1, title: "Revision Session 1", link: "https://t.me/c/4428371838/19" },
-      { unit: 2, title: "Revision Session 2", link: "" },
+      { unit: 2, title: "Revision Session 2", link: "https://t.me/c/4428371838/20" },
       { unit: 3, title: "Revision Session 3", link: "" }
     ];
 

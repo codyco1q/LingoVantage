@@ -178,10 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (greetEl) greetEl.textContent = nm ? `Welcome back, ${nm.split(" ")[0]}! 👋` : "Welcome back! 👋";
     await loadPortalConfig();
     renderSessions();
+    renderRevisions();
     renderHomework();
     renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
     renderResource("miroList", "mindmap", "🧩 Open mind map", "Mind map available", "Not ready yet");
-    renderRevisions();
   }
 
   /* Generic renderer for a per-unit link list (presentations, miro, …) */
@@ -231,14 +231,14 @@ document.addEventListener("DOMContentLoaded", () => {
     wrap.innerHTML = portalRevisions.map(r => {
       const has = r.link && r.link.trim() !== "";
       const action = has
-        ? `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Open session</a>`
-        : `<span class="soon-pill">Coming soon</span>`;
+        ? `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Watch on Telegram</a>`
+        : `<a href="https://t.me/+Ppgqza1DYqxhNjVk" target="_blank" rel="noopener" class="btn btn-primary">✈️ Join Telegram</a>`;
       return `
         <div class="session-row ${has ? "" : "pending"}">
           <div class="session-num">${r.unit}</div>
           <div class="session-info">
             <strong>${r.title}</strong>
-            <span>${has ? "Session available" : "Not ready yet"}</span>
+            <span>${has ? "Revision session" : "Not in the Telegram channel yet?"}</span>
           </div>
           <div class="session-action">${action}</div>
         </div>`;

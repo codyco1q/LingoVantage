@@ -116,8 +116,8 @@
           <button class="tab-btn" data-tab="tabMiro">🧩 Mind Maps</button>
           <button class="tab-btn" data-tab="tabHomework">📚 Homework</button>
           <button class="tab-btn" data-tab="tabSubmit">📤 Submit Homework</button>
-          <button class="tab-btn" data-tab="tabTests">📝 Tests</button>
           <button class="tab-btn" data-tab="tabRevisions">🔁 Revisions</button>
+          <button class="tab-btn" data-tab="tabTests">📝 Tests</button>
         </div>
 
         <!-- Sessions panel -->
@@ -152,6 +152,12 @@
           <p style="color:var(--text-soft);margin-bottom:18px;">Each unit has a short quiz plus a 60-second voice note. You can submit each unit <b>once</b>.</p>
           <div id="hwList" class="session-list"></div>
           <div id="hwView" style="display:none;"></div>
+        </div>
+
+        <!-- Revisions panel -->
+        <div id="tabRevisions" class="tab-panel">
+          <p style="color:var(--text-soft);margin-bottom:18px;">Access your revision sessions below.</p>
+          <div id="revisionsList" class="session-list"></div>
         </div>
 
         <!-- Tests panel -->
