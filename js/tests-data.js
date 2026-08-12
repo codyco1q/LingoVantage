@@ -410,4 +410,100 @@ window.LV_TESTS = [
       { q: 30, text: "Would you like to go for a walk at the weekend?", answer: "RIGHT" }
     ]
   },
+
+  /* =========================================================
+     FINAL A1 LEVEL EXAMINATION
+     Full CEFR A1 capstone covering all 12 units (100 marks).
+     NOT auto-graded — the teacher reviews every submission on
+     the dashboard and delivers the result to the student.
+     Score fields stay empty until the teacher grades it.
+     ========================================================= */
+  {
+    id: "a1-final-exam-v2",
+    name: "A1 Level Final Examination (v2)",
+    subtitle: "CEFR A1 Level Completion · Written & Speaking Capstone",
+    units: "1–12",
+    available: true,
+    timeMinutes: 60,
+    totalMarks: 100,
+
+    /* ---- SECTION I: MULTIPLE CHOICE (22 Qs, scaled to 35 marks) ---- */
+    partA: [
+      { q: 1,  unit: "Unit 1",  text: "My brother ________ a manager at a large bank in Cairo.", options: [["a","be"],["b","is"],["c","are"]], answer: "b" },
+      { q: 2,  unit: "Unit 2",  text: "This is Zoe and this is ________ sister, Kristina. They are both from Ukraine.", options: [["a","she"],["b","her"],["c","his"]], answer: "b" },
+      { q: 3,  unit: "Unit 2",  text: "I need to buy two new ________ for my holiday to London next week.", options: [["a","suitcase"],["b","suitcases"],["c","suitcasees"]], answer: "b" },
+      { q: 4,  unit: "Unit 3",  text: "I ________ drink coffee in the evening because it keeps me awake.", options: [["a","don't"],["b","doesn't"],["c","am not"]], answer: "a" },
+      { q: 5,  unit: "Unit 3",  text: "He ________ breakfast at 7:00 in the morning.", options: [["a","has always"],["b","always has"],["c","always have"]], answer: "b" },
+      { q: 6,  unit: "Unit 4",  text: "My sister ________ English at university on Mondays and Wednesdays.", options: [["a","study"],["b","studies"],["c","studyes"]], answer: "b" },
+      { q: 7,  unit: "Unit 4",  text: "Where ________ live with your family?", options: [["a","do you"],["b","you do"],["c","are you"]], answer: "a" },
+      { q: 8,  unit: "Unit 5",  text: "There ________ nice hotels in this beautiful mountain town.", options: [["a","are a few"],["b","is a few"],["c","are any"]], answer: "a" },
+      { q: 9,  unit: "Unit 5",  text: "There ________ any blankets in the hotel room. Can you bring some, please?", options: [["a","isn't"],["b","are no"],["c","aren't"]], answer: "c" },
+      { q: 10, unit: "Unit 6",  text: "Youssef ________ to school on Fridays. He always stays at home.", options: [["a","don't go"],["b","doesn't goes"],["c","doesn't go"]], answer: "c" },
+      { q: 11, unit: "Unit 6",  text: "What time ________ she usually finish work in the evening?", options: [["a","do"],["b","does"],["c","are"]], answer: "b" },
+      { q: 12, unit: "Unit 7",  text: "Look at ________ glasses in my hand. They are very beautiful!", options: [["a","this"],["b","these"],["c","those"]], answer: "b" },
+      { q: 13, unit: "Unit 7",  text: "This is my ________ car. He bought it last month.", options: [["a","father's"],["b","fathers"],["c","father"]], answer: "a" },
+      { q: 14, unit: "Unit 8",  text: "Where ________ you yesterday afternoon at 4:00? You weren't at work.", options: [["a","was"],["b","were"],["c","did"]], answer: "b" },
+      { q: 15, unit: "Unit 8",  text: "She ________ to the Sunday Flea Market and bought an old clock.", options: [["a","goed"],["b","went"],["c","go"]], answer: "b" },
+      { q: 16, unit: "Unit 9",  text: "They ________ go to the beach yesterday because it was too cold and rainy.", options: [["a","didn't went"],["b","didn't"],["c","don't"]], answer: "b" },
+      { q: 17, unit: "Unit 10", text: "Listen! The baby ________ in the bedroom right now.", options: [["a","crying"],["b","is crying"],["c","are crying"]], answer: "b" },
+      { q: 18, unit: "Unit 10", text: "I can't talk right now because I ________ my homework.", options: [["a","am doing"],["b","doing"],["c","do"]], answer: "a" },
+      { q: 19, unit: "Unit 11", text: "I love my parents very much, and I think they love ________ too.", options: [["a","I"],["b","my"],["c","me"]], answer: "c" },
+      { q: 20, unit: "Unit 11", text: "He is an amazing cook, but he ________ play the guitar at all—he doesn't know how.", options: [["a","can't"],["b","can"],["c","could"]], answer: "a" },
+      { q: 21, unit: "Unit 12", text: "They ________ visit their family in Jordan next month.", options: [["a","going to"],["b","are going to"],["c","will going to"]], answer: "b" },
+      { q: 22, unit: "Unit 12", text: "I ________ watch TV tonight because I am going to study for my level exam.", options: [["a","am not going to"],["b","don't going to"],["c","not going to"]], answer: "a" }
+    ],
+
+    /* ---- SECTION II: RIGHT OR WRONG (10 Qs, scaled to 15 marks) ---- */
+    partB: [
+      { q: 23, unit: "Unit 1",  text: "Sentence: 'My brother very happy today because he has a new car.'", answer: "WRONG", correction: "My brother is very happy today because he has a new car." },
+      { q: 24, unit: "Unit 2",  text: "Sentence: 'This is she book, and that is my phone.'", answer: "WRONG", correction: "This is her book, and that is my phone." },
+      { q: 25, unit: "Unit 3",  text: "Sentence: 'We always go to the park on Saturdays.'", answer: "RIGHT", correction: "Correct as written." },
+      { q: 26, unit: "Unit 4",  text: "Sentence: 'My father live in London, but my brother lives in Paris.'", answer: "WRONG", correction: "My father lives in London, but my brother lives in Paris." },
+      { q: 27, unit: "Unit 5",  text: "Sentence: 'Is a very nice hotel in this city.'", answer: "WRONG", correction: "There is a very nice hotel in this city." },
+      { q: 28, unit: "Unit 6",  text: "Sentence: 'She doesn't likes fish, so she never eats it.'", answer: "WRONG", correction: "She doesn't like fish, so she never eats it." },
+      { q: 29, unit: "Unit 7",  text: "Sentence: 'This is the car of my friend, Khalid.'", answer: "WRONG", correction: "This is my friend Khalid's car." },
+      { q: 30, unit: "Unit 8",  text: "Sentence: 'We watcht a really interesting film on TV last night.'", answer: "WRONG", correction: "We watched a really interesting film on TV last night." },
+      { q: 31, unit: "Unit 9",  text: "Sentence: 'I didn't went to the park because it was raining.'", answer: "WRONG", correction: "I didn't go to the park because it was raining." },
+      { q: 32, unit: "Unit 12", text: "Sentence: 'We going to have a party next weekend.'", answer: "WRONG", correction: "We are going to have a party next weekend." }
+    ],
+
+    /* ---- SECTION III: FUNCTIONAL WRITING (20 marks) ---- */
+    hasWritingTask: true,
+    writingTask: {
+      title: "Section III: Functional Writing — Text Message Response (20 Marks)",
+      minWords: 40,
+      maxWords: 60,
+      incomingMessage: {
+        sender: "Youssef (WhatsApp)",
+        text: "Hi! Would you like to come to my house for a dinner party this Friday at 7:00 PM? My brother is going to make some traditional food, and we can play video games. Let me know!"
+      },
+      instructions: [
+        "Start with a friendly, informal text greeting (e.g., Hi Youssef! / Hey man!).",
+        "Thank him for the invitation.",
+        "Decline politely and explain why you cannot come (MUST use 'because' and 'also').",
+        "State what you are doing THIS Friday night (use Present Continuous).",
+        "Propose a new plan for NEXT weekend instead (use 'be going to').",
+        "End with an informal, friendly text sign-off."
+      ],
+      placeholder: "Type your text message reply here (40-60 words)..."
+    },
+
+    /* ---- COMPONENT 2: SPEAKING CAPSTONE (30 marks total) ---- */
+    hasVoiceTask: true,
+    voiceSeconds: 60,
+    voicePrompts: [
+      {
+        task: 1,
+        title: "Task 1: The Personal Elevator Pitch (15 Marks)",
+        prompt: "Record a 60-second self-introduction. State your name, nationality, and where you are from. Describe your job or daily routine, your hometown, and highlight three things you can do well and one thing you cannot do at all.",
+        criteria: "Evaluated on: 'to be' copula, Present Simple routines, possessive adjectives, and modal 'can/can't' with degree modifiers ('very well', 'at all')."
+      },
+      {
+        task: 2,
+        title: "Task 2: Holiday Narrative & Future Ambitions (15 Marks)",
+        prompt: "Record a 60-second voice note describing a memorable past holiday (where you went, how you travelled, what the weather was like, and what you did). Then, describe your concrete future plans for your next weekend or holiday using 'be going to'.",
+        criteria: "Evaluated on: Tense shifts (Past Simple to 'be going to'), transport prepositions, month pronunciations, and ordinal dates."
+      }
+    ]
+  },
 ];

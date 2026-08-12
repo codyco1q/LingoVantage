@@ -216,10 +216,18 @@ async function loadResults() {
   }
 }
 
+/* A submission for a manual-review exam (writing and/or speaking).
+   It has no score yet — the teacher grades it by hand. */
+function isReviewRow(r) {
+  const t = (window.LV_TESTS || []).find(x => x.id === r.test_id);
+  return !!(t && (t.hasWritingTask || t.hasVoiceTask));
+}
+
 function renderResultStats(rows) {
+  const graded = rows.filter(r => r.percent != null);
   const total = rows.length;
-  const avg = total ? Math.round(rows.reduce((s, r) => s + (r.percent || 0), 0) / total) : 0;
-  const passed = rows.filter(r => (r.percent || 0) >= 60).length;
+  const avg = graded.length ? Math.round(graded.reduce((s, r) => s + (r.percent || 0), 0) / graded.length) : 0;
+  const passed = graded.filter(r => (r.percent || 0) >= 60).length;
   const today = rows.filter(r => sameDay(r.created_at)).length;
   document.getElementById("statResTotal").textContent = total;
   document.getElementById("statResAvg").textContent = avg + "%";
@@ -235,13 +243,20 @@ function renderResultsTable(rows) {
   }
   tbody.innerHTML = rows.map((r, i) => {
     const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
-    const pct = r.percent != null ? r.percent : "—";
+    const review = isReviewRow(r);
+    const score = r.score != null ? `${esc(r.score)}/${esc(r.total_max)}` : "—";
+    const pct = r.percent != null ? r.percent + "%" : "—";
+    let grade;
+    if (review && r.grade === "Passed") grade = '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">Passed</span>';
+    else if (review && r.grade === "Failed") grade = '<span class="pill" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)">Failed</span>';
+    else if (review) grade = '<span class="pill" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">To grade</span>';
+    else grade = `<span class="pill" style="${gradeStyle(r.grade)}">${esc(r.grade)}</span>`;
     return `<tr class="clickable" data-res="${i}">
       <td>${esc(r.student_name)}</td>
       <td>${esc(r.test_name)}</td>
-      <td>${esc(r.score)}/${esc(r.total_max)}</td>
-      <td>${pct}%</td>
-      <td><span class="pill" style="${gradeStyle(r.grade)}">${esc(r.grade)}</span></td>
+      <td>${score}</td>
+      <td>${pct}</td>
+      <td>${grade}</td>
       <td style="white-space:nowrap">${date}</td>
     </tr>`;
   }).join("");
@@ -253,6 +268,8 @@ function renderResultsTable(rows) {
 
 /* ---- Modal: show a student's test answers with correct/wrong ---- */
 function showResultAnswers(r) {
+  if (isReviewRow(r)) { showExamReview(r); return; }
+
   const test = (window.LV_TESTS || []).find(t => t.id === r.test_id);
   let ans = r.answers;
   if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (e) { ans = {}; } }
@@ -291,6 +308,150 @@ function showResultAnswers(r) {
   });
 
   openModal(html);
+}
+
+/* ---- Modal: full A1 final-exam review (Q&A + writing + voice notes) ----
+   The teacher grades manually; score/grade are not stored yet. */
+function showExamReview(r) {
+  const test = (window.LV_TESTS || []).find(t => t.id === r.test_id);
+  let ans = r.answers;
+  if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (e) { ans = {}; } }
+  ans = ans || {};
+  const A = ans.A || {}, B = ans.B || {};
+  const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
+
+  const gradedStatus = r.grade === "Passed" || r.grade === "Failed";
+  const statusPill = gradedStatus
+    ? (r.grade === "Passed"
+        ? '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">✓ Passed</span>'
+        : '<span class="pill" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)">✗ Failed</span>')
+    : '<span class="pill" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">Awaiting teacher grading</span>';
+
+  let html = `
+    <h2 style="margin-bottom:4px;">${esc(r.student_name)}</h2>
+    <p style="color:var(--text-soft);margin-bottom:16px;">${esc(r.test_name)} · ${date}<br>${statusPill}</p>`;
+
+  if (!test) {
+    html += `<pre class="raw-json">${esc(JSON.stringify(ans, null, 2))}</pre>`;
+    openModal(html);
+    return;
+  }
+
+  const optText = (item, key) => {
+    const opt = (item.options || []).find(([k]) => k === key);
+    return opt ? `${key}) ${opt[1]}` : (key == null ? "—" : key);
+  };
+
+  // Section I — Multiple choice
+  html += `<h3 style="margin:18px 0 10px;">Section I — Multiple Choice <span style="color:var(--text-dim);font-weight:500;">(${test.partA.length} Qs)</span></h3>`;
+  (test.partA || []).forEach(item => {
+    const chosen = A[item.q];
+    const ok = String(chosen) === String(item.answer);
+    html += `<div class="ans-row ${ok ? "ok" : "bad"}">
+      <div class="ans-q">${item.q}. ${item.unit ? `<span class="unit-tag">${esc(item.unit)}</span>` : ""}${esc(item.text)}</div>
+      <div class="ans-detail">
+        <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+        <span>Student: <b>${esc(optText(item, chosen))}</b></span>
+        ${ok ? "" : `<span class="ans-correct">Correct: <b>${esc(optText(item, item.answer))}</b></span>`}
+      </div>
+    </div>`;
+  });
+
+  // Section II — Right or Wrong
+  html += `<h3 style="margin:24px 0 10px;">Section II — Right or Wrong <span style="color:var(--text-dim);font-weight:500;">(${test.partB.length} Qs)</span></h3>`;
+  (test.partB || []).forEach(item => {
+    const chosen = B[item.q];
+    const ok = String(chosen) === String(item.answer);
+    html += `<div class="ans-row ${ok ? "ok" : "bad"}">
+      <div class="ans-q">${item.q}. ${item.unit ? `<span class="unit-tag">${esc(item.unit)}</span>` : ""}${esc(item.text)}</div>
+      <div class="ans-detail">
+        <span class="ans-badge ${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</span>
+        <span>Student: <b>${esc(chosen == null ? "—" : chosen)}</b></span>
+        ${ok ? "" : `<span class="ans-correct">Correct: <b>${esc(item.answer)}</b> — ${esc(item.correction || "")}</span>`}
+      </div>
+    </div>`;
+  });
+
+  // Section III — Writing
+  if (test.hasWritingTask && test.writingTask) {
+    const wt = test.writingTask;
+    html += `<h3 style="margin:24px 0 10px;">Section III — Functional Writing <span style="color:var(--text-dim);font-weight:500;">(20 marks)</span></h3>`;
+    html += `<div class="writing-card">
+      <div class="msg-bubble"><strong>${esc(wt.incomingMessage.sender)}:</strong><p>${esc(wt.incomingMessage.text)}</p></div>
+      <h4 style="margin:16px 0 8px;color:var(--teal-300);">Student's reply</h4>
+      <div style="white-space:pre-wrap;line-height:1.7;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;">${esc((ans.writing && ans.writing.text) || "—")}</div>
+      <div class="words-counter">${ans.writing && ans.writing.wordCount != null ? esc(ans.writing.wordCount) : "—"} words · target ${wt.minWords}–${wt.maxWords}</div>
+    </div>`;
+  }
+
+  // Component 2 — Speaking (voice notes)
+  if (test.hasVoiceTask && test.voicePrompts && test.voicePrompts.length) {
+    html += `<h3 style="margin:24px 0 10px;">Component 2 — Speaking <span style="color:var(--text-dim);font-weight:500;">(30 marks)</span></h3>`;
+    (test.voicePrompts || []).forEach(vp => {
+      const url = ans.voice ? ans.voice[vp.task] : null;
+      html += `<div class="task-card">
+        <strong>${esc(vp.title)}</strong>
+        <p style="color:var(--text-soft);font-size:.88rem;margin:6px 0;">${esc(vp.prompt)}</p>
+        <p class="criteria">${esc(vp.criteria)}</p>
+        ${url
+          ? `<audio controls src="${esc(url)}" style="width:100%;"></audio>
+             <p style="margin-top:6px;"><a href="${esc(url)}" target="_blank" rel="noopener" style="color:var(--teal-300);font-size:.85rem;">Open / download voice note ↗</a></p>`
+          : '<p style="color:var(--text-dim);">No voice note submitted.</p>'}
+      </div>`;
+    });
+  }
+
+  // Grading panel (manual-review exams only)
+  html += `<div class="grade-panel">
+    <h3 style="margin-bottom:4px;">Grade result</h3>
+    <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:14px;">Check the answers above, then mark this exam as passed or failed. A failed exam lets the student retake it from the portal.</p>`;
+
+  if (gradedStatus) {
+    const isPassed = r.grade === "Passed";
+    html += `<p style="font-size:1.05rem;font-weight:800;color:${isPassed ? "var(--success)" : "#f87171"};margin-bottom:14px;">
+        ${isPassed ? "✓ Passed" : "✗ Failed"}${isPassed && r.score != null ? ` — <b>${r.score}/${r.total_max}</b> (${r.percent}%)` : ""}</p>
+      <button class="btn btn-ghost" id="reGradeBtn">↻ Re-grade</button>`;
+  } else {
+    html += `<div class="grade-actions">
+        <div class="pass-row">
+          <input class="input" id="gradeMark" type="number" min="0" max="${r.total_max || 100}" placeholder="Mark (0–${r.total_max || 100})" />
+          <button class="btn btn-primary" id="passBtn">✓ Pass</button>
+        </div>
+        <button class="btn btn-danger" id="failBtn">✗ Fail — allow retake</button>
+      </div>`;
+  }
+  html += `</div>`;
+
+  openModal(html);
+
+  if (gradedStatus) {
+    document.getElementById("reGradeBtn").addEventListener("click", () => showResultAnswers(r));
+  } else {
+    document.getElementById("passBtn").addEventListener("click", async () => {
+      const markInput = document.getElementById("gradeMark");
+      const raw = markInput.value.trim();
+      const mark = Math.round(Number(raw));
+      const totalMax = r.total_max || 100;
+      if (raw === "" || isNaN(mark) || mark < 0 || mark > totalMax) {
+        markInput.classList.add("input-err");
+        alert(`Please enter a valid mark from 0 to ${totalMax}.`);
+        return;
+      }
+      await saveGrade(r, { score: mark, total_max: totalMax, percent: Math.round((mark / totalMax) * 100), grade: "Passed" });
+    });
+    document.getElementById("failBtn").addEventListener("click", () => saveGrade(r, { grade: "Failed", score: null, percent: null }));
+  }
+}
+
+/* Save the teacher's pass/fail grade for a manual-review exam. */
+async function saveGrade(r, patch) {
+  try {
+    await window.LV_Supabase.update("test_results", `id=eq.${encodeURIComponent(r.id)}`, patch);
+    closeModal();
+    loadResults();
+  } catch (err) {
+    alert("Could not save grade: " + (err.message || ""));
+  }
 }
 
 function gradeStyle(g) {

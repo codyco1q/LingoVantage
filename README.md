@@ -119,6 +119,26 @@ create policy "tr public select" on test_results
 
 Grading guide: ≥90% = A · ≥80% = B · ≥70% = C · ≥60% = D · below = needs practice.
 
+> 🎓 **Final A1 exam** (`a1-final-exam-v2`): a 100-mark capstone covering all 12
+> units — 22 multiple choice (scaled 35) + 10 right/wrong (scaled 15) + a 40–60
+> word writing task (20) + two 60-second speaking voice notes (30). It is **not
+> auto-graded**: `score`, `percent` and `grade` are saved empty, and the student
+> sees only a "submitted" confirmation. Everything is stored inside the `answers`
+> jsonb (`A`, `B`, `writing` and `voice` object with the audio URLs).
+>
+> **Grading on the dashboard:** exam rows show a **"To grade"** pill and open a
+> full review — every question with the student's answer and the correct one, the
+> writing reply with word count, and both voice notes playable inline. At the
+> bottom of that modal you can **✓ Pass** (type the mark, 0–100, saved to
+> `score`/`total_max`/`percent`/`grade`) or **✗ Fail** (`grade: "Failed"`). Both
+> can be re-graded anytime. Voice notes upload to the same public
+> **`voicenotes`** storage bucket (path `a1final/`).
+>
+> **Retakes:** a failed exam unlocks a **↻ Retake exam** button on the student's
+> Tests tab (the one-attempt rule is skipped only when the latest attempt was
+> marked Failed). A passed exam stays view-only. Students never see the mark or
+> the answer key — you deliver the result to them.
+
 > ⚠️ **One-attempt rule:** each visitor IP can take a given test only once
 > (checked against `test_results`). Note this is per-network — students on the
 > same Wi-Fi share an IP, and mobile data IPs can change. It stops casual
