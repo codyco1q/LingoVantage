@@ -248,6 +248,7 @@ function renderResultsTable(rows) {
     const pct = r.percent != null ? r.percent + "%" : "—";
     let grade;
     if (review && r.score != null) grade = '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">Passed</span>';
+    else if (review && (r.grade === "Failed" || (r.grade === "—" && r.score == null))) grade = '<span class="pill" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)">Failed</span>';
     else if (review) grade = '<span class="pill" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">To grade</span>';
     else grade = `<span class="pill" style="${gradeStyle(r.grade)}">${esc(r.grade)}</span>`;
     return `<tr class="clickable" data-res="${i}">
@@ -438,22 +439,36 @@ function showExamReview(r) {
     });
     document.getElementById("failBtn").addEventListener("click", async () => {
       if (!confirm("Fail this exam? The student will be able to retake it.")) return;
+      let ok = false;
+      /* Strategy 1: DELETE the record so student sees "Start exam →" */
       try {
-        /* Try to delete the record outright so the student sees "Start exam →". */
+        await window.LV_Supabase.remove("test_results", `id=eq.${encodeURIComponent(r.id)}`);
+        ok = true;
+        console.log("[Lingo] DELETE succeeded for", r.id);
+      } catch (e) { console.warn("[Lingo] DELETE failed, trying _retake flag:", e.message); }
+      /* Strategy 2: set _retake flag in answers JSONB (bypasses grade CHECK) */
+      if (!ok) {
         try {
-          await window.LV_Supabase.remove("test_results", `id=eq.${encodeURIComponent(r.id)}`);
-        } catch (_) {
-          /* If DELETE is blocked (e.g. RLS), fall back to marking the record
-             via a _retake flag in the answers JSONB — JSONB updates bypass
-             the grade CHECK constraint. */
           const answers = typeof r.answers === "string" ? JSON.parse(r.answers || "{}") : (r.answers || {});
           answers._retake = true;
           await window.LV_Supabase.update("test_results", `id=eq.${encodeURIComponent(r.id)}`, { answers });
-        }
+          ok = true;
+          console.log("[Lingo] _retake flag set for", r.id);
+        } catch (e) { console.warn("[Lingo] _retake flag failed, trying grade dash:", e.message); }
+      }
+      /* Strategy 3: set grade to "—" which IS allowed by the CHECK constraint */
+      if (!ok) {
+        try {
+          await window.LV_Supabase.update("test_results", `id=eq.${encodeURIComponent(r.id)}`, { grade: "—" });
+          ok = true;
+          console.log("[Lingo] grade dash set for", r.id);
+        } catch (e) { console.error("[Lingo] ALL fail strategies failed for", r.id, e.message); }
+      }
+      if (ok) {
         closeModal();
         loadResults();
-      } catch (err) {
-        alert("Could not fail submission: " + (err.message || ""));
+      } else {
+        alert("Could not mark this exam as failed. Check the browser console (F12) for details and contact support.");
       }
     });
   }

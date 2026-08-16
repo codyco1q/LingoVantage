@@ -76,6 +76,10 @@
   function isRetakeState(rec) {
     if (!rec) return false;
     if (rec.grade === "Failed") return true;
+    /* grade "—" is set by the fail action's last-resort fallback (it IS
+       allowed by the CHECK constraint).  For a review-test record with no
+       score, this means the teacher marked it as failed. */
+    if (rec.grade === "—" && rec.score == null) return true;
     let ans = rec.answers;
     if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (_) { ans = null; } }
     return !!(ans && ans._retake);
