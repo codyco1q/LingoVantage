@@ -21,6 +21,7 @@
 
 (function () {
   let CURRENT_IP = null;
+  let initialized = false;
 
   /* Called by portal.js when the Tests tab is shown */
   window.LV_initTests = async function () {
@@ -595,14 +596,18 @@
     let saved = false;
     if (sbReady) {
       try {
-        // Clean up any leftover "Failed" records for this student+test (safety net)
+        // Clean up ALL leftover records for this student+test (covers all fail
+        // strategies: DELETE, _retake flag, and grade dash). Without this, stale
+        // records from previous failed attempts persist alongside the new one.
         try {
           const stale = await window.LV_Supabase.selectWhere(
-            "test_results", `student_name=ilike.${encodeURIComponent(studentName.trim())}&test_id=eq.${t.id}&grade=eq.Failed`
+            "test_results", `student_name=ilike.${encodeURIComponent(studentName.trim())}&test_id=eq.${t.id}`
           );
           if (stale && stale.length) {
             for (const row of stale) {
-              await window.LV_Supabase.remove("test_results", `id=eq.${row.id}`);
+              try {
+                await window.LV_Supabase.remove("test_results", `id=eq.${row.id}`);
+              } catch (e) { console.warn("Could not delete stale record:", row.id, e); }
             }
           }
         } catch (e) { console.warn("Stale-record cleanup skipped:", e); }
