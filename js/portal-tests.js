@@ -21,12 +21,9 @@
 
 (function () {
   let CURRENT_IP = null;
-  let initialized = false;
 
-  /* Called by portal.js when the Tests tab is first shown */
+  /* Called by portal.js when the Tests tab is shown */
   window.LV_initTests = async function () {
-    if (initialized) return;
-    initialized = true;
     await ensureIP();
     renderTestList();
   };
@@ -228,7 +225,7 @@
             try { await window.LV_Supabase.remove("test_results", `id=eq.${existing[0].id}`); } catch (e) { console.warn("Could not delete old failed record:", e); }
           } else {
             alert("You have already taken this test. Only one attempt is allowed.");
-            initialized = false; renderTestList();
+            renderTestList();
             return;
           }
         }
