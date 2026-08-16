@@ -439,7 +439,10 @@ function showExamReview(r) {
       }
       await saveGrade(r, { score: mark, total_max: totalMax, percent: Math.round((mark / totalMax) * 100), grade: "Passed" });
     });
-    document.getElementById("failBtn").addEventListener("click", () => saveGrade(r, { grade: "Failed", score: null, percent: null }));
+    document.getElementById("failBtn").addEventListener("click", async () => {
+      if (!confirm("Mark this exam as Failed? The student will be able to retake it.")) return;
+      await saveGrade(r, { grade: "Failed" });
+    });
   }
 }
 

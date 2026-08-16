@@ -207,7 +207,8 @@
         if (existing && existing.length) {
           // Manual-review exams: a retake is allowed when the latest attempt was failed
           if (isReviewTest(t) && existing[0].grade === "Failed") {
-            /* retake allowed */
+            /* retake allowed — delete the old failed record so a fresh attempt is inserted */
+            try { await window.LV_Supabase.remove("test_results", `id=eq.${existing[0].id}`); } catch (e) { console.warn("Could not delete old failed record:", e); }
           } else {
             alert("You have already taken this test. Only one attempt is allowed.");
             initialized = false; renderTestList();
@@ -579,7 +580,20 @@
 
     let saved = false;
     if (sbReady) {
-      try { await window.LV_Supabase.insert("test_results", record); saved = true; }
+      try {
+        // Clean up any leftover "Failed" records for this student+test (safety net)
+        try {
+          const stale = await window.LV_Supabase.selectWhere(
+            "test_results", `student_name=ilike.${encodeURIComponent(studentName.trim())}&test_id=eq.${t.id}&grade=eq.Failed`
+          );
+          if (stale && stale.length) {
+            for (const row of stale) {
+              await window.LV_Supabase.remove("test_results", `id=eq.${row.id}`);
+            }
+          }
+        } catch (e) { console.warn("Stale-record cleanup skipped:", e); }
+        await window.LV_Supabase.insert("test_results", record); saved = true;
+      }
       catch (e) { console.error("Save failed:", e); }
     }
 

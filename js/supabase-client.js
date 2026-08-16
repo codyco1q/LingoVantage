@@ -90,5 +90,19 @@ window.LV_Supabase = (function () {
     return res.json();
   }
 
-  return { insert: insert, select: select, selectWhere: selectWhere, uploadFile: uploadFile, update: update, ready: function () { return true; } };
+  /* Delete rows matching a PostgREST filter.
+     e.g. remove("test_results", "id=eq.<uuid>") */
+  async function remove(table, filter) {
+    var res = await fetch("/api/supabase/" + table + "?" + filter, {
+      method: "DELETE",
+      headers: { "Prefer": "return=minimal" }
+    });
+    if (!res.ok && res.status !== 204 && res.status !== 404) {
+      var txt = await res.text();
+      throw new Error("Delete failed (" + res.status + "): " + txt);
+    }
+    return true;
+  }
+
+  return { insert: insert, select: select, selectWhere: selectWhere, uploadFile: uploadFile, update: update, remove: remove, ready: function () { return true; } };
 })();
