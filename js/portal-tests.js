@@ -69,6 +69,18 @@
      the teacher reviews it on the dashboard and delivers the result. */
   function isReviewTest(t) { return !!(t && (t.hasWritingTask || t.hasVoiceTask)); }
 
+  /* A review-exam record is in "retake" state when the teacher has marked it
+     as failed.  This is signaled either by grade === "Failed" (legacy) or by
+     a _retake flag inside the answers JSONB (preferred — avoids the grade
+     CHECK constraint). */
+  function isRetakeState(rec) {
+    if (!rec) return false;
+    if (rec.grade === "Failed") return true;
+    let ans = rec.answers;
+    if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (_) { ans = null; } }
+    return !!(ans && ans._retake);
+  }
+
   function unitBadge(unit) { return `<span class="unit-tag">${escapeHtml(unit)}</span>`; }
 
   /* ---------- Voice recorder state (per speaking task) ---------- */
@@ -154,15 +166,16 @@
 
     const total = t.totalMarks || maxOf(t);
     const review = isReviewTest(t);
-    const prevGrade = review && prev ? prev.grade : null;
+    const isRetake = review && prev && isRetakeState(prev);
+    const isPassed = review && prev && prev.score != null;
 
     let actionHTML, statusHTML = escapeHtml(t.subtitle) + " · " + total + " marks";
 
     if (review && prev) {
-      if (prevGrade === "Passed") {
+      if (isPassed) {
         statusHTML += ' · <span style="color:var(--success);font-weight:700;">✅ Passed</span>';
         actionHTML = `<button class="btn btn-ghost" data-view="${t.id}">View submission</button>`;
-      } else if (prevGrade === "Failed") {
+      } else if (isRetake) {
         statusHTML += ' · <span style="color:#f87171;font-weight:700;">❌ Needs retake</span>';
         actionHTML = `<button class="btn btn-primary" data-retake="${t.id}">↻ Retake exam →</button>
           <button class="btn btn-ghost" data-view="${t.id}">View submission</button>`;
@@ -205,8 +218,8 @@
           "test_results", `student_name=ilike.${encodeURIComponent(myName)}&test_id=eq.${t.id}`
         );
         if (existing && existing.length) {
-          // Manual-review exams: a retake is allowed when the latest attempt was failed
-          if (isReviewTest(t) && existing[0].grade === "Failed") {
+          // Manual-review exams: a retake is allowed when the teacher marked it as failed
+          if (isReviewTest(t) && isRetakeState(existing[0])) {
             /* retake allowed — delete the old failed record so a fresh attempt is inserted */
             try { await window.LV_Supabase.remove("test_results", `id=eq.${existing[0].id}`); } catch (e) { console.warn("Could not delete old failed record:", e); }
           } else {
@@ -697,9 +710,9 @@
     ans = ans || {};
     const A = ans.A || {}, B = ans.B || {};
 
-    const statusLine = prev.grade === "Passed"
+    const statusLine = prev.score != null
       ? '<p style="text-align:center;font-weight:700;color:var(--success);margin-top:8px;">✅ Passed</p>'
-      : prev.grade === "Failed"
+      : isRetakeState(prev)
         ? '<p style="text-align:center;font-weight:700;color:#f87171;margin-top:8px;">❌ Needs retake — you can take the exam again from the tests list.</p>'
         : '<p style="text-align:center;font-weight:700;color:var(--warn);margin-top:8px;">⏳ Awaiting teacher grading</p>';
 

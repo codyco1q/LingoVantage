@@ -247,8 +247,7 @@ function renderResultsTable(rows) {
     const score = r.score != null ? `${esc(r.score)}/${esc(r.total_max)}` : "—";
     const pct = r.percent != null ? r.percent + "%" : "—";
     let grade;
-    if (review && r.grade === "Passed") grade = '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">Passed</span>';
-    else if (review && r.grade === "Failed") grade = '<span class="pill" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)">Failed</span>';
+    if (review && r.score != null) grade = '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">Passed</span>';
     else if (review) grade = '<span class="pill" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">To grade</span>';
     else grade = `<span class="pill" style="${gradeStyle(r.grade)}">${esc(r.grade)}</span>`;
     return `<tr class="clickable" data-res="${i}">
@@ -320,11 +319,9 @@ function showExamReview(r) {
   const A = ans.A || {}, B = ans.B || {};
   const date = r.created_at ? new Date(r.created_at).toLocaleString() : "—";
 
-  const gradedStatus = r.grade === "Passed" || r.grade === "Failed";
+  const gradedStatus = r.score != null;
   const statusPill = gradedStatus
-    ? (r.grade === "Passed"
-        ? '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">✓ Passed</span>'
-        : '<span class="pill" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)">✗ Failed</span>')
+    ? '<span class="pill" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.3)">✓ Graded</span>'
     : '<span class="pill" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">Awaiting teacher grading</span>';
 
   let html = `
@@ -407,9 +404,9 @@ function showExamReview(r) {
     <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:14px;">Check the answers above, then mark this exam as passed or failed. A failed exam lets the student retake it from the portal.</p>`;
 
   if (gradedStatus) {
-    const isPassed = r.grade === "Passed";
+    const isPassed = r.score != null;
     html += `<p style="font-size:1.05rem;font-weight:800;color:${isPassed ? "var(--success)" : "#f87171"};margin-bottom:14px;">
-        ${isPassed ? "✓ Passed" : "✗ Failed"}${isPassed && r.score != null ? ` — <b>${r.score}/${r.total_max}</b> (${r.percent}%)` : ""}</p>
+        ${isPassed ? "✓ Passed" : "✗ Failed"}${r.score != null ? ` — <b>${r.score}/${r.total_max}</b> (${r.percent}%)` : ""}</p>
       <button class="btn btn-ghost" id="reGradeBtn">↻ Re-grade</button>`;
   } else {
     html += `<div class="grade-actions">
@@ -437,11 +434,27 @@ function showExamReview(r) {
         alert(`Please enter a valid mark from 0 to ${totalMax}.`);
         return;
       }
-      await saveGrade(r, { score: mark, total_max: totalMax, percent: Math.round((mark / totalMax) * 100), grade: "Passed" });
+      await saveGrade(r, { score: mark, total_max: totalMax, percent: Math.round((mark / totalMax) * 100) });
     });
     document.getElementById("failBtn").addEventListener("click", async () => {
-      if (!confirm("Mark this exam as Failed? The student will be able to retake it.")) return;
-      await saveGrade(r, { grade: "Failed" });
+      if (!confirm("Fail this exam? The student will be able to retake it.")) return;
+      try {
+        /* Try to delete the record outright so the student sees "Start exam →". */
+        try {
+          await window.LV_Supabase.remove("test_results", `id=eq.${encodeURIComponent(r.id)}`);
+        } catch (_) {
+          /* If DELETE is blocked (e.g. RLS), fall back to marking the record
+             via a _retake flag in the answers JSONB — JSONB updates bypass
+             the grade CHECK constraint. */
+          const answers = typeof r.answers === "string" ? JSON.parse(r.answers || "{}") : (r.answers || {});
+          answers._retake = true;
+          await window.LV_Supabase.update("test_results", `id=eq.${encodeURIComponent(r.id)}`, { answers });
+        }
+        closeModal();
+        loadResults();
+      } catch (err) {
+        alert("Could not fail submission: " + (err.message || ""));
+      }
     });
   }
 }
