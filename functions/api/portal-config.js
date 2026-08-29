@@ -33,17 +33,29 @@ export async function onRequestGet(context) {
     }
     const user = await userRes.json();
 
-    const profileRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=approved,access_levels,full_name&limit=1`,
+    let profiles = [];
+    let selectFields = "approved,access_levels,full_name";
+    let profileRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=${selectFields}&limit=1`,
       { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=representation" } }
     );
+
+    // If the access_levels column hasn't been added to the DB yet (older schema),
+    // retry without it so the portal keeps working (A1 stays available).
+    if (profileRes.status === 400 || profileRes.status === 422) {
+      selectFields = "approved,full_name";
+      profileRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=${selectFields}&limit=1`,
+        { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=representation" } }
+      );
+    }
     if (!profileRes.ok) {
       return new Response(JSON.stringify({ error: "Could not load profile" }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
       });
     }
-    const profiles = await profileRes.json();
+    profiles = await profileRes.json();
     if (!profiles.length || profiles[0].approved !== true) {
       return new Response(JSON.stringify({ error: "Not approved" }), {
         status: 403,
