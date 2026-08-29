@@ -102,7 +102,7 @@ export async function onRequestGet(context) {
 
     const a2Units = Array.from({ length: 14 }, (_, i) => {
       const n = i + 1;
-      return { unit: n, title: "Level " + n, homeworkPage: 0, presentation: "", mindmap: "" };
+      return { unit: n, title: "Unit " + n, homeworkPage: 0, presentation: "", mindmap: "" };
     });
 
     const a2Revisions = Array.from({ length: 3 }, (_, i) => {
