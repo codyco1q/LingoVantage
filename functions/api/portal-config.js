@@ -104,6 +104,8 @@ export async function onRequestGet(context) {
       const n = i + 1;
       return { unit: n, title: "Unit " + n, homeworkPage: 0, presentation: "", mindmap: "" };
     });
+    // Starter Unit appears before Unit 1 in the Presentations / Mind Maps / Homework tabs
+    a2Units.unshift({ unit: 0, title: "Starter Unit", homeworkPage: 0, presentation: "", mindmap: "" });
 
     const a2Revisions = Array.from({ length: 3 }, (_, i) => {
       return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };
