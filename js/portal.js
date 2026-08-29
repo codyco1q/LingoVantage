@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let portalSessions = [];
   let portalRevisions = [];
+  let a2Data = null;          // { sessions, units, revisions, hasTests, hasHomework }
+  let accessLevels = ["A1"];  // levels the logged-in student may view
+  let currentLevel = "A1";
 
   function setErr(type, msg) {
     if (!err) return;
@@ -134,22 +137,102 @@ document.addEventListener("DOMContentLoaded", () => {
   if (pendingLogout) pendingLogout.addEventListener("click", doLogout);
 
   /* Tabs */
+  function activateTab(tabName, btn) {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    const panel = document.getElementById(tabName);
+    if (panel) panel.classList.add("active");
+    refreshTabContent(tabName);
+  }
+
+  /* Re-render a tab's content for the selected level. Called both when a
+     tab button is clicked and whenever the level is switched. */
+  function refreshTabContent(tabName) {
+    const isA2 = currentLevel === "A2";
+
+    // Tests tab — A2 content not provided yet
+    if (tabName === "tabTests") {
+      const testsList = document.getElementById("testsList");
+      const testsView = document.getElementById("testsView");
+      const soon = document.getElementById("testsComingSoon");
+      const intro = document.getElementById("testsIntro");
+      if (isA2) {
+        if (soon) soon.style.display = "block";
+        if (testsList) testsList.style.display = "none";
+        if (testsView) testsView.style.display = "none";
+        if (intro) intro.textContent = "A2 tests will be available here soon.";
+      } else {
+        if (soon) soon.style.display = "none";
+        if (testsList) testsList.style.display = "block";
+        if (intro) intro.textContent = "Take a progress test after every 3 units, or the <b>final A1 exam</b> at the end. You can take each test <b>once</b>. Progress test results appear here instantly; your final exam result will be <b>delivered by your teacher</b>.";
+        if (typeof window.LV_initTests === "function") window.LV_initTests();
+      }
+      return;
+    }
+
+    // Submit Homework tab — A2 content not provided yet
+    if (tabName === "tabSubmit") {
+      const hwList = document.getElementById("hwList");
+      const hwView = document.getElementById("hwView");
+      const soon = document.getElementById("hwComingSoon");
+      if (isA2) {
+        if (soon) soon.style.display = "block";
+        if (hwList) hwList.style.display = "none";
+        if (hwView) hwView.style.display = "none";
+      } else {
+        if (soon) soon.style.display = "none";
+        if (hwList) hwList.style.display = "block";
+        if (typeof window.LV_initHomework === "function") window.LV_initHomework();
+      }
+      return;
+    }
+
+    // Any other tab re-renders from the currently selected level's data
+    if (tabName === "tabSessions") renderSessions();
+    else if (tabName === "tabPresentations") renderResource("presentationsList", "presentation", "🖼️ Open presentation", "Slideshow available", "Not ready yet");
+    else if (tabName === "tabMiro") renderResource("miroList", "mindmap", "🧩 Open mind map", "Mind map available", "Not ready yet");
+    else if (tabName === "tabHomework") renderHomework();
+    else if (tabName === "tabRevisions") renderRevisions();
+  }
+
   document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.tab).classList.add("active");
-      // Lazy-load the Tests tab the first time it's opened
-      if (btn.dataset.tab === "tabTests" && typeof window.LV_initTests === "function") {
-        window.LV_initTests();
-      }
-      // Lazy-load the interactive Homework tab
-      if (btn.dataset.tab === "tabSubmit" && typeof window.LV_initHomework === "function") {
-        window.LV_initHomework();
-      }
+    btn.addEventListener("click", () => activateTab(btn.dataset.tab, btn));
+  });
+
+  /* Level switcher (A1 / A2) — only A2 when granted by the teacher */
+  const lvBtns = document.querySelectorAll(".level-btn");
+  lvBtns.forEach(b => {
+    b.addEventListener("click", () => {
+      setLevel(b.dataset.level);
     });
   });
+
+  function setLevel(level) {
+    // A2 is only accessible when the teacher has granted it
+    if (level === "A2" && !hasLevel("A2")) {
+      const lockMsg = document.getElementById("a2LockMsg");
+      if (lockMsg) lockMsg.style.display = "block";
+      return;
+    }
+    currentLevel = level;
+    lvBtns.forEach(b => b.classList.toggle("active", b.dataset.level === level));
+    refreshLevelSwitchState();
+    // Re-render the currently active tab for the new level
+    const activeTab = document.querySelector(".tab-panel.active");
+    if (activeTab) refreshTabContent(activeTab.id);
+  }
+
+  /* Show/hide the A2 lock message based on granted access */
+  function refreshLevelSwitchState() {
+    const lockMsg = document.getElementById("a2LockMsg");
+    if (!lockMsg) return;
+    lockMsg.style.display = (currentLevel === "A2" && !hasLevel("A2")) ? "block" : "none";
+  }
+
+  function hasLevel(level) {
+    return accessLevels.indexOf(level) !== -1;
+  }
 
   async function loadPortalConfig() {
     const token = window.LV_Auth && window.LV_Auth.accessToken();
@@ -162,6 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
         var data = await res.json();
         portalSessions = data.sessions || [];
         portalRevisions = data.revisions || [];
+        a2Data = data.a2 || null;
+        if (Array.isArray(data.access) && data.access.length) accessLevels = data.access;
       } else {
         var errData = await res.json().catch(function() { return {}; });
         console.error("portal-config rejected:", res.status, errData);
@@ -177,6 +262,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const greetEl = document.getElementById("portalGreeting");
     if (greetEl) greetEl.textContent = nm ? `Welcome back, ${nm.split(" ")[0]}! 👋` : "Welcome back! 👋";
     await loadPortalConfig();
+    // Show the level switcher once we know access levels
+    const switchEl = document.getElementById("levelSwitch");
+    if (switchEl) switchEl.style.display = "flex";
+    // Default to A1; disable A2 button unless granted
+    const grantedA2 = hasLevel("A2");
+    lvBtns.forEach(b => {
+      b.classList.toggle("active", currentLevel === b.dataset.level);
+      if (b.dataset.level === "A2" && !grantedA2) b.classList.add("locked");
+    });
     renderSessions();
     renderRevisions();
     renderHomework();
@@ -188,7 +282,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderResource(containerId, field, btnLabel, readyText, pendingText) {
     const wrap = document.getElementById(containerId);
     if (!wrap) return;
-    wrap.innerHTML = portalSessions.map(s => {
+    const data = isA2() ? ((a2Data && a2Data.units) || []) : portalSessions;
+    wrap.innerHTML = data.map(s => {
       const link = s[field];
       const has = link && link.trim() !== "";
       const action = has
@@ -206,9 +301,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }).join("");
   }
 
+  function isA2() { return currentLevel === "A2"; }
+  function a2Sessions() { return (a2Data && a2Data.sessions) || []; }
+
   function renderSessions() {
     const wrap = document.getElementById("sessionsList");
-    wrap.innerHTML = portalSessions.map(s => {
+    const data = isA2() ? a2Sessions() : portalSessions;
+    wrap.innerHTML = data.map(s => {
       const has = s.recording && s.recording.trim() !== "";
       const action = has
         ? `<a href="${s.recording}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording</a>`
@@ -228,17 +327,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderRevisions() {
     const wrap = document.getElementById("revisionsList");
     if (!wrap) return;
-    wrap.innerHTML = portalRevisions.map(r => {
+    const data = isA2() ? ((a2Data && a2Data.revisions) || []) : portalRevisions;
+    wrap.innerHTML = data.map(r => {
       const has = r.link && r.link.trim() !== "";
       const action = has
         ? `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Watch on Telegram</a>`
-        : `<a href="https://t.me/+Ppgqza1DYqxhNjVk" target="_blank" rel="noopener" class="btn btn-primary">✈️ Join Telegram</a>`;
+        : `<span class="soon-pill">Coming soon</span>`;
       return `
         <div class="session-row ${has ? "" : "pending"}">
           <div class="session-num">${r.unit}</div>
           <div class="session-info">
             <strong>${r.title}</strong>
-            <span>${has ? "Revision session" : "Not in the Telegram channel yet?"}</span>
+            <span>${has ? "Revision session" : "Not ready yet"}</span>
           </div>
           <div class="session-action">${action}</div>
         </div>`;
@@ -247,14 +347,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderHomework() {
     const wrap = document.getElementById("homeworkList");
-    wrap.innerHTML = portalSessions.map(s => `
+    const data = isA2() ? ((a2Data && a2Data.units) || []) : portalSessions;
+    wrap.innerHTML = data.map(s => `
       <div class="hw-row">
         <div class="session-num">${s.unit}</div>
         <div class="session-info">
           <strong>${s.title}</strong>
           <span>Homework</span>
         </div>
-        <div class="hw-page">📖 Page <b>${s.homeworkPage}</b></div>
+        <div class="hw-page">📖 Page <b>${s.homeworkPage || "—"}</b></div>
       </div>`).join("");
   }
 });

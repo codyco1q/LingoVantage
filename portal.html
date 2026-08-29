@@ -107,6 +107,12 @@
             <h2 id="portalGreeting" style="font-size:2rem;margin-top:12px;">Welcome back! 👋</h2>
             <p style="color:var(--text-soft);">Your session recordings and homework, all in one place.</p>
           </div>
+          <!-- Level switcher (shown after login) -->
+          <div id="levelSwitch" class="level-switch" style="display:none;">
+            <button type="button" class="level-btn active" data-level="A1">A1</button>
+            <button type="button" class="level-btn" data-level="A2">A2</button>
+            <div class="level-lock-msg" id="a2LockMsg" style="display:none;">🔒 A2 locked · ask your teacher to grant access</div>
+          </div>
         </div>
 
         <!-- Tabs -->
@@ -152,6 +158,12 @@
           <p style="color:var(--text-soft);margin-bottom:18px;">Each unit has a short quiz plus a 60-second voice note. You can submit each unit <b>once</b>.</p>
           <div id="hwList" class="session-list"></div>
           <div id="hwView" style="display:none;"></div>
+          <div id="hwComingSoon" style="display:none;">
+            <div class="dash-empty" style="text-align:center;padding:40px 20px;">
+              <div style="font-size:2.4rem;margin-bottom:10px;">🚧</div>
+              <strong>A2 homework is coming soon.</strong>
+            </div>
+          </div>
         </div>
 
         <!-- Revisions panel -->
@@ -162,16 +174,17 @@
 
         <!-- Tests panel -->
         <div id="tabTests" class="tab-panel">
-          <p style="color:var(--text-soft);margin-bottom:18px;">Take a progress test after every 3 units, or the <b>final A1 exam</b> at the end. You can take each test <b>once</b>. Progress test results appear here instantly; your final exam result will be <b>delivered by your teacher</b>.</p>
+          <p id="testsIntro" style="color:var(--text-soft);margin-bottom:18px;">Take a progress test after every 3 units, or the <b>final A1 exam</b> at the end. You can take each test <b>once</b>. Progress test results appear here instantly; your final exam result will be <b>delivered by your teacher</b>.</p>
           <div id="testsList" class="session-list"></div>
           <div id="testsView" style="display:none;"></div>
+          <div id="testsComingSoon" style="display:none;">
+            <div class="dash-empty" style="text-align:center;padding:40px 20px;">
+              <div style="font-size:2.4rem;margin-bottom:10px;">🚧</div>
+              <strong>A2 tests are coming soon.</strong>
+            </div>
+          </div>
         </div>
 
-        <!-- Revisions panel -->
-        <div id="tabRevisions" class="tab-panel">
-          <p style="color:var(--text-soft);margin-bottom:18px;">Your revision sessions, all in one place.</p>
-          <div id="revisionsList" class="session-list"></div>
-        </div>
       </div>
 
     </div>

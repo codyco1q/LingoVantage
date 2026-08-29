@@ -34,7 +34,7 @@ export async function onRequestGet(context) {
     const user = await userRes.json();
 
     const profileRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=approved&limit=1`,
+      `${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${user.id}&select=approved,access_levels,full_name&limit=1`,
       { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=representation" } }
     );
     if (!profileRes.ok) {
@@ -50,6 +50,10 @@ export async function onRequestGet(context) {
         headers: { "Content-Type": "application/json" }
       });
     }
+    const profile = profiles[0];
+    const accessLevels = Array.isArray(profile.access_levels) && profile.access_levels.length
+      ? profile.access_levels
+      : ["A1"];
 
     const sessions = [
       { unit: 1,  title: "Unit 1",  homeworkPage: 14,  recording: "https://t.me/c/4428371838/4", presentation: "https://canva.link/aoazz9v0qv200o6", mindmap: "https://notebooklm.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/58d8eef5-57f5-4a3a-86e2-50d815a9058f?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" },
@@ -72,7 +76,37 @@ export async function onRequestGet(context) {
       { unit: 3, title: "Revision Session 3", link: "https://t.me/c/4428371838/21" }
     ];
 
-    return new Response(JSON.stringify({ sessions, revisions }), {
+    /* ============================================================
+       NEXT LEVEL — A2
+       - 24 session recordings (Sessions tab)
+       - 14 units/levels (Presentations · Mind Maps · Homework tabs)
+       For now these are PLACEHOLDER entries (links empty → the portal
+       shows "Coming soon"). Fill in the links below when ready.
+       ============================================================ */
+    const a2Sessions = Array.from({ length: 24 }, (_, i) => {
+      const n = i + 1;
+      return { unit: n, title: "Session " + n, homeworkPage: 0, recording: "", presentation: "", mindmap: "" };
+    });
+
+    const a2Units = Array.from({ length: 14 }, (_, i) => {
+      const n = i + 1;
+      return { unit: n, title: "Level " + n, homeworkPage: 0, presentation: "", mindmap: "" };
+    });
+
+    const a2Revisions = Array.from({ length: 3 }, (_, i) => {
+      return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };
+    });
+
+    const a2 = {
+      sessions: a2Sessions,   // 24 sessions
+      units: a2Units,         // 14 levels
+      revisions: a2Revisions,
+      // A2 Tests & interactive Homework: not provided yet (portal shows "Coming soon").
+      hasTests: false,
+      hasHomework: false
+    };
+
+    return new Response(JSON.stringify({ sessions, revisions, access: accessLevels, a2 }), {
       headers: { "Content-Type": "application/json" }
     });
   } catch (err) {

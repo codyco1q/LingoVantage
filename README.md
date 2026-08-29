@@ -161,11 +161,12 @@ dashboard — and you can revoke anyone instantly if they share access.
 
 ```sql
 create table if not exists student_profiles (
-  id         uuid primary key,          -- matches the auth user id
-  created_at timestamptz default now(),
-  email      text,
-  full_name  text,
-  approved   boolean default false
+  id            uuid primary key,          -- matches the auth user id
+  created_at    timestamptz default now(),
+  email         text,
+  full_name     text,
+  approved      boolean default false,
+  access_levels jsonb default '["A1"]'::jsonb  -- which levels the student may open
 );
 
 alter table student_profiles enable row level security;
@@ -250,6 +251,47 @@ create policy "voicenotes read" on storage.objects
 
 **Adding more units:** open `js/homework-data.js`, fill a unit's `questions`
 (10 items) + `voicePrompt`, and set `available: true`.
+
+---
+
+## 🆕 A2 Level (Next Level) & Level Switcher
+
+The student portal now supports a **second level (A2)** alongside the original
+A1. Logged-in students get an **A1 / A2 switcher** in the portal header.
+
+- **A1** is always available to approved students (unchanged behaviour).
+- **A2** is only unlocked for a student when you **grant it from the dashboard**.
+
+### Grant A2 access from the dashboard
+In `dashboard.html` → **🔑 Student Logins** tab, each student row now has an
+**A2 Access** button:
+- **`＋ A2`** → grants the student the A2 level (saved to `access_levels`).
+- **`✓ A2`** → click again to remove A2 access.
+
+Approve/Revoke still controls whether the student can log in at all; the A2
+button only controls which levels they can open once logged in.
+
+> If you already created `student_profiles` before this update, run this once
+> in the Supabase SQL Editor to add the new column:
+> ```sql
+> alter table student_profiles
+>   add column if not exists access_levels jsonb default '["A1"]'::jsonb;
+> ```
+
+### What the A2 level contains
+- **Sessions tab:** **24 session recordings**.
+- **Presentations / Mind Maps / Homework tabs:** **14 units (levels)**.
+- **Revisions:** placeholder revision sessions.
+
+The A2 links are currently **placeholders** (empty), so each item shows
+**"Coming soon"** until you fill them in. All A2 content lives in
+`functions/api/portal-config.js` (the `a2.sessions`, `a2.units` and
+`a2.revisions` arrays) — edit the `recording`, `presentation`, `mindmap`,
+`homeworkPage` and `link` fields there.
+
+A2 **Tests** and interactive **Submit Homework** are currently shown as
+"Coming soon" (no A2 questions/voice prompts provided yet). Add them later by
+splitting-extending the A1 question banks in `js/tests-data.js` / `js/homework-data.js`.
 
 ### 3) Deploy to Netlify
 - Push this folder to GitHub.

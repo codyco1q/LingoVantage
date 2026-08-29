@@ -35,7 +35,7 @@ window.LV_Auth = (function () {
       await fetch("/api/supabase/student_profiles", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Prefer": "return=minimal" },
-        body: JSON.stringify({ id: uid, email: email, full_name: fullName, approved: false })
+        body: JSON.stringify({ id: uid, email: email, full_name: fullName, approved: false, access_levels: ["A1"] })
       });
     } catch (e) { console.warn("profile create skipped:", e); }
 

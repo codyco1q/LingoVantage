@@ -679,17 +679,20 @@ function renderStudents(rows) {
   renderStudentStats(rows);
   const tbody = document.getElementById("stuTbody");
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="dash-empty">No student accounts yet.</div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6"><div class="dash-empty">No student accounts yet.</div></td></tr>';
     return;
   }
   tbody.innerHTML = rows.map((r, i) => {
     const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : "—";
     const approved = r.approved === true;
+    const a2 = hasA2(r);
     const btn = `<button class="btn ${approved ? "btn-ghost" : "btn-primary"}" data-toggle="${i}" style="padding:6px 14px;font-size:.82rem;">${approved ? "Revoke" : "Approve"}</button>`;
+    const a2Btn = `<button class="btn ${a2 ? "btn-ghost" : ""}" data-a2="${i}" style="padding:6px 14px;font-size:.82rem;${a2 ? "color:var(--success);border-color:rgba(52,211,153,.4);" : ""}">${a2 ? "✓ A2" : "＋ A2"}</button>`;
     return `<tr>
       <td>${esc(r.full_name)}</td>
       <td>${esc(r.email)}</td>
       <td>${approved ? '<span style="color:var(--success)">● Approved</span>' : '<span style="color:var(--warn)">● Pending</span>'}</td>
+      <td>${a2Btn}</td>
       <td style="white-space:nowrap">${date}</td>
       <td>${btn}</td>
     </tr>`;
@@ -697,6 +700,37 @@ function renderStudents(rows) {
   tbody.querySelectorAll("[data-toggle]").forEach(b => {
     b.addEventListener("click", () => toggleStudent(rows[+b.dataset.toggle]));
   });
+  tbody.querySelectorAll("[data-a2]").forEach(b => {
+    b.addEventListener("click", () => toggleA2Access(rows[+b.dataset.a2]));
+  });
+}
+
+/* Does this profile have A2 access? (A1 is always granted to approved students) */
+function hasA2(r) {
+  const a = r.access_levels;
+  if (Array.isArray(a)) return a.indexOf("A2") !== -1;
+  if (typeof a === "string") { try { return JSON.parse(a).indexOf("A2") !== -1; } catch (e) { return false; } }
+  return false;
+}
+
+/* Grant / revoke A2 access for a student (persisted to access_levels) */
+async function toggleA2Access(s) {
+  const cur = Array.isArray(s.access_levels) ? s.access_levels.slice() : ["A1"];
+  let next;
+  if (cur.indexOf("A2") !== -1) {
+    next = cur.filter(x => x !== "A2");
+    if (!next.length) next = ["A1"];
+  } else {
+    if (cur.indexOf("A1") === -1) cur.unshift("A1");
+    next = cur.concat("A2");
+  }
+  try {
+    await window.LV_Supabase.update("student_profiles", `id=eq.${encodeURIComponent(s.id)}`, { access_levels: next });
+    s.access_levels = next;
+    renderStudents(LV_students);
+  } catch (err) {
+    alert("Could not update A2 access: " + (err.message || ""));
+  }
 }
 
 async function toggleStudent(s) {
