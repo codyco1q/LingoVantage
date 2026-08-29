@@ -91,7 +91,7 @@ export async function onRequestGet(context) {
     /* ============================================================
        NEXT LEVEL — A2
        - 24 session recordings (Sessions tab)
-       - 14 units/levels (Presentations · Mind Maps · Homework tabs)
+       - 12 units/levels (Presentations · Mind Maps · Homework tabs)
        For now these are PLACEHOLDER entries (links empty → the portal
        shows "Coming soon"). Fill in the links below when ready.
        ============================================================ */
@@ -100,12 +100,11 @@ export async function onRequestGet(context) {
       return { unit: n, title: "Session " + n, homeworkPage: 0, recording: "", presentation: "", mindmap: "" };
     });
 
-    const a2Units = Array.from({ length: 14 }, (_, i) => {
+    const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
+    const a2Units = Array.from({ length: 12 }, (_, i) => {
       const n = i + 1;
-      return { unit: n, title: "Unit " + n, homeworkPage: 0, presentation: "", mindmap: "" };
+      return { unit: n, title: "Unit " + n, homeworkPage: homeworkPages[i], presentation: "", mindmap: "" };
     });
-    // Starter Unit appears before Unit 1 in the Presentations / Mind Maps / Homework tabs
-    a2Units.unshift({ unit: 0, title: "Starter Unit", homeworkPage: 0, presentation: "", mindmap: "" });
 
     const a2Revisions = Array.from({ length: 3 }, (_, i) => {
       return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };
@@ -113,7 +112,7 @@ export async function onRequestGet(context) {
 
     const a2 = {
       sessions: a2Sessions,   // 24 sessions
-      units: a2Units,         // 14 levels
+      units: a2Units,         // 12 levels
       revisions: a2Revisions,
       // A2 Tests & interactive Homework: not provided yet (portal shows "Coming soon").
       hasTests: false,
