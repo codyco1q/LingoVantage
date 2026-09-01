@@ -44,7 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---- Resume an existing session on load ---- */
   (async function resume() {
     if (window.LV_Auth && window.LV_Auth.currentUser()) {
-      await enterIfApproved(true);
+      // Re-validate the stored session first: if the access token has expired
+      // (they're only valid ~1h), refresh it so the portal content still loads.
+      // If refresh fails, the session is cleared and the login screen is shown.
+      await window.LV_Auth.ensureValidSession();
+      if (window.LV_Auth.currentUser()) {
+        await enterIfApproved(true);
+      }
     }
   })();
 
@@ -237,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadPortalConfig() {
     const token = window.LV_Auth && window.LV_Auth.accessToken();
     if (!token) return;
+    let forceRefreshed = false;
     try {
       const res = await fetch("/api/portal-config", {
         headers: { "Authorization": "Bearer " + token }
@@ -247,6 +254,11 @@ document.addEventListener("DOMContentLoaded", () => {
         portalRevisions = data.revisions || [];
         a2Data = data.a2 || null;
         if (Array.isArray(data.access) && data.access.length) accessLevels = data.access;
+      } else if (res.status === 401 && !forceRefreshed) {
+        // Token was rejected (expired/invalid) — force a refresh and retry once
+        forceRefreshed = true;
+        await window.LV_Auth.ensureValidSession(true);
+        if (window.LV_Auth.currentUser()) return loadPortalConfig();
       } else {
         var errData = await res.json().catch(function() { return {}; });
         console.error("portal-config rejected:", res.status, errData);

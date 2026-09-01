@@ -67,6 +67,47 @@ window.LV_Auth = (function () {
     return s ? s.access_token : null;
   }
 
+  /* ---- Is the stored access token expired (or about to be)? ---- */
+  function isExpired(s) {
+    // Prefer expires_at (Unix seconds) returned by Supabase Auth…
+    if (s && s.expires_at) return (s.expires_at * 1000) < (Date.now() + 60000);
+    // …otherwise fall back to the JWT "exp" claim.
+    try {
+      var payload = s.access_token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (payload.length % 4) payload += "=";
+      var exp = JSON.parse(atob(payload)).exp;
+      return (exp * 1000) < (Date.now() + 60000);
+    } catch (e) { return true; }
+  }
+
+  /* ---- Swap an expired access token for a fresh one ---- */
+  async function refreshSession() {
+    var s = getSession();
+    if (!s || !s.refresh_token) { clearSession(); return null; }
+    try {
+      var res = await fetch("/api/supabase-auth/token?grant_type=refresh_token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh_token: s.refresh_token })
+      });
+      var data = await res.json();
+      if (!res.ok) { clearSession(); return null; }
+      saveSession(data);
+      return getSession();
+    } catch (e) { clearSession(); return null; }
+  }
+
+  /* ---- Re-validate the stored session, refreshing the token if needed.
+     Pass force=true to refresh even when the token isn't marked expired
+     (used to recover from an unexpected 401). Returns the usable session,
+     or null (session cleared) if it's gone. ---- */
+  async function ensureValidSession(force) {
+    var s = getSession();
+    if (!s || !s.access_token) return null;
+    if (!force && !isExpired(s)) return s;
+    return await refreshSession();
+  }
+
   /* ---- Look up this user's profile (approved flag, name) ---- */
   async function getProfile() {
     var u = currentUser();
@@ -90,5 +131,5 @@ window.LV_Auth = (function () {
     return true;
   }
 
-  return { signUp: signUp, signIn: signIn, signOut: signOut, currentUser: currentUser, accessToken: accessToken, getProfile: getProfile, resetPassword: resetPassword, getSession: getSession };
+  return { signUp: signUp, signIn: signIn, signOut: signOut, currentUser: currentUser, accessToken: accessToken, getProfile: getProfile, resetPassword: resetPassword, getSession: getSession, ensureValidSession: ensureValidSession };
 })();
