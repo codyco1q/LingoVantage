@@ -16,13 +16,15 @@
 (function () {
   let CURRENT_IP = null;
   let initialized = false;
+  let activeLevel = "A1";
 
   // recorder state
   let mediaRecorder = null, chunks = [], audioBlob = null, audioMime = "audio/webm";
   let timerId = null, secondsLeft = 0;
 
-  window.LV_initHomework = async function () {
-    if (initialized) return;
+  window.LV_initHomework = async function (level = "A1") {
+    if (initialized && activeLevel === level) return;
+    activeLevel = level;
     initialized = true;
     await ensureIP();
     renderList();
@@ -80,7 +82,7 @@
     if (!wrap) return;
     wrap.innerHTML = '<div class="dash-empty"><span class="spinner" style="border-top-color:var(--teal-400)"></span> Loading homework…</div>';
 
-    const units = window.LV_HOMEWORK || [];
+    const units = activeLevel === "A2" ? (window.LV_HOMEWORK_A2 || []) : (window.LV_HOMEWORK || []);
     const sbReady = window.LV_Supabase && window.LV_Supabase.ready();
 
     let mine = [];
@@ -93,7 +95,7 @@
 
     wrap.innerHTML = "";
     units.forEach(u => {
-      const prev = mine.find(m => String(m.unit) === String(u.unit) || m.unit === u.title);
+      const prev = mine.find(m => m.unit_title === u.title || (activeLevel !== "A2" && String(m.unit) === String(u.unit)));
       wrap.appendChild(buildCard(u, prev, sbReady));
     });
   }
@@ -136,7 +138,7 @@
     if (sbReady && myName.length >= 2) {
       try {
         const ex = await window.LV_Supabase.selectWhere("homework_submissions",
-          `student_name=ilike.${encodeURIComponent(myName)}&unit=eq.${encodeURIComponent(u.unit)}`);
+          `student_name=ilike.${encodeURIComponent(myName)}&unit_title=eq.${encodeURIComponent(u.title)}`);
         if (ex && ex.length) {
           alert("You have already submitted this unit's homework. Only one attempt is allowed.");
           initialized = false; renderList();
@@ -377,7 +379,7 @@
       try {
         const ext = audioMime.includes("mp4") ? "mp4" : (audioMime.includes("ogg") ? "ogg" : "webm");
         const safeName = name.replace(/[^a-z0-9]/gi, "_").slice(0, 30);
-        const path = `unit${u.unit}/${safeName}_${Date.now()}.${ext}`;
+        const path = `${activeLevel.toLowerCase()}/unit${u.unit}/${safeName}_${Date.now()}.${ext}`;
         voiceUrl = await window.LV_Supabase.uploadFile("voicenotes", path, audioBlob, audioMime);
       } catch (e) {
         console.error("Voice upload failed:", e);

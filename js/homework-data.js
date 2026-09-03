@@ -211,6 +211,20 @@ window.LV_HOMEWORK = [
   },
 ];
 
+window.LV_HOMEWORK_A2 = [
+  {
+    unit: 1, level: "A2", title: "A2 Unit 1 — Session 1 Checkpoint", subtitle: "People", available: true, voiceSeconds: 30,
+    voicePrompt: "Record a 30-second spoken introduction. Say your name and profession or status, your country of origin and nationality, and describe yourself with at least one personal adjective. Speak clearly and naturally.",
+    questions: [
+      { q: 1, text: "My colleagues ____ from Spain; they are from Brazil.", options: [["A", "isn't"], ["B", "aren't"], ["C", "not are"]], answer: "B" },
+      { q: 2, text: "Choose the grammatically correct sentence.", options: [["A", "He a very professional manager."], ["B", "He is a very professional manager."], ["C", "He is very professional manager."]], answer: "B" },
+      { q: 3, text: "Marta lives in Tokyo. She was born in Japan, so she is ____.", options: [["A", "Japanish"], ["B", "Japanese"], ["C", "Japanian"]], answer: "B" },
+      { q: 4, text: "____ name is Fatima, and she is a highly skilled engineer at the tech firm.", options: [["A", "Her"], ["B", "She"], ["C", "Hers"]], answer: "A" },
+      { q: 5, text: "\"____ you and Mahmoud from Jordan?\" — \"No, we ____.\"", options: [["A", "Are / aren't"], ["B", "Is / isn't"], ["C", "Do / don't"]], answer: "A" }
+    ]
+  }
+];
+
 /* Shared answer-normalizer (used by portal + dashboard) */
 window.LV_normAnswer = function (s) {
   return String(s == null ? "" : s)

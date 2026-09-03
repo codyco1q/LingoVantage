@@ -100,11 +100,19 @@ export async function onRequestGet(context) {
       return { unit: n, title: "Session " + n, homeworkPage: 0, recording: "", presentation: "", mindmap: "" };
     });
 
+    a2Sessions[0].recording = "https://t.me/c/4299575479/3";
+
+    a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {
       const n = i + 1;
       return { unit: n, title: "Unit " + n, homeworkPage: homeworkPages[i], presentation: "", mindmap: "" };
     });
+
+    a2Units[0].presentation = a2Sessions[0].presentation;
+    a2Units[0].mindmap = a2Sessions[0].mindmap;
 
     const a2Revisions = Array.from({ length: 3 }, (_, i) => {
       return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };
@@ -114,9 +122,10 @@ export async function onRequestGet(context) {
       sessions: a2Sessions,   // 24 sessions
       units: a2Units,         // 12 levels
       revisions: a2Revisions,
-      // A2 Tests & interactive Homework: not provided yet (portal shows "Coming soon").
+      telegramChannel: "https://t.me/+pXja5Af9U5gzYWQ0",
+      // A2 Tests are not provided yet; Session 1 homework is available.
       hasTests: false,
-      hasHomework: false
+      hasHomework: true
     };
 
     return new Response(JSON.stringify({ sessions, revisions, access: accessLevels, a2 }), {

@@ -156,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
      tab button is clicked and whenever the level is switched. */
   function refreshTabContent(tabName) {
     const isA2 = currentLevel === "A2";
+    updateTelegramBanner();
 
     // Tests tab — A2 content not provided yet
     if (tabName === "tabTests") {
@@ -177,15 +178,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Submit Homework tab — A2 content not provided yet
+    // Submit Homework tab
     if (tabName === "tabSubmit") {
       const hwList = document.getElementById("hwList");
       const hwView = document.getElementById("hwView");
       const soon = document.getElementById("hwComingSoon");
       if (isA2) {
-        if (soon) soon.style.display = "block";
-        if (hwList) hwList.style.display = "none";
+        if (soon) soon.style.display = "none";
+        if (hwList) hwList.style.display = "block";
         if (hwView) hwView.style.display = "none";
+        if (typeof window.LV_initHomework === "function") window.LV_initHomework("A2");
       } else {
         if (soon) soon.style.display = "none";
         if (hwList) hwList.style.display = "block";
@@ -227,6 +229,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Re-render the currently active tab for the new level
     const activeTab = document.querySelector(".tab-panel.active");
     if (activeTab) refreshTabContent(activeTab.id);
+  }
+
+  function updateTelegramBanner() {
+    const banner = document.querySelector(".telegram-banner");
+    if (!banner) return;
+    const link = banner.querySelector("a");
+    if (!link) return;
+    const channel = isA2() && a2Data && a2Data.telegramChannel
+      ? a2Data.telegramChannel
+      : "https://t.me/+Ppgqza1DYqxhNjVk";
+    link.href = channel;
   }
 
   /* Show/hide the A2 lock message based on granted access */
@@ -274,6 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const greetEl = document.getElementById("portalGreeting");
     if (greetEl) greetEl.textContent = nm ? `Welcome back, ${nm.split(" ")[0]}! 👋` : "Welcome back! 👋";
     await loadPortalConfig();
+    updateTelegramBanner();
     // Show the level switcher once we know access levels
     const switchEl = document.getElementById("levelSwitch");
     if (switchEl) switchEl.style.display = "flex";
