@@ -91,9 +91,9 @@ export async function onRequestGet(context) {
     /* ============================================================
        NEXT LEVEL — A2
        - 24 session recordings (Sessions tab)
-       - 12 units/levels (Presentations · Mind Maps · Homework tabs)
-       For now these are PLACEHOLDER entries (links empty → the portal
-       shows "Coming soon"). Fill in the links below when ready.
+      - 24 session resources (Presentations · Mind Maps tabs)
+      - 12 units/levels (Homework tab)
+      Session 1 is available; the remaining sessions are placeholders.
        ============================================================ */
     const a2Sessions = Array.from({ length: 24 }, (_, i) => {
       const n = i + 1;
@@ -101,18 +101,18 @@ export async function onRequestGet(context) {
     });
 
     a2Sessions[0].recording = "https://t.me/c/4299575479/3";
+    a2Sessions[1].recording = "https://t.me/c/4299575479/4";
 
     a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[1].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/e3c78c95-7e27-4542-9b2e-6337ffbbb56a?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[1].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/efe978af-c28d-48da-9792-287fb65cd5d2?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
 
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {
       const n = i + 1;
       return { unit: n, title: "Unit " + n, homeworkPage: homeworkPages[i], presentation: "", mindmap: "" };
     });
-
-    a2Units[0].presentation = a2Sessions[0].presentation;
-    a2Units[0].mindmap = a2Sessions[0].mindmap;
 
     const a2Revisions = Array.from({ length: 3 }, (_, i) => {
       return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };

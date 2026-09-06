@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderResource(containerId, field, btnLabel, readyText, pendingText) {
     const wrap = document.getElementById(containerId);
     if (!wrap) return;
-    const data = isA2() ? ((a2Data && a2Data.units) || []) : portalSessions;
+    const data = isA2() ? ((a2Data && a2Data.sessions) || []) : portalSessions;
     wrap.innerHTML = data.map(s => {
       const link = s[field];
       const has = link && link.trim() !== "";

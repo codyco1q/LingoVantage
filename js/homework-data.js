@@ -222,6 +222,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "____ name is Fatima, and she is a highly skilled engineer at the tech firm.", options: [["A", "Her"], ["B", "She"], ["C", "Hers"]], answer: "A" },
       { q: 5, text: "\"____ you and Mahmoud from Jordan?\" — \"No, we ____.\"", options: [["A", "Are / aren't"], ["B", "Is / isn't"], ["C", "Do / don't"]], answer: "A" }
     ]
+  },
+  {
+    unit: 2, level: "A2", title: "A2 Unit 2 — Session 2 Checkpoint", subtitle: "Daily Jobs & Study Habits", available: true, voiceSeconds: 30,
+    voicePrompt: "Record a 30-second voice note. State your job title, use one positive sentence about your daily routine, and use one negative sentence with don't.",
+    questions: [
+      { q: 1, text: "A person who welcomes guests and helps visitors at an office or hotel entrance is a ____.", options: [["A", "engineer"], ["B", "receptionist"], ["C", "mechanic"], ["D", "manager"]], answer: "B" },
+      { q: 2, text: "My colleagues and I ____ in a large department store in the city center.", options: [["A", "works"], ["B", "work"], ["C", "working"], ["D", "are work"]], answer: "B" },
+      { q: 3, text: "Which sentence is grammatically correct?", options: [["A", "I not work on weekends because I relax."], ["B", "I no work on weekends because I relax."], ["C", "I don't work on weekends because I relax."], ["D", "I don't works on weekends because I relax."]], answer: "C" },
+      { q: 4, text: "During our live online sessions, I always ____ notes in my English notebook.", options: [["A", "write"], ["B", "make"], ["C", "do"], ["D", "take"]], answer: "B" },
+      { q: 5, text: "Identify the sentence with no grammatical errors.", options: [["A", "We don't study at night; we prefer the morning."], ["B", "We no study at night; we prefer the morning."], ["C", "We don't studies at night; we prefer the morning."], ["D", "We not study at night; we prefer the morning."]], answer: "A" }
+    ]
   }
 ];
 
