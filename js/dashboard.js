@@ -627,15 +627,29 @@ function showHwContent(r) {
 }
 
 /* Look up a homework bank (A1 or A2) for a submission.
-   Titles are unique across both banks, so match by unit_title
-   first; fall back to the A1 unit number for legacy rows. */
+   A2 checkpoints are identified by "Session N Checkpoint" titles
+   (older ones used "A2 Unit N — Session N Checkpoint"), so match
+   A2 by title or by checkpoint pattern + unit number; match A1 by
+   exact title, falling back to unit number for legacy rows. */
 function findHwUnit(r) {
-  const banks = [].concat(window.LV_HOMEWORK_A2 || [], window.LV_HOMEWORK || []);
-  if (r.unit_title) {
-    const byTitle = banks.find(u => String(u.title) === String(r.unit_title));
+  const a2 = window.LV_HOMEWORK_A2 || [];
+  const a1 = window.LV_HOMEWORK || [];
+  const title = String(r.unit_title || "");
+  const byUnit = arr => arr.find(u => String(u.unit) === String(r.unit));
+
+  if (title && /checkpoint/i.test(title)) {
+    const t = title.toLowerCase();
+    const byTitle = a2.find(u => String(u.title).toLowerCase() === t);
     if (byTitle) return byTitle;
+    const byNo = byUnit(a2);
+    if (byNo) return byNo;
   }
-  return (window.LV_HOMEWORK || []).find(u => String(u.unit) === String(r.unit));
+  if (title) {
+    const t = title.toLowerCase();
+    const a1ByTitle = a1.find(u => String(u.title).toLowerCase() === t);
+    if (a1ByTitle) return a1ByTitle;
+  }
+  return byUnit(a1);
 }
 
 function filterHw(term) {

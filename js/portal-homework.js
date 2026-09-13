@@ -95,9 +95,14 @@
 
     wrap.innerHTML = "";
     units.forEach(u => {
-      const prev = mine.find(m =>
-        (m.unit_title && m.unit_title === u.title) ||
-        (!m.unit_title && activeLevel !== "A2" && String(m.unit) === String(u.unit)));
+      const prev = mine.find(m => {
+        const mt = m.unit_title || "";
+        if (activeLevel === "A2") {
+          // A2 checkpoints: match by session (unit) regardless of title wording
+          return /checkpoint/i.test(mt) && String(m.unit) === String(u.unit);
+        }
+        return (mt !== "" && mt === u.title) || (mt === "" && String(m.unit) === String(u.unit));
+      });
       wrap.appendChild(buildCard(u, prev, sbReady));
     });
   }
@@ -139,8 +144,10 @@
     const myName = (sessionStorage.getItem("lv_portal_name") || "").trim();
     if (sbReady && myName.length >= 2) {
       try {
-        const ex = await window.LV_Supabase.selectWhere("homework_submissions",
-          `student_name=ilike.${encodeURIComponent(myName)}&unit_title=eq.${encodeURIComponent(u.title)}`);
+        const filter = activeLevel === "A2"
+          ? `student_name=ilike.${encodeURIComponent(myName)}&unit=eq.${u.unit}&unit_title=ilike.%25checkpoint%25`
+          : `student_name=ilike.${encodeURIComponent(myName)}&unit_title=eq.${encodeURIComponent(u.title)}`;
+        const ex = await window.LV_Supabase.selectWhere("homework_submissions", filter);
         if (ex && ex.length) {
           alert("You have already submitted this unit's homework. Only one attempt is allowed.");
           initialized = false; renderList();

@@ -213,7 +213,7 @@ window.LV_HOMEWORK = [
 
 window.LV_HOMEWORK_A2 = [
   {
-    unit: 1, level: "A2", title: "A2 Unit 1 — Session 1 Checkpoint", subtitle: "People", available: true, voiceSeconds: 30,
+    unit: 1, level: "A2", title: "A2 Session 1 Checkpoint", subtitle: "People", available: true, voiceSeconds: 30,
     voicePrompt: "Record a 30-second spoken introduction. Say your name and profession or status, your country of origin and nationality, and describe yourself with at least one personal adjective. Speak clearly and naturally.",
     questions: [
       { q: 1, text: "My colleagues ____ from Spain; they are from Brazil.", options: [["A", "isn't"], ["B", "aren't"], ["C", "not are"]], answer: "B" },
@@ -224,7 +224,7 @@ window.LV_HOMEWORK_A2 = [
     ]
   },
   {
-    unit: 2, level: "A2", title: "A2 Unit 2 — Session 2 Checkpoint", subtitle: "Daily Jobs & Study Habits", available: true, voiceSeconds: 30,
+    unit: 2, level: "A2", title: "A2 Session 2 Checkpoint", subtitle: "Daily Jobs & Study Habits", available: true, voiceSeconds: 30,
     voicePrompt: "Record a 30-second voice note. State your job title, use one positive sentence about your daily routine, and use one negative sentence with don't.",
     questions: [
       { q: 1, text: "A person who welcomes guests and helps visitors at an office or hotel entrance is a ____.", options: [["A", "engineer"], ["B", "receptionist"], ["C", "mechanic"], ["D", "manager"]], answer: "B" },

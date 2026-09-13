@@ -352,8 +352,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderRevisions() {
     const wrap = document.getElementById("revisionsList");
+    const soon = document.getElementById("revisionsComingSoon");
+    const intro = document.getElementById("revisionsIntro");
     if (!wrap) return;
     const data = isA2() ? ((a2Data && a2Data.revisions) || []) : portalRevisions;
+    if (isA2()) {
+      // No A2 revision sessions provided yet — empty, just like tests
+      wrap.style.display = "none";
+      if (soon) soon.style.display = "block";
+      if (intro) intro.textContent = "A2 revision sessions will be available here soon.";
+      return;
+    }
+    wrap.style.display = "block";
+    if (soon) soon.style.display = "none";
+    if (intro) intro.textContent = "Access your revision sessions below.";
     wrap.innerHTML = data.map(r => {
       const has = r.link && r.link.trim() !== "";
       const action = has
