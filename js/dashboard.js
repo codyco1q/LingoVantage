@@ -589,7 +589,7 @@ function showHwContent(r) {
   // Quiz answers with correct/wrong
   if (r.score != null && r.total_max != null) {
     html += `<h3 style="margin:6px 0 10px;">Quiz — ${esc(r.score)}/${esc(r.total_max)} (${pct}%)</h3>`;
-    const hw = (window.LV_HOMEWORK || []).find(u => String(u.unit) === String(r.unit));
+    const hw = findHwUnit(r);
     let ans = r.answers;
     if (typeof ans === "string") { try { ans = JSON.parse(ans); } catch (e) { ans = {}; } }
     ans = ans || {};
@@ -624,6 +624,18 @@ function showHwContent(r) {
   }
 
   openModal(html);
+}
+
+/* Look up a homework bank (A1 or A2) for a submission.
+   Titles are unique across both banks, so match by unit_title
+   first; fall back to the A1 unit number for legacy rows. */
+function findHwUnit(r) {
+  const banks = [].concat(window.LV_HOMEWORK_A2 || [], window.LV_HOMEWORK || []);
+  if (r.unit_title) {
+    const byTitle = banks.find(u => String(u.title) === String(r.unit_title));
+    if (byTitle) return byTitle;
+  }
+  return (window.LV_HOMEWORK || []).find(u => String(u.unit) === String(r.unit));
 }
 
 function filterHw(term) {

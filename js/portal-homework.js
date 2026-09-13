@@ -95,7 +95,9 @@
 
     wrap.innerHTML = "";
     units.forEach(u => {
-      const prev = mine.find(m => m.unit_title === u.title || (activeLevel !== "A2" && String(m.unit) === String(u.unit)));
+      const prev = mine.find(m =>
+        (m.unit_title && m.unit_title === u.title) ||
+        (!m.unit_title && activeLevel !== "A2" && String(m.unit) === String(u.unit)));
       wrap.appendChild(buildCard(u, prev, sbReady));
     });
   }

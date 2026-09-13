@@ -102,11 +102,14 @@ export async function onRequestGet(context) {
 
     a2Sessions[0].recording = "https://t.me/c/4299575479/3";
     a2Sessions[1].recording = "https://t.me/c/4299575479/4";
+    a2Sessions[2].recording = "https://t.me/c/4299575479/5";
 
     a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[1].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/e3c78c95-7e27-4542-9b2e-6337ffbbb56a?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[1].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/efe978af-c28d-48da-9792-287fb65cd5d2?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[2].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/95a94dbe-8fb0-4439-a105-632cfc85ad35?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[2].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/24cd89c4-3e8c-43e5-87cc-ce3b4ee80473?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
 
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {
@@ -123,7 +126,7 @@ export async function onRequestGet(context) {
       units: a2Units,         // 12 levels
       revisions: a2Revisions,
       telegramChannel: "https://t.me/+pXja5Af9U5gzYWQ0",
-      // A2 Tests are not provided yet; Session 1 homework is available.
+      // A2 Tests are not provided yet; Sessions 1–3 homework are available.
       hasTests: false,
       hasHomework: true
     };

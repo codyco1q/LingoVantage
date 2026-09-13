@@ -233,6 +233,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "During our live online sessions, I always ____ notes in my English notebook.", options: [["A", "write"], ["B", "make"], ["C", "do"], ["D", "take"]], answer: "B" },
       { q: 5, text: "Identify the sentence with no grammatical errors.", options: [["A", "We don't study at night; we prefer the morning."], ["B", "We no study at night; we prefer the morning."], ["C", "We don't studies at night; we prefer the morning."], ["D", "We not study at night; we prefer the morning."]], answer: "A" }
     ]
+  },
+  {
+    unit: 3, level: "A2", title: "A2 Session 3 Checkpoint", subtitle: "Work Routines & Questions", available: true, voiceSeconds: 30,
+    voicePrompt: "The Daily Routine Interview Challenge: ask a colleague one Wh- question about their daily schedule (e.g. \"What time do you start work?\"), one Yes/No question about their work habits (e.g. \"Do you use English in meetings?\"), and state one positive and one negative routine about a manager or coworker (e.g. \"My manager finishes work at 5:00 PM, but he doesn't work on weekends.\"). Record yourself for up to 30 seconds.",
+    questions: [
+      { q: 1, text: "\"____ you work in a team or alone?\"", options: [["A", "Does"], ["B", "Do"], ["C", "Are"], ["D", "Is"]], answer: "B" },
+      { q: 2, text: "Choose the sentence with the correct question word order:", options: [["A", "Where you work every day?"], ["B", "Where do you work every day?"], ["C", "Where work you every day?"], ["D", "Where you do work every day?"]], answer: "B" },
+      { q: 3, text: "\"What time ____ he ____ work in the evening?\"", options: [["A", "does / finishes"], ["B", "do / finish"], ["C", "does / finish"], ["D", "is / finishing"]], answer: "C" },
+      { q: 4, text: "Student A: \"Does Sarah travel to other cities for her job?\"  Student B: \"No, she ____.\"", options: [["A", "doesn't"], ["B", "don't"], ["C", "isn't"], ["D", "not"]], answer: "A" },
+      { q: 5, text: "Identify the sentence that is 100% grammatically correct:", options: [["A", "What time do your manager start work?"], ["B", "Where do your colleagues have lunch?"], ["C", "When does you finish your study?"], ["D", "How you travel to the office?"]], answer: "B" }
+    ]
   }
 ];
 
