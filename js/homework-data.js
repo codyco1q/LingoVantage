@@ -244,6 +244,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Student A: \"Does Sarah travel to other cities for her job?\"  Student B: \"No, she ____.\"", options: [["A", "doesn't"], ["B", "don't"], ["C", "isn't"], ["D", "not"]], answer: "A" },
       { q: 5, text: "Identify the sentence that is 100% grammatically correct:", options: [["A", "What time do your manager start work?"], ["B", "Where do your colleagues have lunch?"], ["C", "When does you finish your study?"], ["D", "How you travel to the office?"]], answer: "B" }
     ]
+  },
+  {
+    unit: 4, level: "A2", title: "A2 Session 4 Checkpoint", subtitle: "Daily Technology & Gadgets", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe the technology gadgets you use every day for work or study. Include one gadget you have got, one gadget you haven't got, and two adverbs of frequency in the correct position. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "I use my __________ every night in bed to read books because the screen is easy on my eyes.", options: [["A", "satnav"], ["B", "e-reader"], ["C", "printer"], ["D", "keyboard"]], answer: "B" },
+      { q: 2, text: "Select the sentence with the correct word order:", options: [["A", "He uses always his smartphone in meetings."], ["B", "He always uses his smartphone in meetings."], ["C", "He uses his smartphone always in meetings."], ["D", "Always he uses his smartphone in meetings."]], answer: "B" },
+      { q: 3, text: "Which sentence correctly describes someone's gadgets using the third-person form?", options: [["A", "She has got a new laptop, but she haven't got headphones."], ["B", "She have got a new laptop, but she hasn't got headphones."], ["C", "She's got a new laptop, but she hasn't got headphones."], ["D", "She's got a new laptop, but she don't have got headphones."]], answer: "C" },
+      { q: 4, text: "Identify the sentence that places the adverb of frequency correctly with the verb be:", options: [["A", "My laptop is usually on my desk."], ["B", "My laptop usually is on my desk."], ["C", "My laptop is on my desk usually."], ["D", "Usually my laptop on my desk."]], answer: "A" },
+      { q: 5, text: "Which sentence is grammatically correct and avoids common translation errors?", options: [["A", "I haven't got a tablet, but I always use my laptop for work."], ["B", "I don't got a tablet, but I use always my laptop for work."], ["C", "I no have got a tablet, but I always am using my laptop for work."], ["D", "I hasn't got a tablet, but I work always with my laptop."]], answer: "A" }
+    ]
   }
 ];
 
