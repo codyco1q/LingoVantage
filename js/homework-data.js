@@ -255,6 +255,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Identify the sentence that places the adverb of frequency correctly with the verb be:", options: [["A", "My laptop is usually on my desk."], ["B", "My laptop usually is on my desk."], ["C", "My laptop is on my desk usually."], ["D", "Usually my laptop on my desk."]], answer: "A" },
       { q: 5, text: "Which sentence is grammatically correct and avoids common translation errors?", options: [["A", "I haven't got a tablet, but I always use my laptop for work."], ["B", "I don't got a tablet, but I use always my laptop for work."], ["C", "I no have got a tablet, but I always am using my laptop for work."], ["D", "I hasn't got a tablet, but I work always with my laptop."]], answer: "A" }
     ]
+  },
+  {
+    unit: 5, level: "A2", title: "A2 Session 5 Checkpoint", subtitle: "Making Social Arrangements & Have Got Questions", available: true, voiceSeconds: 30,
+    voicePrompt: "Invite a friend or colleague to a weekend social activity. Use an invitation phrase, ask a question with have got, and state a proposed time and location. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Which sentence is a correct way to invite a colleague to an activity?", options: [["A", "Would you like to go for a coffee after work?"], ["B", "Do you want like to go for a coffee after work?"], ["C", "Are you like going for a coffee after work?"], ["D", "Have you like to go for a coffee after work?"]], answer: "A" },
+      { q: 2, text: "Your classmate invites you: \"Shall we study together at the library tomorrow?\" How do you decline politely?", options: [["A", "I'd love to, but I'm afraid I can't. I'm busy."], ["B", "No, I don't want."], ["C", "I not have time tomorrow."], ["D", "I am can't study tomorrow."]], answer: "A" },
+      { q: 3, text: "Which question is grammatically correct when asking if someone has something?", options: [["A", "Have you got tickets for the match on Sunday?"], ["B", "Do you got tickets for the match on Sunday?"], ["C", "Are you got tickets for the match on Sunday?"], ["D", "Have you get tickets for the match on Sunday?"]], answer: "A" },
+      { q: 4, text: "Has he got a laptop for the meeting? Choose the correct short answer.", options: [["A", "Yes, he has."], ["B", "Yes, he got."], ["C", "Yes, he does."], ["D", "Yes, he is."]], answer: "A" },
+      { q: 5, text: "Choose the sentence with the correct word order for making plans:", options: [["A", "What time shall we meet at the mall?"], ["B", "What time we shall meet at the mall?"], ["C", "What time do shall we meet at the mall?"], ["D", "What time shall we meeting at the mall?"]], answer: "A" }
+    ]
   }
 ];
 
