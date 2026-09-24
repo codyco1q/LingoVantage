@@ -266,6 +266,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Has he got a laptop for the meeting? Choose the correct short answer.", options: [["A", "Yes, he has."], ["B", "Yes, he got."], ["C", "Yes, he does."], ["D", "Yes, he is."]], answer: "A" },
       { q: 5, text: "Choose the sentence with the correct word order for making plans:", options: [["A", "What time shall we meet at the mall?"], ["B", "What time we shall meet at the mall?"], ["C", "What time do shall we meet at the mall?"], ["D", "What time shall we meeting at the mall?"]], answer: "A" }
     ]
+  },
+  {
+    unit: 6, level: "A2", title: "A2 Session 6 Checkpoint", subtitle: "The Food We Eat", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe the food items you have in your kitchen or fridge for the week. Use countable and uncountable nouns with suitable quantifiers and at least one container expression. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Which container expressions best complete the sentence? \"Could you please buy a __________ of olive oil and a __________ of biscuits from the supermarket?\"", options: [["A", "bottle / box"], ["B", "cup / tin"], ["C", "slice / packet"], ["D", "glass / carton"]], answer: "A" },
+      { q: 2, text: "Choose the sentence that correctly uses some and any:", options: [["A", "We need any butter for the cake, but we don't have some milk."], ["B", "We need some butter for the cake, but we don't have any milk."], ["C", "We need a butter for the cake, but we don't have an milk."], ["D", "We need many butter for the cake, but we don't have any milks."]], answer: "B" },
+      { q: 3, text: "Which question correctly uses quantifiers for countable and uncountable food items?", options: [["A", "How much apples do you eat every week, and how many sugar do you take in your tea?"], ["B", "How many apples do you eat every week, and how much sugar do you take in your tea?"], ["C", "How many apple do you eat every week, and how many sugars do you take in your tea?"], ["D", "How much apple do you eat every week, and how much sugars do you take in your tea?"]], answer: "B" },
+      { q: 4, text: "Identify the sentence that is grammatically correct and avoids Arabic L1 agreement errors:", options: [["A", "I bought a lot of apples and some fresh bread for lunch."], ["B", "I bought a lot of apple and some fresh breads for lunch."], ["C", "I bought many apple and a lot of breads for lunch."], ["D", "I bought much apples and a fresh bread for lunch."]], answer: "A" },
+      { q: 5, text: "Select the sentence with the correct verb agreement and quantifier usage:", options: [["A", "There isn't much rice left in the kitchen, and there aren't many eggs."], ["B", "There aren't much rice left in the kitchen, and there isn't many eggs."], ["C", "There isn't many rice left in the kitchen, and there aren't much eggs."], ["D", "There don't have much rice left in the kitchen, and there isn't many egg."]], answer: "A" }
+    ]
   }
 ];
 
