@@ -277,6 +277,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Identify the sentence that is grammatically correct and avoids Arabic L1 agreement errors:", options: [["A", "I bought a lot of apples and some fresh bread for lunch."], ["B", "I bought a lot of apple and some fresh breads for lunch."], ["C", "I bought many apple and a lot of breads for lunch."], ["D", "I bought much apples and a fresh bread for lunch."]], answer: "A" },
       { q: 5, text: "Select the sentence with the correct verb agreement and quantifier usage:", options: [["A", "There isn't much rice left in the kitchen, and there aren't many eggs."], ["B", "There aren't much rice left in the kitchen, and there isn't many eggs."], ["C", "There isn't many rice left in the kitchen, and there aren't much eggs."], ["D", "There don't have much rice left in the kitchen, and there isn't many egg."]], answer: "A" }
     ]
+  },
+  {
+    unit: 7, level: "A2", title: "A2 Session 7 Checkpoint", subtitle: "Ordering a Meal & Restaurant Service", available: true, voiceSeconds: 30,
+    voicePrompt: "Imagine you are at a café or restaurant ordering lunch for yourself and a colleague. Include two polite requests for food or drinks using \"I'd like...\" or \"Could I have...?\", one question asking about an ingredient or quantifier, and a polite closing request for the bill. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Which sentence is the most polite and natural way to order food in a café or restaurant?", options: [["A", "I want the chicken soup now."], ["B", "Give me the chicken soup, please."], ["C", "Could I have the chicken soup, please?"], ["D", "I am needing the chicken soup."]], answer: "C" },
+      { q: 2, text: "How do you politely ask the waiter for the total cost at the end of a meal?", options: [["A", "Could we have the bill, please?"], ["B", "How much money you want?"], ["C", "Give me the paper for price."], ["D", "Do we pay now or what?"]], answer: "A" },
+      { q: 3, text: "Choose the correct option to complete the customer's question: \"Excuse me, how __________ sugar is in this lemonade?\"", options: [["A", "many"], ["B", "much"], ["C", "a lot"], ["D", "number of"]], answer: "B" },
+      { q: 4, text: "Identify the sentence that correctly avoids literal translation errors when ordering a drink:", options: [["A", "I want a cold water."], ["B", "I'd like a glass of water, please."], ["C", "Bring me water now."], ["D", "I do want water please."]], answer: "B" },
+      { q: 5, text: "Select the grammatically correct response from the waiter:", options: [["A", "We don't have much tables available outside."], ["B", "We don't have many tables available outside."], ["C", "We don't have much table available outside."], ["D", "We haven't got many table available outside."]], answer: "B" }
+    ]
   }
 ];
 
