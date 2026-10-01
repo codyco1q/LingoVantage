@@ -288,6 +288,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Identify the sentence that correctly avoids literal translation errors when ordering a drink:", options: [["A", "I want a cold water."], ["B", "I'd like a glass of water, please."], ["C", "Bring me water now."], ["D", "I do want water please."]], answer: "B" },
       { q: 5, text: "Select the grammatically correct response from the waiter:", options: [["A", "We don't have much tables available outside."], ["B", "We don't have many tables available outside."], ["C", "We don't have much table available outside."], ["D", "We haven't got many table available outside."]], answer: "B" }
     ]
+  },
+  {
+    unit: 8, level: "A2", title: "A2 Session 8 Checkpoint", subtitle: "Neighborhoods & Places", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe your neighborhood or your dream apartment. Include at least two sentences using \"There is\" or \"There are\", one negative sentence using \"There isn't\" or \"There aren't any\", and at least three vocabulary words for city places or furniture. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"I need to buy stamps and mail this package, so I'm going to the __________.\"", options: [["A", "sports centre"], ["B", "post office"], ["C", "concert hall"], ["D", "police station"]], answer: "B" },
+      { q: 2, text: "Select the sentence that is grammatically correct:", options: [["A", "There is three nice cafes in my street."], ["B", "There are three nice cafes in my street."], ["C", "There be three nice cafes in my street."], ["D", "Is three nice cafes in my street."]], answer: "B" },
+      { q: 3, text: "Which question correctly asks about facilities in a neighborhood?", options: [["A", "Are there any hotels near the station?"], ["B", "Is there any hotels near the station?"], ["C", "Do there have hotels near the station?"], ["D", "Are there some hotel near the station?"]], answer: "A" },
+      { q: 4, text: "Identify the sentence that correctly avoids the L1 Arabic plural agreement trap (\"There is some shops\"):", options: [["A", "There is a lot of shops near my house."], ["B", "There are some shops near my house."], ["C", "There is some shops near my house."], ["D", "There has some shops near my house."]], answer: "B" },
+      { q: 5, text: "Which sentence correctly combines existential there is with a preposition of place?", options: [["A", "There is a quiet park behind the bank."], ["B", "There is behind the bank a quiet park."], ["C", "Behind the bank is a quiet park there."], ["D", "Is a quiet park behind the bank."]], answer: "A" }
+    ]
   }
 ];
 
