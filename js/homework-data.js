@@ -299,6 +299,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Identify the sentence that correctly avoids the L1 Arabic plural agreement trap (\"There is some shops\"):", options: [["A", "There is a lot of shops near my house."], ["B", "There are some shops near my house."], ["C", "There is some shops near my house."], ["D", "There has some shops near my house."]], answer: "B" },
       { q: 5, text: "Which sentence correctly combines existential there is with a preposition of place?", options: [["A", "There is a quiet park behind the bank."], ["B", "There is behind the bank a quiet park."], ["C", "Behind the bank is a quiet park there."], ["D", "Is a quiet park behind the bank."]], answer: "A" }
     ]
+  },
+  {
+    unit: 9, level: "A2", title: "A2 Session 9 Checkpoint", subtitle: "Giving Directions & Prepositions of Movement", available: true, voiceSeconds: 30,
+    voicePrompt: "Give directions to a tourist or colleague from the train station to a nearby café or hotel. Use at least two directional phrases, at least one preposition of place, and a possessive form or possessive pronoun. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Which question is the most polite and natural way to ask for directions in a new city?", options: [["A", "Where is bank?"], ["B", "Excuse me, could you tell me how to get to the train station?"], ["C", "Tell me the road to train station."], ["D", "How I go to train station please?"]], answer: "B" },
+      { q: 2, text: "Complete the sentence: \"Walk down Main Street, ________ the post office, and the cinema is on your left.\"", options: [["A", "go past"], ["B", "go between"], ["C", "go under"], ["D", "go opposite"]], answer: "A" },
+      { q: 3, text: "Which sentence correctly describes the location of two buildings?", options: [["A", "The hospital is opposite to the hotel."], ["B", "The hospital is opposite the hotel."], ["C", "The hospital is between the hotel."], ["D", "The hospital is next the hotel."]], answer: "B" },
+      { q: 4, text: "Choose the grammatically CORRECT sentence:", options: [["A", "This is the car my father."], ["B", "This is my father car."], ["C", "This is my father's car."], ["D", "This is the car of my father's."]], answer: "C" },
+      { q: 5, text: "Sentence: \"That isn't your jacket. It's _______.\" Choose the correct possessive pronoun:", options: [["A", "my"], ["B", "mine"], ["C", "me"], ["D", "I"]], answer: "B" }
+    ]
   }
 ];
 
