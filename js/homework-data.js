@@ -310,6 +310,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the grammatically CORRECT sentence:", options: [["A", "This is the car my father."], ["B", "This is my father car."], ["C", "This is my father's car."], ["D", "This is the car of my father's."]], answer: "C" },
       { q: 5, text: "Sentence: \"That isn't your jacket. It's _______.\" Choose the correct possessive pronoun:", options: [["A", "my"], ["B", "mine"], ["C", "me"], ["D", "I"]], answer: "B" }
     ]
+  },
+  {
+    unit: 10, level: "A2", title: "A2 Session 10 Checkpoint", subtitle: "Family History & Past 'be' (was / were)", available: true, voiceSeconds: 30,
+    voicePrompt: "Share a brief family history story about where a family member was born, grew up, or moved in the past. Use both was and were correctly, include at least two regular past simple verbs, and mention a specific year or date in the past. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Where __________ your grandparents born in 1955?", options: [["A", "was"], ["B", "were"], ["C", "are"], ["D", "did"]], answer: "B" },
+      { q: 2, text: "My family __________ to Dubai five years ago because of my father's job.", options: [["A", "move"], ["B", "moved"], ["C", "moves"], ["D", "was moved"]], answer: "B" },
+      { q: 3, text: "Which sentence correctly uses the past simple of be?", options: [["A", "My uncle and his wife was in Cairo last week."], ["B", "My uncle and his wife were in Cairo last week."], ["C", "My uncle and his wife did in Cairo last week."], ["D", "My uncle and his wife been in Cairo last week."]], answer: "B" },
+      { q: 4, text: "How do you correctly pronounce the regular past simple ending in the verb \"started\"?", options: [["A", "/t/ (like 'talked')"], ["B", "/d/ (like 'lived')"], ["C", "/ɪd/ (like 'needed')"], ["D", "/s/ (like 'works')"]], answer: "C" },
+      { q: 5, text: "Choose the correct phrase to complete the sentence: \"My parents got married in 1998, and three years later, my sister was _________ in Alexandria.\"", options: [["A", "grew up"], ["B", "born"], ["C", "died"], ["D", "lived"]], answer: "B" }
+    ]
   }
 ];
 
