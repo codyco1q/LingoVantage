@@ -321,6 +321,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "How do you correctly pronounce the regular past simple ending in the verb \"started\"?", options: [["A", "/t/ (like 'talked')"], ["B", "/d/ (like 'lived')"], ["C", "/ɪd/ (like 'needed')"], ["D", "/s/ (like 'works')"]], answer: "C" },
       { q: 5, text: "Choose the correct phrase to complete the sentence: \"My parents got married in 1998, and three years later, my sister was _________ in Alexandria.\"", options: [["A", "grew up"], ["B", "born"], ["C", "died"], ["D", "lived"]], answer: "B" }
     ]
+  },
+  {
+    unit: 11, level: "A2", title: "A2 Session 11 Checkpoint", subtitle: "Past Simple Irregular Verbs & Voicemails", available: true, voiceSeconds: 30,
+    voicePrompt: "Record a 30-second voicemail message for a colleague or friend explaining why you missed a meeting or dinner appointment. State why you are calling, use at least two irregular past simple verbs (e.g., went, took, had, saw, came, lost, spoke), use at least one time connector (e.g., then, after that, finally), and request a call back or suggest a new meeting time.",
+    questions: [
+      { q: 1, text: "Which sentence correctly uses the past simple of the verb go and see?", options: [["A", "Yesterday I went to the city center and saw my cousin."], ["B", "Yesterday I goed to the city center and seed my cousin."], ["C", "Yesterday I go to the city center and see my cousin."], ["D", "Yesterday I was go to the city center and was see my cousin."]], answer: "A" },
+      { q: 2, text: "Choose the correct connector to sequence past events: \"I finished my work at 5:00 PM. __________, I took a taxi to the restaurant.\"", options: [["A", "After that"], ["B", "Because"], ["C", "But"], ["D", "Although"]], answer: "A" },
+      { q: 3, text: "How do you state the reason for your call in a voicemail message?", options: [["A", "I'm calling to ask about our meeting tomorrow."], ["B", "I call for ask about our meeting tomorrow."], ["C", "I am call to ask about our meeting tomorrow."], ["D", "I calling about ask our meeting tomorrow."]], answer: "A" },
+      { q: 4, text: "Which sentence is grammatically CORRECT and avoids regularizing irregular verbs?", options: [["A", "We had lunch together, and then he gave me the report."], ["B", "We haved lunch together, and then he gived me the report."], ["C", "We did have lunch together, and then he was give me the report."], ["D", "We have lunch yesterday, and then he give me the report."]], answer: "A" },
+      { q: 5, text: "Choose the correct sentence to leave a call-back request in a voicemail:", options: [["A", "Please call me back when you get this message."], ["B", "Please to call me back when you get this message."], ["C", "Please calling me back when you getting this message."], ["D", "Please you call back me when you get this message."]], answer: "A" }
+    ]
   }
 ];
 
