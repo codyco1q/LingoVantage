@@ -332,6 +332,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Which sentence is grammatically CORRECT and avoids regularizing irregular verbs?", options: [["A", "We had lunch together, and then he gave me the report."], ["B", "We haved lunch together, and then he gived me the report."], ["C", "We did have lunch together, and then he was give me the report."], ["D", "We have lunch yesterday, and then he give me the report."]], answer: "A" },
       { q: 5, text: "Choose the correct sentence to leave a call-back request in a voicemail:", options: [["A", "Please call me back when you get this message."], ["B", "Please to call me back when you get this message."], ["C", "Please calling me back when you getting this message."], ["D", "Please you call back me when you get this message."]], answer: "A" }
     ]
+  },
+  {
+    unit: 12, level: "A2", title: "A2 Session 12 Checkpoint", subtitle: "Journeys and Travel: Past Simple Negatives", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe your last vacation or journey. Mention how you traveled, where you stayed, and at least two things you DID NOT do or like using Past Simple negatives (didn't + base verb). Include at least two transport or travel words (e.g., train, flight, hotel, ferry), at least two Past Simple negative sentences with correct form (e.g., didn't go, didn't like, didn't stay), and at least one transport adjective (e.g., comfortable, crowded, expensive). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"The morning metro train was extremely __________; there were so many people that I couldn't find a seat.\"", options: [["A", "comfortable"], ["B", "crowded"], ["C", "cheap"], ["D", "quiet"]], answer: "B" },
+      { q: 2, text: "Select the grammatically correct sentence describing a past travel experience:", options: [["A", "We didn't went to London by train last summer."], ["B", "We didn't go to London by train last summer."], ["C", "We wasn't go to London by train last summer."], ["D", "We didn't going to London by train last summer."]], answer: "B" },
+      { q: 3, text: "Identify the sentence that correctly avoids the double-past tense error:", options: [["A", "He didn't bought a ticket at the station."], ["B", "He didn't buy a ticket at the station."], ["C", "He not bought a ticket at the station."], ["D", "He didn't buys a ticket at the station."]], answer: "B" },
+      { q: 4, text: "Choose the correct option to complete the dialogue: Person A: \"Did you enjoy the long ferry trip across the lake?\" Person B: \"Not really. The sea was rough and I __________ very well.\"", options: [["A", "didn't felt"], ["B", "didn't feel"], ["C", "don't feel"], ["D", "wasn't feel"]], answer: "B" },
+      { q: 5, text: "Which sentence is grammatically correct and avoids auxiliary confusion?", options: [["A", "I didn't stay in an expensive hotel because I didn't have enough money."], ["B", "I didn't stayed in an expensive hotel because I didn't had enough money."], ["C", "I wasn't stay in an expensive hotel because I didn't have enough money."], ["D", "I don't stayed in an expensive hotel because I didn't stayed."]], answer: "A" }
+    ]
   }
 ];
 
