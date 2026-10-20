@@ -145,9 +145,15 @@ export async function onRequestGet(context) {
       return { unit: n, title: "Unit " + n, homeworkPage: homeworkPages[i], presentation: "", mindmap: "" };
     });
 
-    const a2Revisions = Array.from({ length: 3 }, (_, i) => {
-      return { unit: i + 1, title: "A2 Revision Session " + (i + 1), link: "" };
-    });
+    const a2Revisions = [
+      {
+        unit: 1,
+        title: "A2 — IN, ON & AT",
+        description: "Prepositions of Time and Place",
+        video: "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/155d9b54-6042-437f-acde-1ebfcb6de702?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_",
+        presentation: "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/fe96f3de-12a9-4fef-a80a-4d6d71e29ace?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_"
+      }
+    ];
 
     const a2 = {
       sessions: a2Sessions,   // 24 sessions

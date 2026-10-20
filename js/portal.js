@@ -356,29 +356,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const intro = document.getElementById("revisionsIntro");
     if (!wrap) return;
     const data = isA2() ? ((a2Data && a2Data.revisions) || []) : portalRevisions;
-    if (isA2()) {
-      // No A2 revision sessions provided yet — empty, just like tests
-      wrap.style.display = "none";
-      if (soon) soon.style.display = "block";
-      if (intro) intro.textContent = "A2 revision sessions will be available here soon.";
-      return;
-    }
     wrap.style.display = "block";
     if (soon) soon.style.display = "none";
-    if (intro) intro.textContent = "Access your revision sessions below.";
+    if (intro) intro.textContent = isA2()
+      ? "Access your A2 revision resources below."
+      : "Access your revision sessions below.";
     wrap.innerHTML = data.map(r => {
-      const has = r.link && r.link.trim() !== "";
-      const action = has
-        ? `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Watch on Telegram</a>`
-        : `<span class="soon-pill">Coming soon</span>`;
+      const hasVideo = r.video && r.video.trim() !== "";
+      const hasPres = r.presentation && r.presentation.trim() !== "";
+      const hasOld = r.link && r.link.trim() !== "";
+      const desc = r.description ? `<span style="display:block;margin-top:2px;">${r.description}</span>` : "";
+      let action;
+      if (isA2() || hasVideo || hasPres) {
+        // A2 revision row: Video + Presentation buttons (pill when a link is missing)
+        const btn = (href, label) => href
+          ? `<a href="${href}" target="_blank" rel="noopener" class="btn btn-primary">${label}</a>`
+          : `<span class="soon-pill" style="flex:1;justify-content:center;display:flex;">Coming soon</span>`;
+        action = btn(hasVideo ? r.video : "", "▶ Video") +
+                 btn(hasPres ? r.presentation : "", "🖼️ Presentation");
+      } else if (hasOld) {
+        action = `<a href="${r.link}" target="_blank" rel="noopener" class="btn btn-primary">✈️ Watch on Telegram</a>`;
+      } else {
+        action = `<span class="soon-pill" style="flex:1;justify-content:center;display:flex;">Coming soon</span>`;
+      }
+      const any = hasVideo || hasPres || hasOld;
       return `
-        <div class="session-row ${has ? "" : "pending"}">
+        <div class="session-row ${any ? "" : "pending"}">
           <div class="session-num">${r.unit}</div>
           <div class="session-info">
             <strong>${r.title}</strong>
-            <span>${has ? "Revision session" : "Not ready yet"}</span>
+            ${desc}
+            <span>${any ? "Revision resource" : "Not ready yet"}</span>
           </div>
-          <div class="session-action">${action}</div>
+          <div class="session-action" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">${action}</div>
         </div>`;
     }).join("");
   }
