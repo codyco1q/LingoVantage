@@ -289,9 +289,13 @@ The A2 links are currently **placeholders** (empty), so each item shows
 `a2.revisions` arrays) — edit the `recording`, `presentation`, `mindmap`,
 `homeworkPage` and `link` fields there.
 
-A2 **Tests** and interactive **Submit Homework** are currently shown as
-"Coming soon" (no A2 questions/voice prompts provided yet). Add them later by
-splitting-extending the A1 question banks in `js/tests-data.js` / `js/homework-data.js`.
+A2 **Tests** are available: the **Units 1–4 cumulative diagnostic test**
+(30 multiple-choice questions, auto-graded) is defined in `js/tests-data.js`
+with `level: "A2"`. Add more A2 tests by pushing objects there with
+`level: "A2"` (tests without a `level` default to A1).
+
+A2 **Submit Homework** checkpoints live in `js/homework-data.js`
+(`LV_HOMEWORK_A2`).
 
 ### 3) Deploy to Netlify
 - Push this folder to GitHub.

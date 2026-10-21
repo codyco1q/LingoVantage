@@ -21,10 +21,14 @@
 
 (function () {
   let CURRENT_IP = null;
+  let CURRENT_LEVEL = "A1";
   let initialized = false;
 
-  /* Called by portal.js when the Tests tab is shown */
-  window.LV_initTests = async function () {
+  /* Called by portal.js when the Tests tab is shown.
+     `level` selects which test bank to display ("A1" or "A2").
+     When omitted (e.g. "Back to tests"), the current level is kept. */
+  window.LV_initTests = async function (level) {
+    if (level) CURRENT_LEVEL = level;
     await ensureIP();
     renderTestList();
   };
@@ -135,7 +139,7 @@
     if (!wrap) return;
     wrap.innerHTML = '<div class="dash-empty"><span class="spinner" style="border-top-color:var(--teal-400)"></span> Loading tests…</div>';
 
-    const tests = window.LV_TESTS || [];
+    const tests = (window.LV_TESTS || []).filter(t => (t.level || "A1") === CURRENT_LEVEL);
     const sbReady = window.LV_Supabase && window.LV_Supabase.ready();
 
     // Fetch this student's previous results once
@@ -313,14 +317,16 @@
       html += `</div></div>`;
     });
 
-    // Part B — Right or Wrong
-    html += `<h3 style="margin:28px 0 14px;">Part B — Right or Wrong <span style="color:var(--text-dim);font-weight:500;">(${t.partB.length} questions)</span></h3>`;
-    t.partB.forEach(item => {
-      html += `<div class="quiz-q"><p class="quiz-q-text">${item.q}. ${item.unit ? unitBadge(item.unit) : ""}${escapeHtml(item.text)}</p><div class="quiz-opts row">
+    // Part B — Right or Wrong (skipped for MCQ-only tests)
+    if (t.partB && t.partB.length) {
+      html += `<h3 style="margin:28px 0 14px;">Part B — Right or Wrong <span style="color:var(--text-dim);font-weight:500;">(${t.partB.length} questions)</span></h3>`;
+      t.partB.forEach(item => {
+        html += `<div class="quiz-q"><p class="quiz-q-text">${item.q}. ${item.unit ? unitBadge(item.unit) : ""}${escapeHtml(item.text)}</p><div class="quiz-opts row">
         <label class="quiz-opt"><input type="radio" name="B${item.q}" value="RIGHT"><span>✓ Right</span></label>
         <label class="quiz-opt"><input type="radio" name="B${item.q}" value="WRONG"><span>✗ Wrong</span></label>
       </div></div>`;
-    });
+      });
+    }
 
     // Section III — Functional Writing
     if (t.hasWritingTask && t.writingTask) {
@@ -459,8 +465,8 @@
 
     // Require all answers
     let unanswered = 0;
-    t.partA.forEach(i => { if (!form.querySelector(`input[name="A${i.q}"]:checked`)) unanswered++; });
-    t.partB.forEach(i => { if (!form.querySelector(`input[name="B${i.q}"]:checked`)) unanswered++; });
+    (t.partA || []).forEach(i => { if (!form.querySelector(`input[name="A${i.q}"]:checked`)) unanswered++; });
+    (t.partB || []).forEach(i => { if (!form.querySelector(`input[name="B${i.q}"]:checked`)) unanswered++; });
     if (unanswered > 0) {
       alertBox.className = "alert show error";
       alertBox.textContent = `⚠️ Please answer all questions (${unanswered} left).`;
@@ -476,7 +482,7 @@
       answers.A[i.q] = v;
       if (v === i.answer) score++;
     });
-    t.partB.forEach(i => {
+    (t.partB || []).forEach(i => {
       const v = form.querySelector(`input[name="B${i.q}"]:checked`).value;
       answers.B[i.q] = v;
       if (v === i.answer) score++;
@@ -515,8 +521,8 @@
 
     // Require all multiple-choice and right/wrong answers
     let unanswered = 0;
-    t.partA.forEach(i => { if (!form.querySelector(`input[name="A${i.q}"]:checked`)) unanswered++; });
-    t.partB.forEach(i => { if (!form.querySelector(`input[name="B${i.q}"]:checked`)) unanswered++; });
+    (t.partA || []).forEach(i => { if (!form.querySelector(`input[name="A${i.q}"]:checked`)) unanswered++; });
+    (t.partB || []).forEach(i => { if (!form.querySelector(`input[name="B${i.q}"]:checked`)) unanswered++; });
     if (unanswered > 0) {
       alertBox.className = "alert show error";
       alertBox.textContent = `⚠️ Please answer all questions (${unanswered} left).`;
@@ -525,8 +531,8 @@
     }
 
     const answers = { A: {}, B: {} };
-    t.partA.forEach(i => { answers.A[i.q] = form.querySelector(`input[name="A${i.q}"]:checked`).value; });
-    t.partB.forEach(i => { answers.B[i.q] = form.querySelector(`input[name="B${i.q}"]:checked`).value; });
+    (t.partA || []).forEach(i => { answers.A[i.q] = form.querySelector(`input[name="A${i.q}"]:checked`).value; });
+    (t.partB || []).forEach(i => { answers.B[i.q] = form.querySelector(`input[name="B${i.q}"]:checked`).value; });
 
     // Writing task validation
     let writing = null;

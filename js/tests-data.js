@@ -2,10 +2,16 @@
    LingoVantage — Test Bank
    Each test = 3 units. Add new tests by pushing to LV_TESTS.
    ---------------------------------------------------------
+   level: "A1" | "A2"
+     Selects which portal tab (A1 or A2) the test appears in.
+     Omit it for A1 tests — the portal defaults to "A1".
+   ---------------------------------------------------------
    Scoring (fully automatic):
      • Part A — Multiple choice  (1 mark each)
-     • Part B — Right / Wrong    (1 mark each)
+     • Part B — Right / Wrong    (1 mark each, optional)
      totalMax = partA.length + partB.length
+   A test with only multiple-choice questions can omit Part B
+   (or set `partB: []`).
    Set "available: false" to show a test as "Coming soon".
    ========================================================= */
 
@@ -15,6 +21,7 @@ window.LV_TESTS = [
     name: "Units 1–3 Test",
     subtitle: "Hello! · All About Me · Food and Drink",
     units: "1–3",
+    level: "A1",
     available: true,
     timeMinutes: 15,
 
@@ -62,6 +69,7 @@ window.LV_TESTS = [
     name: "Units 4–6 Test",
     subtitle: "My Life and My Family · Places · Work and Routines",
     units: "4–6",
+    level: "A1",
     available: true,
     timeMinutes: 15,
 
@@ -117,6 +125,7 @@ window.LV_TESTS = [
     name: "Units 7–9 Test",
     subtitle: "Units 7–9 · Past Events, Shopping & Holidays",
     units: "7-9",
+    level: "A1",
     available: true,
     timeMinutes: 15,
 
@@ -266,6 +275,7 @@ window.LV_TESTS = [
     name: "Progress Review Exam",
     subtitle: "Units 10–12 · Here & Now, Achievers & Plans",
     units: "10-12",
+    level: "A1",
     available: true,
     timeMinutes: 45,
 
@@ -423,6 +433,7 @@ window.LV_TESTS = [
     name: "A1 Level Final Examination (v2)",
     subtitle: "CEFR A1 Level Completion · Written & Speaking Capstone",
     units: "1–12",
+    level: "A1",
     available: true,
     timeMinutes: 60,
     totalMarks: 100,
@@ -505,5 +516,64 @@ window.LV_TESTS = [
         criteria: "Evaluated on: Tense shifts (Past Simple to 'be going to'), transport prepositions, month pronunciations, and ordinal dates."
       }
     ]
+  },
+
+  /* =========================================================
+     A2 — UNITS 1–4 CUMULATIVE DIAGNOSTIC TEST
+     CEFR A2 · 30 multiple-choice questions · auto-graded
+     Unit 1 (People) · Unit 2 (Work & Study)
+     Unit 3 (Daily Life & Tech) · Unit 4 (Food & Dining)
+     ========================================================= */
+  {
+    id: "a2-units-1-4",
+    name: "Units 1–4 Test",
+    subtitle: "People · Work & Study · Daily Life & Tech · Food & Dining",
+    units: "1–4",
+    level: "A2",
+    available: true,
+    timeMinutes: 30,
+
+    /* ---- PART A: Multiple Choice (30 questions · 1 mark each) ---- */
+    partA: [
+      /* Unit 1: People & Places */
+      { q: 1,  unit: "Unit 1", text: "Choose the correct sentence to complete the profile:", options: [["a","I from Cairo and I am a software engineer."],["b","I am from Cairo and I am a software engineer."],["c","I be from Cairo and I engineer."],["d","Am I from Cairo and engineer."]], answer: "b" },
+      { q: 2,  unit: "Unit 1", text: "Sara is an architect in Dubai. ________ husband works at the university.", options: [["a","She"],["b","Hers"],["c","Her"],["d","His"]], answer: "c" },
+      { q: 3,  unit: "Unit 1", text: "Kemal was born in Turkey, so he is ________.", options: [["a","Turkish"],["b","Turkeyish"],["c","Turkian"],["d","Turkan"]], answer: "a" },
+      { q: 4,  unit: "Unit 1", text: "Select the grammatically correct sentence:", options: [["a","My brother manager in a big bank."],["b","My brother is a manager in a big bank."],["c","My brother a manager in a big bank."],["d","My brother being manager in a big bank."]], answer: "b" },
+      { q: 5,  unit: "Unit 1", text: "Omar and Hassan ________ at work today because it is a national holiday.", options: [["a","isn't"],["b","aren't"],["c","don't"],["d","doesn't"]], answer: "b" },
+      { q: 6,  unit: "Unit 1", text: "Which question is formed correctly?", options: [["a","Where your colleagues are from?"],["b","Where are your colleagues from?"],["c","Where do your colleagues from?"],["d","Where from your colleagues are?"]], answer: "b" },
+      { q: 7,  unit: "Unit 1", text: "Choose the adjective that best describes someone who talks very little and likes peace:", options: [["a","friendly"],["b","busy"],["c","quiet"],["d","crowded"]], answer: "c" },
+
+      /* Unit 2: Work & Study */
+      { q: 8,  unit: "Unit 2", text: "Select the grammatically correct sentence:", options: [["a","My father work in an international office in Riyadh."],["b","My father works in an international office in Riyadh."],["c","My father working in an international office in Riyadh."],["d","My father is work in an international office in Riyadh."]], answer: "b" },
+      { q: 9,  unit: "Unit 2", text: "Identify the correct negative sentence:", options: [["a","I not like working late on Friday nights."],["b","I no like working late on Friday nights."],["c","I don't like working late on Friday nights."],["d","I am not like working late on Friday nights."]], answer: "c" },
+      { q: 10, unit: "Unit 2", text: "Choose the correct question format:", options: [["a","Where your sister study medicine?"],["b","Where does your sister study medicine?"],["c","Where do your sister study medicine?"],["d","Where is your sister study medicine?"]], answer: "b" },
+      { q: 11, unit: "Unit 2", text: "Person A: \"Does your manager speak French?\" Person B: \"No, he ________.\"", options: [["a","don't"],["b","isn't"],["c","doesn't"],["d","not speak"]], answer: "c" },
+      { q: 12, unit: "Unit 2", text: "To pass the final university exam, you must ________ good notes during lectures.", options: [["a","make"],["b","do"],["c","write"],["d","catch"]], answer: "a" },
+      { q: 13, unit: "Unit 2", text: "Select the correct job title for a person who repairs car engines:", options: [["a","receptionist"],["b","architect"],["c","mechanic"],["d","accountant"]], answer: "c" },
+      { q: 14, unit: "Unit 2", text: "Choose the correct negative form for he/she/it:", options: [["a","Tariq doesn't works on weekends."],["b","Tariq doesn't work on weekends."],["c","Tariq don't work on weekends."],["d","Tariq isn't work on weekends."]], answer: "b" },
+
+      /* Unit 3: Daily Life & Technology */
+      { q: 15, unit: "Unit 3", text: "Select the sentence with the correct word order:", options: [["a","Layla checks her emails always in the morning."],["b","Layla always checks her emails in the morning."],["c","Layla checks always her emails in the morning."],["d","Always Layla checks her emails in the morning."]], answer: "b" },
+      { q: 16, unit: "Unit 3", text: "Choose the grammatically correct sentence:", options: [["a","He is usually late for the morning briefing."],["b","He usually is late for the morning briefing."],["c","He is late usually for the morning briefing."],["d","Usually he is late for the morning briefing."]], answer: "a" },
+      { q: 17, unit: "Unit 3", text: "We ________ a new desktop computer in our study room.", options: [["a","have get"],["b","have got"],["c","has got"],["d","do got"]], answer: "b" },
+      { q: 18, unit: "Unit 3", text: "Select the correct negative statement:", options: [["a","She hasn't got a smartphone with a good camera."],["b","She don't have got a smartphone with a good camera."],["c","She haven't got a smartphone with a good camera."],["d","She isn't got a smartphone with a good camera."]], answer: "a" },
+      { q: 19, unit: "Unit 3", text: "Choose the correct question form for possession:", options: [["a","Do you got a wireless printer at home?"],["b","Have you got a wireless printer at home?"],["c","Are you got a wireless printer at home?"],["d","Have you get a wireless printer at home?"]], answer: "b" },
+      { q: 20, unit: "Unit 3", text: "I need to plug in my phone because the ________ is almost dead.", options: [["a","keyboard"],["b","battery"],["c","screen"],["d","printer"]], answer: "b" },
+      { q: 21, unit: "Unit 3", text: "Choose the most natural expression to invite a colleague for coffee:", options: [["a","Would you like to get a coffee after work?"],["b","Do you want that we get coffee?"],["c","Are you like getting coffee after work?"],["d","Have you got to get coffee?"]], answer: "a" },
+      { q: 22, unit: "Unit 3", text: "Select the polite response to decline an invitation:", options: [["a","No, I don't want to go."],["b","I'd love to, but I'm afraid I can't. I have to study."],["c","I am not coming with you."],["d","I haven't got time for this."]], answer: "b" },
+
+      /* Unit 4: Food & Dining */
+      { q: 23, unit: "Unit 4", text: "There is ________ milk in the fridge, but there aren't ________ apples left.", options: [["a","a / some"],["b","some / any"],["c","any / some"],["d","an / much"]], answer: "b" },
+      { q: 24, unit: "Unit 4", text: "Identify the grammatically correct sentence:", options: [["a","There are many shop in the new mall."],["b","There are many shops in the new mall."],["c","There is many shops in the new mall."],["d","There are much shops in the new mall."]], answer: "b" },
+      { q: 25, unit: "Unit 4", text: "How ________ sugar do you put in your tea?", options: [["a","many"],["b","much"],["c","a lot"],["d","any"]], answer: "b" },
+      { q: 26, unit: "Unit 4", text: "How ________ lemons do we need for the salad?", options: [["a","much"],["b","many"],["c","some"],["d","any"]], answer: "b" },
+      { q: 27, unit: "Unit 4", text: "Which phrase is the most appropriate and polite way to order food in a restaurant?", options: [["a","Give me the grilled chicken now."],["b","I want the grilled chicken."],["c","Could I have the grilled chicken, please?"],["d","I buy the grilled chicken today."]], answer: "c" },
+      { q: 28, unit: "Unit 4", text: "Can you buy a ________ of olive oil from the supermarket?", options: [["a","packet"],["b","bottle"],["c","slice"],["d","cup"]], answer: "b" },
+      { q: 29, unit: "Unit 4", text: "Choose the polite functional expression used at the end of a meal:", options: [["a","Could we have the bill, please?"],["b","How much money I give you?"],["c","I want to pay my food now."],["d","Give me the price list."]], answer: "a" },
+      { q: 30, unit: "Unit 4", text: "Select the correct sentence for uncountable food items:", options: [["a","We don't have many rice left in the kitchen."],["b","We don't have much rice left in the kitchen."],["c","We don't have a rice left in the kitchen."],["d","We don't have some rice left in the kitchen."]], answer: "b" }
+
+    ],
+    partB: []
   },
 ];

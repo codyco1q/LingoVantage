@@ -160,8 +160,8 @@ export async function onRequestGet(context) {
       units: a2Units,         // 12 levels
       revisions: a2Revisions,
       telegramChannel: "https://t.me/+pXja5Af9U5gzYWQ0",
-      // A2 Tests are not provided yet; Sessions 1–12 homework are available.
-      hasTests: false,
+      // A2 tests live in js/tests-data.js (Units 1–4 cumulative test).
+      hasTests: true,
       hasHomework: true
     };
 

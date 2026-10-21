@@ -158,13 +158,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const isA2 = currentLevel === "A2";
     updateTelegramBanner();
 
-    // Tests tab — A2 content not provided yet
+    // Tests tab — test banks live in js/tests-data.js and are split by level
     if (tabName === "tabTests") {
       const testsList = document.getElementById("testsList");
       const testsView = document.getElementById("testsView");
       const soon = document.getElementById("testsComingSoon");
       const intro = document.getElementById("testsIntro");
-      if (isA2) {
+      // A2 tests are available unless the server config explicitly disables them
+      const a2TestsAvailable = !a2Data || a2Data.hasTests !== false;
+      if (isA2 && !a2TestsAvailable) {
         if (soon) soon.style.display = "block";
         if (testsList) testsList.style.display = "none";
         if (testsView) testsView.style.display = "none";
@@ -172,8 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         if (soon) soon.style.display = "none";
         if (testsList) testsList.style.display = "block";
-        if (intro) intro.textContent = "Take a progress test after every 3 units, or the <b>final A1 exam</b> at the end. You can take each test <b>once</b>. Progress test results appear here instantly; your final exam result will be <b>delivered by your teacher</b>.";
-        if (typeof window.LV_initTests === "function") window.LV_initTests();
+        if (intro) intro.innerHTML = isA2
+          ? "Take the A2 cumulative test after every 4 units. You can take each test <b>once</b>. Your result appears here instantly."
+          : "Take a progress test after every 3 units, or the <b>final A1 exam</b> at the end. You can take each test <b>once</b>. Progress test results appear here instantly; your final exam result will be <b>delivered by your teacher</b>.";
+        if (typeof window.LV_initTests === "function") window.LV_initTests(currentLevel);
       }
       return;
     }
