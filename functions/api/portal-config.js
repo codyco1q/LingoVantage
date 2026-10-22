@@ -94,7 +94,7 @@ export async function onRequestGet(context) {
       - 24 session resources (Presentations · Mind Maps tabs)
       - 12 units/levels (Homework tab)
 
-      Sessions 1–12 are available; the remaining sessions are placeholders.
+      Sessions 1–13 are available; the remaining sessions are placeholders.
        ============================================================ */
     const a2Sessions = Array.from({ length: 24 }, (_, i) => {
       const n = i + 1;
@@ -113,6 +113,7 @@ export async function onRequestGet(context) {
     a2Sessions[9].recording = "https://t.me/c/4299575479/12";
     a2Sessions[10].recording = "https://t.me/c/4299575479/13";
     a2Sessions[11].recording = "https://t.me/c/4299575479/14";
+    a2Sessions[12].recording = "https://t.me/c/4299575479/15";
 
     a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
@@ -138,6 +139,8 @@ export async function onRequestGet(context) {
     a2Sessions[10].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/26f19758-f6bb-48a0-9462-c74d29b8b553?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[11].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/854fac44-a312-4fef-a360-198469f3fbee?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[11].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/dfacf2ab-b218-431b-9d84-6d57f93cb8ac?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[12].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/7867da2e-3317-4f3d-8320-d355759d0305?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[12].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c8fd01f3-0539-4626-a27d-78ce7c9aa848?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
 
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {

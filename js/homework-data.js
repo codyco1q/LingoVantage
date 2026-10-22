@@ -343,6 +343,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the correct option to complete the dialogue: Person A: \"Did you enjoy the long ferry trip across the lake?\" Person B: \"Not really. The sea was rough and I __________ very well.\"", options: [["A", "didn't felt"], ["B", "didn't feel"], ["C", "don't feel"], ["D", "wasn't feel"]], answer: "B" },
       { q: 5, text: "Which sentence is grammatically correct and avoids auxiliary confusion?", options: [["A", "I didn't stay in an expensive hotel because I didn't have enough money."], ["B", "I didn't stayed in an expensive hotel because I didn't had enough money."], ["C", "I wasn't stay in an expensive hotel because I didn't have enough money."], ["D", "I don't stayed in an expensive hotel because I didn't stayed."]], answer: "A" }
     ]
+  },
+  {
+    unit: 13, level: "A2", title: "A2 Session 13 Checkpoint", subtitle: "Travel Problems & Past Questions", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe a real or imagined travel problem you experienced (a lost bag, a delayed flight, or a missed train). Explain what happened, ask a question you asked to the airport or station staff, and explain how the problem was resolved. Include at least two travel problem words (delay, lost luggage, missed train, airport desk), at least one Past Simple question (Did you see...?, How did I get...?), and at least two Past Simple affirmative or negative sentences (The flight was delayed, I didn't find my bag). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the option that best completes the sentence: \"Our flight to Cairo had a 3-hour __________ because of bad weather, so we arrived at the hotel after midnight.\"", options: [["A", "luggage"], ["B", "ticket"], ["C", "delay"], ["D", "station"]], answer: "C" },
+      { q: 2, text: "Select the grammatically correct question asking about a past journey:", options: [["A", "Where you went on holiday last month?"], ["B", "Where did you go on holiday last month?"], ["C", "Where did you went on holiday last month?"], ["D", "Where was you go on holiday last month?"]], answer: "B" },
+      { q: 3, text: "Identify the question that correctly avoids the double-past tense error:", options: [["A", "Did you lose your luggage at the airport?"], ["B", "Did you lost your luggage at the airport?"], ["C", "Do you lost your luggage at the airport?"], ["D", "Did you losing your luggage at the airport?"]], answer: "A" },
+      { q: 4, text: "Choose the correct option to complete the conversation: Passenger: \"Excuse me, did the train to Alexandria leave from Platform 4?\" Agent: \"No, __________. It left from Platform 2.\"", options: [["A", "it didn't"], ["B", "it didn't left"], ["C", "it wasn't"], ["D", "it don't"]], answer: "A" },
+      { q: 5, text: "Which option arranges the words in the grammatically correct question order?", options: [["A", "How did you solve the problem with your missed flight?"], ["B", "How you did solve the problem with your missed flight?"], ["C", "How did you solved the problem with your missed flight?"], ["D", "How solved you the problem with your missed flight?"]], answer: "A" }
+    ]
   }
 ];
 
