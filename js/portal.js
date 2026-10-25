@@ -339,17 +339,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = isA2() ? a2Sessions() : portalSessions;
     wrap.innerHTML = data.map(s => {
       const has = s.recording && s.recording.trim() !== "";
-      const action = has
-        ? `<a href="${s.recording}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording</a>`
-        : `<span class="soon-pill">Coming soon</span>`;
+      const has2 = s.recording2 && s.recording2.trim() !== "";
+      // A session can carry a second recording (same session, two parts):
+      // it still renders as one row, but with two buttons.
+      const action = has && has2
+        ? `<a href="${s.recording}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording 1</a>
+           <a href="${s.recording2}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording 2</a>`
+        : has
+          ? `<a href="${s.recording}" target="_blank" rel="noopener" class="btn btn-primary">▶ Watch recording</a>`
+          : `<span class="soon-pill">Coming soon</span>`;
+      const style = has && has2 ? ` style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;"` : "";
+      const status = has ? (has2 ? "2 recordings available" : "Recording available") : "Not recorded yet";
       return `
         <div class="session-row ${has ? "" : "pending"}">
           <div class="session-num">${s.unit}</div>
           <div class="session-info">
             <strong>${s.title}</strong>
-            <span>${has ? "Recording available" : "Not recorded yet"}</span>
+            <span>${status}</span>
           </div>
-          <div class="session-action">${action}</div>
+          <div class="session-action"${style}>${action}</div>
         </div>`;
     }).join("");
   }

@@ -354,6 +354,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the correct option to complete the conversation: Passenger: \"Excuse me, did the train to Alexandria leave from Platform 4?\" Agent: \"No, __________. It left from Platform 2.\"", options: [["A", "it didn't"], ["B", "it didn't left"], ["C", "it wasn't"], ["D", "it don't"]], answer: "A" },
       { q: 5, text: "Which option arranges the words in the grammatically correct question order?", options: [["A", "How did you solve the problem with your missed flight?"], ["B", "How you did solve the problem with your missed flight?"], ["C", "How did you solved the problem with your missed flight?"], ["D", "How solved you the problem with your missed flight?"]], answer: "A" }
     ]
+  },
+  {
+    unit: 14, level: "A2", title: "A2 Session 14 Checkpoint", subtitle: "Physical Abilities & Rules", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe your physical abilities in the past versus the present, and mention one rule or obligation at your workplace or gym. Use could / couldn't, can / can't, and have to / don't have to. Requirements: (1) at least one past ability statement (When I was young, I could/couldn't...), (2) at least one present ability statement (Now I can/can't...), and (3) at least one obligation or lack of obligation statement (At my gym/work, I have to / don't have to...). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"When my grandfather was five years old, he __________ swim very well, but now he is a master swimmer.\"", options: [["A", "can't"], ["B", "couldn't"], ["C", "doesn't have to"], ["D", "can"]], answer: "B" },
+      { q: 2, text: "Select the grammatically correct sentence expressing lack of obligation (not necessary):", options: [["A", "You don't have to wear a formal suit on Fridays; smart casual clothes are okay."], ["B", "You mustn't to wear a formal suit on Fridays; smart casual clothes are okay."], ["C", "You haven't to wear a formal suit on Fridays; smart casual clothes are okay."], ["D", "You not have to wear a formal suit on Fridays; smart casual clothes are okay."]], answer: "A" },
+      { q: 3, text: "Choose the option that best completes the sentence: \"Before you start running or doing intense gymnastics, you should stretch your __________ so you don't hurt your legs.\"", options: [["A", "symptoms"], ["B", "muscles"], ["C", "treatments"], ["D", "prescriptions"]], answer: "B" },
+      { q: 4, text: "Identify the sentence that correctly expresses present physical ability without structural transfer errors:", options: [["A", "She can speaks three languages fluently."], ["B", "She can speak three languages fluently."], ["C", "She is can speak three languages fluently."], ["D", "She can speaking three languages fluently."]], answer: "B" },
+      { q: 5, text: "Which sentence correctly expresses obligation (necessary rule) in the workplace or gym?", options: [["A", "Employees have to show their ID card when entering the fitness center."], ["B", "Employees has to showing their ID card when entering the fitness center."], ["C", "Employees is having to show their ID card when entering the fitness center."], ["D", "Employees having to show their ID card when entering the fitness center."]], answer: "A" }
+    ]
   }
 ];
 
