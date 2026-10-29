@@ -289,8 +289,8 @@ The A2 links are currently **placeholders** (empty), so each item shows
 `a2.revisions` arrays) — edit the `recording`, `presentation`, `mindmap`,
 `homeworkPage` and `link` fields there.
 
-A2 **Tests** are available: the **Units 1–4 cumulative diagnostic test**
-(30 multiple-choice questions, auto-graded) is defined in `js/tests-data.js`
+A2 **Tests** are available: the **Units 1–4** and **Units 4–8** cumulative diagnostic tests
+(30 multiple-choice questions each, auto-graded) are defined in `js/tests-data.js`
 with `level: "A2"`. Add more A2 tests by pushing objects there with
 `level: "A2"` (tests without a `level` default to A1).
 

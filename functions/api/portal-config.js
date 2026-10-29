@@ -94,7 +94,7 @@ export async function onRequestGet(context) {
       - 24 session resources (Presentations · Mind Maps tabs)
       - 12 units/levels (Homework tab)
 
-      Sessions 1–14 are available; the remaining sessions are placeholders.
+      Sessions 1–15 are available; the remaining sessions are placeholders.
       Session 14 has TWO recordings (recording + recording2).
        ============================================================ */
     const a2Sessions = Array.from({ length: 24 }, (_, i) => {
@@ -117,6 +117,7 @@ export async function onRequestGet(context) {
     a2Sessions[12].recording = "https://t.me/c/4299575479/15";
     a2Sessions[13].recording = "https://t.me/c/4299575479/16";
     a2Sessions[13].recording2 = "https://t.me/c/4299575479/17";
+    a2Sessions[14].recording = "https://t.me/c/4299575479/18";
 
     a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
@@ -146,6 +147,8 @@ export async function onRequestGet(context) {
     a2Sessions[12].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c8fd01f3-0539-4626-a27d-78ce7c9aa848?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[13].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9fdddafb-f428-4977-be8f-7047d7d200b5?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[13].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/4551d652-b0df-483f-ba9c-ea4be3f969a4?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[14].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/14df4064-1ce3-4b0f-9905-bf8b66e8cd9b?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
+    a2Sessions[14].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/39476380-2f00-4645-92e3-186292c41c51?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
 
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {
@@ -168,7 +171,7 @@ export async function onRequestGet(context) {
       units: a2Units,         // 12 levels
       revisions: a2Revisions,
       telegramChannel: "https://t.me/+pXja5Af9U5gzYWQ0",
-      // A2 tests live in js/tests-data.js (Units 1–4 cumulative test).
+      // A2 tests live in js/tests-data.js (Units 1–4 and Units 4–8 cumulative tests).
       hasTests: true,
       hasHomework: true
     };

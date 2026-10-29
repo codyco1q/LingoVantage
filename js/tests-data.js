@@ -576,4 +576,65 @@ window.LV_TESTS = [
     ],
     partB: []
   },
+
+  /* =========================================================
+     A2 — UNITS 4–8 CUMULATIVE DIAGNOSTIC TEST
+     CEFR A2 · 30 multiple-choice questions · auto-graded
+     Unit 4 (Food) · Unit 5 (Places)
+     Unit 6 (Family & Past 'be') · Unit 7 (Journeys & Transport)
+     Unit 8 (Fit & Healthy)
+     ========================================================= */
+  {
+    id: "a2-units-4-8",
+    name: "Units 4–8 Test",
+    subtitle: "Food · Places · Family & Past · Journeys & Transport · Fit & Healthy",
+    units: "4–8",
+    level: "A2",
+    available: true,
+    timeMinutes: 30,
+
+    /* ---- PART A: Multiple Choice (30 questions · 1 mark each) ---- */
+    partA: [
+      /* Unit 4: Food & Quantifiers */
+      { q: 1,  unit: "Unit 4", text: "We need to buy a __________ of olive oil and a __________ of cereal from the supermarket.", options: [["a","bottle / box"],["b","cup / slice"],["c","glass / packet"],["d","piece / can"]], answer: "a" },
+      { q: 2,  unit: "Unit 4", text: "Is there __________ sugar left in the kitchen? I want to make __________ tea.", options: [["a","any / some"],["b","a / any"],["c","some / a"],["d","any / an"]], answer: "a" },
+      { q: 3,  unit: "Unit 4", text: "How __________ water do you drink every day? You should drink __________ water when it is hot.", options: [["a","much / a lot of"],["b","many / much"],["c","much / many"],["d","many / a lot of"]], answer: "a" },
+      { q: 4,  unit: "Unit 4", text: "Select the grammatically correct sentence:", options: [["a","She bought many apples and some cheese for the recipe."],["b","She bought many apple and some cheese for the recipe."],["c","She bought much apples and some cheeses for the recipe."],["d","She bought a lot of apple and a cheese for the recipe."]], answer: "a" },
+      { q: 5,  unit: "Unit 4", text: "Choose the most polite and natural way to order food in a café:", options: [["a","\"Could I have the grilled chicken and a mineral water, please?\""],["b","\"I want the grilled chicken and a mineral water right now.\""],["c","\"Give me grilled chicken and water.\""],["d","\"I am wanting grilled chicken and water, please.\""]], answer: "a" },
+      { q: 6,  unit: "Unit 4", text: "There aren't __________ tables free in the restaurant, but there is __________ bread on the table.", options: [["a","many / some"],["b","much / any"],["c","a lot of / a"],["d","many / an"]], answer: "a" },
+
+      /* Unit 5: Places, Possessives & Directions */
+      { q: 7,  unit: "Unit 5", text: "__________ three quiet parks near my house, but __________ a cinema in our neighborhood.", options: [["a","There are / there isn't"],["b","There is / there aren't"],["c","There are / there no"],["d","There is / there is no"]], answer: "a" },
+      { q: 8,  unit: "Unit 5", text: "Select the sentence that uses possessive structures correctly:", options: [["a","\"This apartment isn't ours; it is my uncle's house.\""],["b","\"This apartment isn't our; it is the house my uncle.\""],["c","\"This apartment isn't ours; it is my uncle house.\""],["d","\"This apartment isn't our's; it is house of my uncle's.\""]], answer: "a" },
+      { q: 9,  unit: "Unit 5", text: "Is this notebook __________? No, it belongs to Sarah, so it is __________.", options: [["a","yours / hers"],["b","your / her"],["c","yours / her"],["d","your / hers"]], answer: "a" },
+      { q: 10, unit: "Unit 5", text: "To get to the pharmacy, go __________ the bank and turn right __________ the corner.", options: [["a","past / on"],["b","straight / in"],["c","through / at"],["d","opposite / next"]], answer: "a" },
+      { q: 11, unit: "Unit 5", text: "The hotel is __________ the hospital and the museum, right __________ the park.", options: [["a","between / opposite"],["b","next to / behind"],["c","on / in"],["d","across / between"]], answer: "a" },
+      { q: 12, unit: "Unit 5", text: "Which sentence avoids plural/singular agreement errors with there?", options: [["a","There are many beautiful shops in the city center."],["b","There is many beautiful shops in the city center."],["c","There are a beautiful shop in the city center."],["d","There be many beautiful shops in the city center."]], answer: "a" },
+
+      /* Unit 6: Family History & Past Simple */
+      { q: 13, unit: "Unit 6", text: "My grandparents __________ born in Alexandria, but my father __________ born in Cairo.", options: [["a","were / was"],["b","was / were"],["c","were / were"],["d","was / was"]], answer: "a" },
+      { q: 14, unit: "Unit 6", text: "Select the grammatically correct sentence:", options: [["a","\"My uncle and his wife were at home yesterday evening.\""],["b","\"My uncle and his wife was at home yesterday evening.\""],["c","\"My uncle and his wife at home yesterday evening.\""],["d","\"My uncle and his wife been at home yesterday evening.\""]], answer: "a" },
+      { q: 15, unit: "Unit 6", text: "They __________ in Dubai for five years, and then they __________ to Cairo in 2018.", options: [["a","lived / moved"],["b","lived / move"],["c","live / moved"],["d","lived / moveing"]], answer: "a" },
+      { q: 16, unit: "Unit 6", text: "Select the option with the correct past forms of the verbs (meet, drink, speak):\nYesterday, I __________ my friends at the café, __________ coffee, and __________ about our weekend.", options: [["a","met / drank / spoke"],["b","meeted / drinked / speaked"],["c","met / drink / spoke"],["d","meet / drank / speak"]], answer: "a" },
+      { q: 17, unit: "Unit 6", text: "Choose the correct time connectors to order past events:\n\"I had a busy morning. First, I went to the bank. __________, I met my manager, and __________ I went home.\"", options: [["a","Then / finally"],["b","Because / but"],["c","So / although"],["d","Before / after"]], answer: "a" },
+      { q: 18, unit: "Unit 6", text: "Which sentence correctly uses irregular past forms without adding -ed?", options: [["a","\"We had a great trip and saw many famous places.\""],["b","\"We haved a great trip and seed many famous places.\""],["c","\"We have a great trip and sawed many famous places.\""],["d","\"We haded a great trip and saw many famous places.\""]], answer: "a" },
+
+      /* Unit 7: Journeys & Travel Problems */
+      { q: 19, unit: "Unit 7", text: "I __________ by plane because the tickets were too expensive; I took the train instead.", options: [["a","didn't travel"],["b","didn't traveled"],["c","wasn't travel"],["d","don't traveled"]], answer: "a" },
+      { q: 20, unit: "Unit 7", text: "Identify the sentence that correctly avoids the double-past tense error:", options: [["a","She didn't buy a souvenir at the airport."],["b","She didn't bought a souvenir at the airport."],["c","She not bought a souvenir at the airport."],["d","She wasn't buy a souvenir at the airport."]], answer: "a" },
+      { q: 21, unit: "Unit 7", text: "Choose the correctly structured past simple question:", options: [["a","\"Where did you go on holiday last summer?\""],["b","\"Where you went on holiday last summer?\""],["c","\"Where did you went on holiday last summer?\""],["d","\"Where was you go on holiday last summer?\""]], answer: "a" },
+      { q: 22, unit: "Unit 7", text: "Person A: \"Did you lose your luggage at the airport?\"\nPerson B: \"No, I __________! The airline found it quickly.\"", options: [["a","didn't"],["b","didn't lost"],["c","wasn't"],["d","don't"]], answer: "a" },
+      { q: 23, unit: "Unit 7", text: "The flight was very __________ and clean, but the metro station was extremely __________ during peak hour.", options: [["a","comfortable / crowded"],["b","crowded / comfortable"],["c","cheap / convenient"],["d","slow / fast"]], answer: "a" },
+      { q: 24, unit: "Unit 7", text: "Choose the most polite phrase to request help from airport staff:", options: [["a","\"Excuse me, could you help me find my gate, please?\""],["b","\"I want you to tell me where my gate is now.\""],["c","\"Sorry, where my gate is?\""],["d","\"Must you show me the gate?\""]], answer: "a" },
+
+      /* Unit 8: Physical Abilities, Rules & Health Advice */
+      { q: 25, unit: "Unit 8", text: "When I was five years old, I __________ swim, but now I __________ swim very well.", options: [["a","couldn't / can"],["b","can't / could"],["c","could / can't"],["d","couldn't / couldn't"]], answer: "a" },
+      { q: 26, unit: "Unit 8", text: "Select the grammatically correct sentence:", options: [["a","He can speak three languages fluently."],["b","He can to speak three languages fluently."],["c","He cans speak three languages fluently."],["d","He is can speak three languages fluently."]], answer: "a" },
+      { q: 27, unit: "Unit 8", text: "Tomorrow is Sunday, so I __________ get up early for work. I can sleep late!", options: [["a","don't have to"],["b","have to"],["c","mustn't"],["d","doesn't have to"]], answer: "a" },
+      { q: 28, unit: "Unit 8", text: "You look exhausted and you have a fever. You __________ stay in bed and you __________ go to work today.", options: [["a","should / shouldn't"],["b","shouldn't / should"],["c","have to / should"],["d","should / don't have to"]], answer: "a" },
+      { q: 29, unit: "Unit 8", text: "Select the sentence that gives advice correctly without adding unnecessary prepositions:", options: [["a","You should see a doctor and rest at home."],["b","You should to see a doctor and to rest at home."],["c","You should seeing a doctor and resting at home."],["d","You ought see a doctor and rest at home."]], answer: "a" },
+      { q: 30, unit: "Unit 8", text: "I have a terrible __________ and a sore throat, so the doctor told me to take medicine and drink warm tea.", options: [["a","headache"],["b","fracture"],["c","allergy"],["d","bruise"]], answer: "a" }
+    ],
+    partB: []
+  },
 ];

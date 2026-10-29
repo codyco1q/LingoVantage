@@ -365,6 +365,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Identify the sentence that correctly expresses present physical ability without structural transfer errors:", options: [["A", "She can speaks three languages fluently."], ["B", "She can speak three languages fluently."], ["C", "She is can speak three languages fluently."], ["D", "She can speaking three languages fluently."]], answer: "B" },
       { q: 5, text: "Which sentence correctly expresses obligation (necessary rule) in the workplace or gym?", options: [["A", "Employees have to show their ID card when entering the fitness center."], ["B", "Employees has to showing their ID card when entering the fitness center."], ["C", "Employees is having to show their ID card when entering the fitness center."], ["D", "Employees having to show their ID card when entering the fitness center."]], answer: "A" }
     ]
+  },
+  {
+    unit: 15, level: "A2", title: "A2 Session 15 Checkpoint", subtitle: "Health Problems & Giving Advice", available: true, voiceSeconds: 30,
+    voicePrompt: "A colleague calls you and says they feel sick with a headache and a high fever. Record a 30-second voicemail giving them advice on what they SHOULD and SHOULD NOT do. Requirements: (1) mention at least two health symptoms (headache, fever, cough, sore throat), (2) give at least two pieces of positive advice using should + base verb (should rest, should drink water, should see a doctor), and (3) give at least one piece of negative advice using shouldn't + base verb (shouldn't go to work, shouldn't drink cold drinks). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"I have a terrible __________ and it hurts to speak or swallow food.\"", options: [["A", "toothache"], ["B", "sore throat"], ["C", "stomach ache"], ["D", "broken leg"]], answer: "B" },
+      { q: 2, text: "Select the grammatically correct sentence offering medical advice:", options: [["A", "You should to go to bed and rest."], ["B", "You should go to bed and rest."], ["C", "You should going to bed and rest."], ["D", "You should went to bed and rest."]], answer: "B" },
+      { q: 3, text: "Identify the sentence that correctly avoids the modal preposition trap:", options: [["A", "If you have a high fever, you shouldn't to drink cold water."], ["B", "If you have a high fever, you shouldn't drinking cold water."], ["C", "If you have a high fever, you shouldn't drink cold water."], ["D", "If you have a high fever, you don't should drink cold water."]], answer: "C" },
+      { q: 4, text: "Choose the option that best completes the doctor-patient dialogue: Patient: \"I have a bad cough and a headache.\" Doctor: \"You __________ stay at home and drink hot tea, but you __________ go to the hospital unless it gets worse.\"", options: [["A", "should / don't have to"], ["B", "shouldn't / have to"], ["C", "should to / don't"], ["D", "must to / shouldn't to"]], answer: "A" },
+      { q: 5, text: "Which sentence is grammatically correct when giving negative advice?", options: [["A", "You shouldn't eat heavy food when you have a stomach ache."], ["B", "You shouldn't to eat heavy food when you have a stomach ache."], ["C", "You not should eat heavy food when you have a stomach ache."], ["D", "You shouldn't eating heavy food when you have a stomach ache."]], answer: "A" }
+    ]
   }
 ];
 
