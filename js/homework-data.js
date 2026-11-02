@@ -376,6 +376,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the option that best completes the doctor-patient dialogue: Patient: \"I have a bad cough and a headache.\" Doctor: \"You __________ stay at home and drink hot tea, but you __________ go to the hospital unless it gets worse.\"", options: [["A", "should / don't have to"], ["B", "shouldn't / have to"], ["C", "should to / don't"], ["D", "must to / shouldn't to"]], answer: "A" },
       { q: 5, text: "Which sentence is grammatically correct when giving negative advice?", options: [["A", "You shouldn't eat heavy food when you have a stomach ache."], ["B", "You shouldn't to eat heavy food when you have a stomach ache."], ["C", "You not should eat heavy food when you have a stomach ache."], ["D", "You shouldn't eating heavy food when you have a stomach ache."]], answer: "A" }
     ]
+  },
+  {
+    unit: 16, level: "A2", title: "A2 Session 16 Checkpoint", subtitle: "Clothes & Shopping", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe what clothes you are wearing right now (using Present Continuous be + verb-ing) and contrast it with what you usually wear to work or university (using Present Simple). Also mention your favorite shopping venue or clothing store. Requirements: (1) use at least two Present Continuous sentences with correct copulas (I am wearing..., My friend is wearing...), (2) use at least one Present Simple sentence for routine habits (I usually wear...), and (3) include at least three clothes or color vocabulary words (jeans, jacket, shirt, blue, dark). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the option that best completes the sentence: \"Excuse me, I like this jacket, but it is too small. Have you got it in a larger __________?\"", options: [["A", "color"], ["B", "size"], ["C", "price"], ["D", "receipt"]], answer: "B" },
+      { q: 2, text: "Select the grammatically correct sentence describing what someone is wearing right now:", options: [["A", "She wearing a blue dress and black shoes today."], ["B", "She is wearing a blue dress and black shoes today."], ["C", "She is wear a blue dress and black shoes today."], ["D", "She wears wearing a blue dress and black shoes today."]], answer: "B" },
+      { q: 3, text: "Identify the sentence that correctly avoids the L1 Arabic copula drop trap:", options: [["A", "Look! He standing near the boutique entrance."], ["B", "Look! He is standing near the boutique entrance."], ["C", "Look! He be standing near the boutique entrance."], ["D", "Look! He does standing near the boutique entrance."]], answer: "B" },
+      { q: 4, text: "Choose the correct option to complete the comparison: \"Tarek usually __________ formal suits to the office, but today he __________ casual jeans and a T-shirt.\"", options: [["A", "is wearing / wears"], ["B", "wears / is wearing"], ["C", "wear / wearing"], ["D", "is wear / is wearing"]], answer: "B" },
+      { q: 5, text: "Which sentence is the most polite and natural way to ask to try on clothes in a shop?", options: [["A", "I want put this shirt on now."], ["B", "Could I try this shirt on, please? Where are the fitting rooms?"], ["C", "Give me this shirt for trying."], ["D", "Do I try on this shirt here?"]], answer: "B" }
+    ]
   }
 ];
 
