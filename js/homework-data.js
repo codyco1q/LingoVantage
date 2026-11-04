@@ -387,6 +387,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the correct option to complete the comparison: \"Tarek usually __________ formal suits to the office, but today he __________ casual jeans and a T-shirt.\"", options: [["A", "is wearing / wears"], ["B", "wears / is wearing"], ["C", "wear / wearing"], ["D", "is wear / is wearing"]], answer: "B" },
       { q: 5, text: "Which sentence is the most polite and natural way to ask to try on clothes in a shop?", options: [["A", "I want put this shirt on now."], ["B", "Could I try this shirt on, please? Where are the fitting rooms?"], ["C", "Give me this shirt for trying."], ["D", "Do I try on this shirt here?"]], answer: "B" }
     ]
+  },
+  {
+    unit: 17, level: "A2", title: "A2 Session 17 Checkpoint", subtitle: "Modern Technology & Comparatives", available: true, voiceSeconds: 30,
+    voicePrompt: "Compare two electronic gadgets or devices that you own or use (e.g., your smartphone vs. your laptop, or your tablet vs. your e-reader). Use at least three comparative adjectives (cheaper, faster, lighter, larger, more expensive, better) to explain which one you prefer and why. Requirements: (1) mention at least two technology devices (smartphone, laptop, tablet, smartwatch), (2) use at least three comparative adjectives with correct syntax (-er than / more... than / better than), and (3) ensure you avoid double comparatives (e.g., say faster NOT more faster, and than NOT from). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"I bought a new __________ because I wanted a lightweight device with a big screen to read books and watch videos on the train.\"", options: [["A", "smartwatch"], ["B", "tablet"], ["C", "keyboard"], ["D", "printer"]], answer: "B" },
+      { q: 2, text: "Select the grammatically correct sentence comparing two laptops:", options: [["A", "My new laptop is more fast than my old one."], ["B", "My new laptop is faster than my old one."], ["C", "My new laptop is faster from my old one."], ["D", "My new laptop is more faster than my old one."]], answer: "B" },
+      { q: 3, text: "Identify the sentence that correctly avoids the double-marked comparative error:", options: [["A", "This smartphone is more cheaper than that model."], ["B", "This smartphone is cheaper than that model."], ["C", "This smartphone is more cheap than that model."], ["D", "This smartphone is more better than that model."]], answer: "B" },
+      { q: 4, text: "Choose the correct option to complete the dialogue: Person A: \"Which gadget is better for graphic design work?\" Person B: \"The desktop computer is __________ than the tablet, but it is also __________ expensive.\"", options: [["A", "gooder / more"], ["B", "better / more"], ["C", "more good / very"], ["D", "better / most"]], answer: "B" },
+      { q: 5, text: "Which sentence is grammatically correct and uses the correct comparative preposition?", options: [["A", "A wireless keyboard is more convenient than a wired keyboard."], ["B", "A wireless keyboard is more convenient from a wired keyboard."], ["C", "A wireless keyboard is most convenient than a wired keyboard."], ["D", "A wireless keyboard is convenienter than a wired keyboard."]], answer: "A" }
+    ]
   }
 ];
 
