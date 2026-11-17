@@ -420,6 +420,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Select the grammatically correct negative statement:", options: [["A", "We haven't never been to an opera."], ["B", "We haven't seen that new comedy series yet."], ["C", "We hasn't saw that new comedy series yet."], ["D", "We haven't saw that new comedy series yet."]], answer: "B" },
       { q: 5, text: "Choose the correct pair of verb forms to complete the conversation: Speaker A: \"__________ you ever __________ a famous actor?\" Speaker B: \"Yes, I __________ Tom Hanks at an airport in 2019.\"", options: [["A", "Have / meet — have met"], ["B", "Did / meet — have seen"], ["C", "Have / met — met"], ["D", "Have / meet — met"]], answer: "C" }
     ]
+  },
+  {
+    unit: 20, level: "A2", title: "A2 Session 20 Checkpoint", subtitle: "Asking About Experiences (Ever / Never)", available: true, voiceSeconds: 30,
+    voicePrompt: "Imagine you are in a professional or social networking conversation. Share three lifetime experiences: (1) mention one exciting thing you have done and specify when or where you did it using the Past Simple (\"I have... I went there in...\"), (2) ask one question using \"Have you ever...?\" to your listener, and (3) mention one thing you have never done in your life (\"I have never...\"). Requirements: use at least one Present Perfect question with ever, use at least one sentence with never without double negatives, and use the correct tense shift from Present Perfect to Past Simple for specific details. Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the grammatically correct question asking about a lifetime experience:", options: [["A", "Did you ever eaten sushi?"], ["B", "Have you ever eaten sushi?"], ["C", "Have you ever ate sushi?"], ["D", "Are you ever eaten sushi?"]], answer: "B" },
+      { q: 2, text: "Select the sentence that correctly avoids the double-negative error when expressing a lifetime negative experience:", options: [["A", "I haven't never traveled outside my country."], ["B", "I have never traveled outside my country."], ["C", "I don't have never traveled outside my country."], ["D", "I didn't never traveled outside my country."]], answer: "B" },
+      { q: 3, text: "Which question demonstrates the correct syntactic word order?", options: [["A", "Has she ever flown in a helicopter?"], ["B", "Has ever she flown in a helicopter?"], ["C", "She has ever flown in a helicopter?"], ["D", "Ever has she flown in a helicopter?"]], answer: "A" },
+      { q: 4, text: "Choose the correct verb forms to complete the dialogue naturally: Speaker A: \"Have you ever visited Istanbul?\" Speaker B: \"Yes, I __________ . I __________ there on holiday in 2021.\"", options: [["A", "have / have gone"], ["B", "did / went"], ["C", "have / went"], ["D", "have / was gone"]], answer: "C" },
+      { q: 5, text: "Choose the correct response to complete the professional interview exchange: Interviewer: \"Have you ever managed a project team?\" Candidate: \"No, I __________ , but I have assisted senior project managers.\"", options: [["A", "haven't"], ["B", "didn't"], ["C", "am not"], ["D", "never"]], answer: "A" }
+    ]
   }
 ];
 
