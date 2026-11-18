@@ -94,7 +94,7 @@ export async function onRequestGet(context) {
       - 24 session resources (Presentations · Mind Maps tabs)
       - 12 units/levels (Homework tab)
 
-      Sessions 1–20 are available; the remaining sessions are placeholders.
+      Sessions 1–21 are available; the remaining sessions are placeholders.
       Session 14 has TWO recordings (recording + recording2).
        ============================================================ */
     const a2Sessions = Array.from({ length: 24 }, (_, i) => {
@@ -123,6 +123,7 @@ export async function onRequestGet(context) {
     a2Sessions[17].recording = "https://t.me/c/4299575479/21";
     a2Sessions[18].recording = "https://t.me/c/4299575479/22";
     a2Sessions[19].recording = "https://t.me/c/4299575479/23";
+    a2Sessions[20].recording = "https://t.me/c/4299575479/24";
 
     a2Sessions[0].presentation = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/9288bb99-578c-4720-a710-8354cfd99ea6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[0].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/c19da8ee-9c3c-48a4-8930-a62e7806dbfc?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
@@ -164,6 +165,8 @@ export async function onRequestGet(context) {
     a2Sessions[18].mindmap = "https://notebook.google.com/notebook/86ef7e63-0606-44ac-b4a6-635b7e7def32/artifact/b8e5a282-a086-4724-aaf7-28e2c43c15c5?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_";
     a2Sessions[19].presentation = "https://notebooklm.link.google/h40xFOawHmc8";
     a2Sessions[19].mindmap = "https://notebooklm.link.google/4CtSkvzengQQ";
+    a2Sessions[20].presentation = "https://notebooklm.link.google/IoCqSIPT8nOP";
+    a2Sessions[20].mindmap = "https://notebooklm.link.google/GbUE1weSDK0r";
 
     const homeworkPages = [18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128];
     const a2Units = Array.from({ length: 12 }, (_, i) => {

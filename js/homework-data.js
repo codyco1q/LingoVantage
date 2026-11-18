@@ -431,6 +431,17 @@ window.LV_HOMEWORK_A2 = [
       { q: 4, text: "Choose the correct verb forms to complete the dialogue naturally: Speaker A: \"Have you ever visited Istanbul?\" Speaker B: \"Yes, I __________ . I __________ there on holiday in 2021.\"", options: [["A", "have / have gone"], ["B", "did / went"], ["C", "have / went"], ["D", "have / was gone"]], answer: "C" },
       { q: 5, text: "Choose the correct response to complete the professional interview exchange: Interviewer: \"Have you ever managed a project team?\" Candidate: \"No, I __________ , but I have assisted senior project managers.\"", options: [["A", "haven't"], ["B", "didn't"], ["C", "am not"], ["D", "never"]], answer: "A" }
     ]
+  },
+  {
+    unit: 21, level: "A2", title: "A2 Session 21 Checkpoint", subtitle: "Future Plans & Intentions (be going to)", available: true, voiceSeconds: 30,
+    voicePrompt: "Describe your next business or holiday trip planned for the upcoming months. Mention where you are going, when you are going to leave, what the weather will be like, and at least one thing you ARE NOT going to do on the trip. Requirements: (1) use at least two positive sentences with be going to (am/is/are + going to + base verb), (2) use at least one negative sentence with be going to (am not / isn't / aren't + going to + base verb), and (3) include at least one weather adjective (warm, sunny, cool, freezing, rainy) and one future time expression (next month, in July, next week, tomorrow). Speak for 30 seconds.",
+    questions: [
+      { q: 1, text: "Choose the word that best completes the sentence: \"Make sure to pack a heavy winter coat, gloves, and a scarf because the weather in the mountains will be absolutely __________.\"", options: [["A", "sunny"], ["B", "freezing"], ["C", "warm"], ["D", "humid"]], answer: "B" },
+      { q: 2, text: "Select the sentence that correctly expresses a future intention:", options: [["A", "She is going to start a new job in Dubai next month."], ["B", "She going to start a new job in Dubai next month."], ["C", "She is go to start a new job in Dubai next month."], ["D", "She is going start a new job in Dubai next month."]], answer: "A" },
+      { q: 3, text: "Identify the sentence that is grammatically correct and avoids dropping the auxiliary be verb:", options: [["A", "I going to book the flight tickets this evening."], ["B", "We going to spend our summer vacation in Spain."], ["C", "I am going to book the flight tickets this evening."], ["D", "He not going to attend the conference tomorrow."]], answer: "C" },
+      { q: 4, text: "Choose the correct option to complete the negative statement: \"We __________ stay in a luxury hotel because we want to save money for excursions.\"", options: [["A", "aren't going to"], ["B", "don't going to"], ["C", "isn't going to"], ["D", "not going to"]], answer: "A" },
+      { q: 5, text: "Choose the option that correctly completes the sentence: \"My manager __________ an important client in Frankfurt __________.\"", options: [["A", "is going to meet / next week"], ["B", "is going to meeting / next week"], ["C", "going to meet / yesterday"], ["D", "are going to meet / next week"]], answer: "A" }
+    ]
   }
 ];
 
